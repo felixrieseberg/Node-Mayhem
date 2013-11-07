@@ -1,0 +1,19 @@
+{
+  "name": "nko4-west-coast-hackers",
+  "version": "0.0.0",
+  "description": "West Coast Hackers",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko4/west-coast-hackers.git"
+  },
+  "dependencies": {
+    "nko": "*"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
