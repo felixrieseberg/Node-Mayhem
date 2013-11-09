@@ -32,10 +32,13 @@ var game = {
     me.input.bindKey(me.input.KEY.SPACE, 'shoot');
     me.input.bindMouse(0, me.input.KEY.SPACE);
     me.input.bindKey(me.input.KEY.LEFT, 'left');
+    me.input.bindKey(me.input.KEY.A, 'left');
     me.input.bindKey(me.input.KEY.RIGHT, 'right');
+    me.input.bindKey(me.input.KEY.D, 'right');
     me.input.bindKey(me.input.KEY.UP, 'up');
+    me.input.bindKey(me.input.KEY.W, 'up');
     me.input.bindKey(me.input.KEY.DOWN, 'down');
-    me.input.bindKey(me.input.KEY.X, 'jump', true);
+    me.input.bindKey(me.input.KEY.S, 'down');
 
     me.state.change(me.state.PLAY);
 
