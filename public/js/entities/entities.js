@@ -14,6 +14,10 @@ game.PlayerEntity = me.ObjectEntity.extend({
         this.isMP = settings.isMP;
         this.step = 0;
 
+        // set up mouseCoordinates
+        game.felix_mouseX = 0;
+        game.felix_mouseY = 0;
+
         this.isCollidable = true;
 
         // set the default horizontal & vertical speed (accel vector)
@@ -22,7 +26,18 @@ game.PlayerEntity = me.ObjectEntity.extend({
         // set the display to follow our position on both axis
         if (!this.isMP) {
             me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+
+            window.onmousemove = this.handleMouseMove;
+
         }
+    },
+
+    handleMouseMove : function(event) {
+        event = event || window.event; // IE-ism
+        // event.clientX and event.clientY contain the mouse position
+        game.felix_mouseX = event.clientX;
+        game.felix_mouseY = event.clientY;
+        // console.log("Recorded for client: " + this.mouseX + " " + this.mouseY);
     },
 
     /* -----
@@ -35,11 +50,10 @@ game.PlayerEntity = me.ObjectEntity.extend({
         if (!this.isMP) {
 
             if (me.input.isKeyPressed('shoot')) {
-                // flip the sprite on horizontal axis
-                console.log(me.input.mouse.pos);
-                console.log("Hello!");
-            }
+                //  Shoot!
+                console.log("Shoot!"); 
 
+            }
             if (me.input.isKeyPressed('left')) {
                 // flip the sprite on horizontal axis
                 this.flipX(true);
