@@ -19,13 +19,13 @@ game.PlayerEntity = me.ObjectEntity.extend({
         game.felix_mouseY = 0;
 
         this.isCollidable = true;
+        this.type = game.MAIN_PLAYER_OBJECT;
 
-        this.renderable.addAnimation("run-down", [0,1,2,3], 1);
-        this.renderable.addAnimation("run-left", [4,5,6,7], 1);
-        this.renderable.addAnimation("run-up", [8,9,10,11], 1);
-        this.renderable.addAnimation("run-right", [12,13,14,15], 1);
-        this.renderable.setCurrentAnimation("run-down");
-
+        this.renderable.addAnimation('run-down', [0,1,2,3], 1);
+        this.renderable.addAnimation('run-left', [4,5,6,7], 1);
+        this.renderable.addAnimation('run-up', [8,9,10,11], 1);
+        this.renderable.addAnimation('run-right', [12,13,14,15], 1);
+        this.renderable.setCurrentAnimation('run-down');
         // set the default horizontal & vertical speed (accel vector)
         this.setVelocity(4, 4);
 
@@ -81,27 +81,27 @@ game.PlayerEntity = me.ObjectEntity.extend({
 
             if (me.input.isKeyPressed('left')) {
                 // update the entity velocity
-                this.renderable.setCurrentAnimation("run-left");
+                this.renderable.setCurrentAnimation('run-left');
                 this.vel.x -= this.accel.x * me.timer.tick;
             }
 
             if (me.input.isKeyPressed('right')) {
                 // update the entity velocity
-                this.renderable.setCurrentAnimation("run-right");
+                this.renderable.setCurrentAnimation('run-right');
                 this.vel.x += this.accel.x * me.timer.tick;
             }
 
             if (me.input.isKeyPressed('up')) {
                 // TODO: New sprite level
                 // update the entity velocity
-                this.renderable.setCurrentAnimation("run-up");
+                this.renderable.setCurrentAnimation('run-up');
                 this.vel.y = -this.accel.y * me.timer.tick;
             }
 
             if (me.input.isKeyPressed('down')) {
                 // TODO: New sprite level
                 // update the entity velocity
-                this.renderable.setCurrentAnimation("run-down");
+                this.renderable.setCurrentAnimation('run-down');
                 this.vel.y = this.accel.y * me.timer.tick;
             }
 
@@ -117,7 +117,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
             if (!this.isMP) { // Check if it's time to send a message 
                 if (this.step == 0) {
                     game.mp.sendMessage({
-                        action: "update",
+                        action: 'update',
                         pos: {
                             x: this.pos.x,
                             y: this.pos.y
@@ -164,7 +164,6 @@ game.BulletEntity = me.ObjectEntity.extend({
         var bullet = this;
         this.timeout = setTimeout(function() { 
             me.game.remove(bullet);
-            console.log('bullet timed out');
         }, 1500);
 
         // check for direction
@@ -174,11 +173,16 @@ game.BulletEntity = me.ObjectEntity.extend({
     },
     
     onCollision: function() {
-        console.log("Collision omgwtfbbq!");
+        console.log('Collision omgwtfbbq!');
     },
 
     // Update bullet position
     update: function () {
+        var collision = me.game.world.collideType(this);
+        if(collision && collision.obj.type != game.MAIN_PLAYER_OBJECT) {
+            console.log(collision.obj.type, game.MAIN_PLAYER_OBJECT);
+            console.log('BOOM');
+        }
         this.vel.x += this.accel.x * me.timer.tick;
         this.vel.y += this.accel.y * me.timer.tick;
         this.computeVelocity(this.vel);
