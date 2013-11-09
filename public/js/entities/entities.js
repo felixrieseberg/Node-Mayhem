@@ -21,6 +21,12 @@ game.PlayerEntity = me.ObjectEntity.extend({
 
         this.isCollidable = true;
 
+        this.renderable.addAnimation("run-down", [0,1,2,3], 1);
+        this.renderable.addAnimation("run-left", [4,5,6,7], 1);
+        this.renderable.addAnimation("run-up", [8,9,10,11], 1);
+        this.renderable.addAnimation("run-right", [12,13,14,15], 1);
+        this.renderable.setCurrentAnimation("run-down");
+
         // set the default horizontal & vertical speed (accel vector)
         this.setVelocity(5, 5);
 
@@ -66,28 +72,29 @@ game.PlayerEntity = me.ObjectEntity.extend({
 
             if (me.input.isKeyPressed('left')) {
                 // flip the sprite on horizontal axis
-                this.flipX(true);
+                //this.flipX(true);
                 // update the entity velocity
+                this.renderable.setCurrentAnimation("run-left");
                 this.vel.x -= this.accel.x * me.timer.tick;
-            }
-
-            if (me.input.isKeyPressed('right')) {
-                // unflip the sprite
-                this.flipX(false);
+            } else if (me.input.isKeyPressed('right')) {
+                // unflip the 
+                //this.flipX(false);
+                this.renderable.setCurrentAnimation("run-right");
                 // update the entity velocity
                 this.vel.x += this.accel.x * me.timer.tick;
-            }
-
-            if (me.input.isKeyPressed('up')) {
+            } else if (me.input.isKeyPressed('up')) {
                 // TODO: New sprite level
                 // update the entity velocity
+                this.renderable.setCurrentAnimation("run-up");
                 this.vel.y = -this.accel.y * me.timer.tick;
-            }
-
-            if (me.input.isKeyPressed('down')) {
+            } else if (me.input.isKeyPressed('down')) {
                 // TODO: New sprite level
                 // update the entity velocity
+                this.renderable.setCurrentAnimation("run-down");
                 this.vel.y = this.accel.y * me.timer.tick;
+            } else {
+                this.vel.x = 0;
+                this.vel.y = 0;
             }
 
             // check & update player movement
