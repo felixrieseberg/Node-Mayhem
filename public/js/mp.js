@@ -1,18 +1,6 @@
 var Multiplayer = Object.extend({
     init : function (new_player) {
-        
         this.new_player = new_player;
-
-        /*
-        // Record my UUID, so I don't process my own messages
-        this.UUID = this.uuid();
-
-        // Listen for incoming messages
-        this.subscribeToSomething({
-            channel : "heyImYourServer",
-            message : this.handleMessage.bind(this)
-        });
-        */
     },
 
     handleMessage : function (msg) {

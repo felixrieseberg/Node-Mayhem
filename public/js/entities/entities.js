@@ -7,7 +7,6 @@ game.PlayerEntity = me.ObjectEntity.extend({
         // call the constructor
         this.parent(x, y, settings);
 
-        // disable gravity
         this.gravity = 0;
 
         // set up multiplayer
@@ -37,7 +36,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
         // event.clientX and event.clientY contain the mouse position
         game.felix_mouseX = event.clientX;
         game.felix_mouseY = event.clientY;
-        // console.log("Recorded for client: " + this.mouseX + " " + this.mouseY);
+        // console.log('Recorded for client: ' + this.mouseX + ' ' + this.mouseY);
     },
 
     /* -----
@@ -48,14 +47,16 @@ game.PlayerEntity = me.ObjectEntity.extend({
     update: function () {
 
         if (!this.isMP) {
+            this.vel.x = 0;
+            this.vel.y = 0;
 
             if (me.input.isKeyPressed('shoot')) {
                 //  Shoot!
-                console.log("Shoot!"); 
-                //me.entityPool.add("bullet", game.BulletEntity);
+                console.log('Shoot!'); 
+                //me.entityPool.add('bullet', game.BulletEntity);
                 
-                var obj = me.entityPool.newInstanceOf("bullet", this.pos.x, this.pos.y, {
-                image: "bullet",
+                var obj = me.entityPool.newInstanceOf('bullet', this.pos.x, this.pos.y, {
+                image: 'bullet',
                 spritewidth: 24,
                 spriteheight: 24 });
 
@@ -67,23 +68,27 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 this.flipX(true);
                 // update the entity velocity
                 this.vel.x -= this.accel.x * me.timer.tick;
-            } else if (me.input.isKeyPressed('right')) {
+            }
+
+            if (me.input.isKeyPressed('right')) {
                 // unflip the sprite
                 this.flipX(false);
                 // update the entity velocity
                 this.vel.x += this.accel.x * me.timer.tick;
-            } else if (me.input.isKeyPressed('up')) {
+            }
+
+            if (me.input.isKeyPressed('up')) {
                 // TODO: New sprite level
                 // update the entity velocity
                 this.vel.y = -this.accel.y * me.timer.tick;
-            } else if (me.input.isKeyPressed('down')) {
+            }
+
+            if (me.input.isKeyPressed('down')) {
                 // TODO: New sprite level
                 // update the entity velocity
                 this.vel.y = this.accel.y * me.timer.tick;
-            } else {
-                this.vel.x = 0;
-                this.vel.y = 0;
             }
+
             if (me.input.isKeyPressed('jump')) {
                 // make sure we are not already jumping or falling
                 if (!this.jumping && !this.falling) {
@@ -108,7 +113,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
             if (!this.isMP) { // Check if it's time to send a message 
                 if (this.step == 0) {
                     game.mp.sendMessage({
-                        action: "update",
+                        action: 'update',
                         pos: {
                             x: this.pos.x,
                             y: this.pos.y
@@ -142,7 +147,7 @@ game.BulletEntity = me.ObjectEntity.extend({
     init: function (x, y, settings) {
         // call the constructor
         this.parent(x, y, settings);
-        console.log("Hello")
+        console.log('Hello')
         // disable gravity
         this.gravity = 0;
 
