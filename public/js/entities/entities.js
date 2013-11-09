@@ -8,6 +8,8 @@ game.PlayerEntity = me.ObjectEntity.extend({
         this.parent(x, y, settings);
 
         this.gravity = 0;
+        this.isWeaponCoolDown = false;
+        this.weaponCoolDownTime = 500;
 
         // set up multiplayer
         this.isMP = settings.isMP;
@@ -45,12 +47,14 @@ game.PlayerEntity = me.ObjectEntity.extend({
  
     ------ */
     update: function () {
-
         if (!this.isMP) {
             this.vel.x = 0;
             this.vel.y = 0;
 
-            if (me.input.isKeyPressed('shoot')) {
+            if (!this.isWeaponCoolDown && me.input.isKeyPressed('shoot')) {
+                this.isWeaponCoolDown = true;
+                var player = this;
+                setTimeout(function() { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
                 var obj = me.entityPool.newInstanceOf('bullet', this.pos.x, this.pos.y, {
                 image: 'bullet',
                 spritewidth: 24,
@@ -111,28 +115,17 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 }
                 if (this.step++ > 3) this.step = 0;
             }
-
-            // update animation if necessary
-            if (this.vel.x != 0 || this.vel.y != 0) {
-                // update object animation
-                this.parent();
-                return true;
-            }
-
-            // else inform the engine we did not perform
-            // any update (e.g. position, animation)
-            return false;
+            
+            return true;
         }
     }
 
 });
 
 game.BulletEntity = me.ObjectEntity.extend({
-
     init: function (x, y, settings) {
         // call the constructor
         this.parent(x, y, settings);
-        console.log('Hello')
         // disable gravity
         this.gravity = 0;
 
@@ -142,18 +135,14 @@ game.BulletEntity = me.ObjectEntity.extend({
         // check for direction
         // this.direction = settings.direction;
 
-        this.setVelocity(40, 0);
+        this.setVelocity(20, 0);
 
     },
 
     // Update bullet position
     update: function () {
-
         this.vel.x += this.accel.x * me.timer.tick;
-
         this.computeVelocity(this.vel);
-        this.pos.add(this.vel);
-
+        this.updateMovement();
     }
-
 });
