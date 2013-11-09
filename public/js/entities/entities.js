@@ -27,7 +27,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
         this.renderable.setCurrentAnimation("run-down");
 
         // set the default horizontal & vertical speed (accel vector)
-        this.setVelocity(5, 5);
+        this.setVelocity(4, 4);
 
         // set the display to follow our position on both axis
         if (!this.isMP) {
@@ -43,7 +43,6 @@ game.PlayerEntity = me.ObjectEntity.extend({
         // event.clientX and event.clientY contain the mouse position
         game.felix_mouseX = event.clientX;
         game.felix_mouseY = event.clientY;
-        // console.log("Recorded for client: " + this.mouseX + " " + this.mouseY);
     },
 
     /* -----
@@ -151,17 +150,22 @@ game.BulletEntity = me.ObjectEntity.extend({
 
         this.shotAngle = settings.angle;
         this.renderable.angle = this.shotAngle;
-        console.log(settings.target);
+        this.maxVelocity = settings.maxVelocity || 15;
 
         var localX = (settings.target.x - x);
         var localY = (settings.target.y - y);
 
         var localTargetVector = new me.Vector2d(localX, localY);
         localTargetVector.normalize();
-        localTargetVector.scale(new me.Vector2d(20, 20));
+        localTargetVector.scale(new me.Vector2d(this.maxVelocity, this.maxVelocity));
 
-        console.log(localX + " " + localY);
         this.setVelocity(localTargetVector.x, localTargetVector.y);
+
+        var bullet = this;
+        this.timeout = setTimeout(function() { 
+            me.game.remove(bullet);
+            console.log('bullet timed out');
+        }, 1500);
 
         // check for direction
         // this.direction = settings.direction;
@@ -170,19 +174,18 @@ game.BulletEntity = me.ObjectEntity.extend({
     },
     
     onCollision: function() {
-        console.log("Hello");
+        console.log("Collision omgwtfbbq!");
     },
 
     // Update bullet position
     update: function () {
-
-
         this.vel.x += this.accel.x * me.timer.tick;
         this.vel.y += this.accel.y * me.timer.tick;
         this.computeVelocity(this.vel);
         this.updateMovement();
 
         if (!this.renderable.visible) {
+            clearTimeout(this.timeout);
             me.game.remove(this);
         }
     }
