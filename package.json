@@ -11,7 +11,10 @@
     "url": "git@github.com:nko4/west-coast-hackers.git"
   },
   "dependencies": {
-    "nko": "*"
+    "nko": "*",
+    "express": "~3.4.4",
+    "socket.io": "~0.9.16",
+    "jade": "~0.35.0"
   },
   "engines": {
     "node": "0.10.x"
