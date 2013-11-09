@@ -4,7 +4,6 @@ a player entity
 game.PlayerEntity = me.ObjectEntity.extend({
 
     init: function (x, y, settings) {
-        // call the constructor
         this.parent(x, y, settings);
 
         this.gravity = 0;
@@ -39,12 +38,12 @@ game.PlayerEntity = me.ObjectEntity.extend({
         }
     },
 
-    handleMouseMove : function(event) {
+    handleMouseMove: function (event) {
         event = event || window.event; // IE-ism
         // event.clientX and event.clientY contain the mouse position
         game.felix_mouseX = event.clientX;
         game.felix_mouseY = event.clientY;
-        // console.log('Recorded for client: ' + this.mouseX + ' ' + this.mouseY);
+        // console.log("Recorded for client: " + this.mouseX + " " + this.mouseY);
     },
 
     /* -----
@@ -53,48 +52,58 @@ game.PlayerEntity = me.ObjectEntity.extend({
  
     ------ */
     update: function () {
+
         if (!this.isMP) {
             this.vel.x = 0;
             this.vel.y = 0;
 
-            if (!this.isWeaponCoolDown && me.input.isKeyPressed('shoot')) {
-                this.isWeaponCoolDown = true;
-                var player = this;
-                setTimeout(function() { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
-                var obj = me.entityPool.newInstanceOf('bullet', this.pos.x, this.pos.y, {
-                image: 'bullet',
-                spritewidth: 24,
-                spriteheight: 24 });
+            if (me.input.isKeyPressed('shoot')) {
 
-                me.game.add(obj, this.z);
-                me.game.sort();
+                if (!this.isWeaponCoolDown && me.input.isKeyPressed('shoot')) {
+                    this.isWeaponCoolDown = true;
+                    var player = this;
+                    setTimeout(function () { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
+
+                    var pos = me.input.globalToLocal(game.felix_mouseX, game.felix_mouseY);
+                    var anglePlayerToBullet = this.angleToPoint(pos);
+                    
+                    var obj = me.entityPool.newInstanceOf('bullet', this.pos.x + 12, this.pos.y + 12, {
+                        image: 'bullet',
+                        spritewidth: 24,
+                        spriteheight: 24,
+                        angle: anglePlayerToBullet,
+                        target: pos
+                    });
+
+                    me.game.add(obj, this.z);
+                    me.game.sort();
+                }
             }
 
             if (me.input.isKeyPressed('left')) {
-                // flip the sprite on horizontal axis
-                //this.flipX(true);
                 // update the entity velocity
                 this.renderable.setCurrentAnimation("run-left");
                 this.vel.x -= this.accel.x * me.timer.tick;
-            } else if (me.input.isKeyPressed('right')) {
-                // unflip the 
-                //this.flipX(false);
-                this.renderable.setCurrentAnimation("run-right");
+            }
+
+            if (me.input.isKeyPressed('right')) {
                 // update the entity velocity
+                this.renderable.setCurrentAnimation("run-right");
                 this.vel.x += this.accel.x * me.timer.tick;
-            } else if (me.input.isKeyPressed('up')) {
+            }
+
+            if (me.input.isKeyPressed('up')) {
                 // TODO: New sprite level
                 // update the entity velocity
                 this.renderable.setCurrentAnimation("run-up");
                 this.vel.y = -this.accel.y * me.timer.tick;
-            } else if (me.input.isKeyPressed('down')) {
+            }
+
+            if (me.input.isKeyPressed('down')) {
                 // TODO: New sprite level
                 // update the entity velocity
                 this.renderable.setCurrentAnimation("run-down");
                 this.vel.y = this.accel.y * me.timer.tick;
-            } else {
-                this.vel.x = 0;
-                this.vel.y = 0;
             }
 
             // check & update player movement
@@ -109,7 +118,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
             if (!this.isMP) { // Check if it's time to send a message 
                 if (this.step == 0) {
                     game.mp.sendMessage({
-                        action: 'update',
+                        action: "update",
                         pos: {
                             x: this.pos.x,
                             y: this.pos.y
@@ -122,7 +131,8 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 }
                 if (this.step++ > 3) this.step = 0;
             }
-            
+
+            // update animation if necessary
             return true;
         }
     }
@@ -130,26 +140,51 @@ game.PlayerEntity = me.ObjectEntity.extend({
 });
 
 game.BulletEntity = me.ObjectEntity.extend({
+
     init: function (x, y, settings) {
         // call the constructor
         this.parent(x, y, settings);
         // disable gravity
         this.gravity = 0;
-
         this.collidable = true;
         this.canBreakTile = true;
+
+        this.shotAngle = settings.angle;
+        this.renderable.angle = this.shotAngle;
+        console.log(settings.target);
+
+        var localX = (settings.target.x - x);
+        var localY = (settings.target.y - y);
+
+        var localTargetVector = new me.Vector2d(localX, localY);
+        localTargetVector.normalize();
+        localTargetVector.scale(new me.Vector2d(20, 20));
+
+        console.log(localX + " " + localY);
+        this.setVelocity(localTargetVector.x, localTargetVector.y);
 
         // check for direction
         // this.direction = settings.direction;
 
-        this.setVelocity(20, 0);
 
+    },
+    
+    onCollision: function() {
+        console.log("Hello");
     },
 
     // Update bullet position
     update: function () {
+
+
         this.vel.x += this.accel.x * me.timer.tick;
+        this.vel.y += this.accel.y * me.timer.tick;
         this.computeVelocity(this.vel);
         this.updateMovement();
+
+        if (!this.renderable.visible) {
+            me.game.remove(this);
+        }
     }
+
 });

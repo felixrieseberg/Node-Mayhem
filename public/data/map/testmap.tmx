@@ -33,12 +33,6 @@
     <property name="spritewidth" value="48"/>
    </properties>
   </object>
-  <object name="bullet" x="445" y="107" width="24" height="24">
-   <properties>
-    <property name="image" value="bullet"/>
-    <property name="spritewidth" value="24"/>
-   </properties>
-  </object>
  </objectgroup>
  <layer name="collision" width="19" height="15">
   <data encoding="base64">
