@@ -1,104 +1,75 @@
-var canvas = document.getElementById('example');
-var engine = new Joy.Engine({
-  debug: false,
-  canvas: canvas,
-  width: 1200,
-  height: 800,
 
-});
+/* Game namespace */
+var game = {
 
-function getMousePos(canvas, evt) {
-  var rect = canvas.getBoundingClientRect();
-  return {
-    x: (evt.clientX - rect.left) * 2,
-    y: (evt.clientY - rect.top) * 2
-  };
-}
+	// an object where to store game information
+	data : {
+		// score
+		score : 0
+	},
+	
+	
+	// Run on page load.
+	"onload" : function () {
+	// Initialize the video.
+    me.sys.pauseOnBlur = false;
+	if (!me.video.init("screen", 900, 700, true, 'auto')) {
+		alert("Your browser does not support HTML5 canvas.");
+		return;
+	}
 
-engine.createScene(function (scene) {
-  var background = new Joy.Rect({
-    position: scene.viewport.position,
-    width: engine.width * 2,
-    height: engine.height * 2
-  });
-  background.colorize("#BFE5E5");
-  scene.addChild(background);
+	// add "#debug" to the URL to enable the debug Panel
+	if (document.location.hash === "#debug") {
+		window.onReady(function () {
+			me.plugin.register.defer(debugPanel, "debug");
+		});
+	}
 
-  var ship = new Joy.SpriteSheet({
-    x: engine.width / 2,
-    y: engine.height / 2,
-    width: 36,
-    height: 30,
-    animations: {
-      "idle": [0],
-      "left": [1],
-      "right": [2],
-    },
-    src: "/img/spaceship.gif"
-  });
-  ship.behave('Movimentation');
-  ship.friction.set(0.1, 0.1);
-  ship.maxVelocity.set(2, 2);
-  ship.play("idle");
+	// Initialize the audio.
+	me.audio.init("mp3,ogg");
 
-  ship.bind(Joy.Events.KEY_PRESS, function(evt) {
-    if (evt.keyCode == Joy.Keyboard.KEY_W) {
-      this.acceleration.y = -2;
-    } else if (evt.keyCode == Joy.Keyboard.KEY_S) {
-      this.acceleration.y = 2;
-    }
-    if (evt.keyCode === Joy.Keyboard.KEY_A) {
-      this.acceleration.x = -2;
-      this.play("left");
+	// Set a callback to run when loading is complete.
+	me.loader.onload = this.loaded.bind(this);
 
-    } else if (evt.keyCode === Joy.Keyboard.KEY_D) {
-      this.acceleration.x = 2;
-      this.play("right");
-    }
-  });
+	// Load the resources.
+	me.loader.preload(game.resources);
 
-  ship.bind(Joy.Events.KEY_UP, function(evt) {
-    if (evt.keyCode == Joy.Keyboard.KEY_W || evt.keyCode == Joy.Keyboard.KEY_S) {
-      this.acceleration.y = 0;
-    }
-    if (evt.keyCode === Joy.Keyboard.KEY_A || evt.keyCode === Joy.Keyboard.KEY_D) {
-      this.acceleration.x = 0;
-      this.play("idle");
-    }
-  });
+	// Initialize melonJS and display a loading screen.
+	me.state.change(me.state.LOADING);
+},
 
-  ship.fireAt = function(target) {
-    console.log(target);
-  };
+	// Run on game resources loaded.
+	"loaded" : function () {
+		me.state.set(me.state.MENU, new game.TitleScreen());
+		me.state.set(me.state.PLAY, new game.PlayScreen());
 
-  ship.lookAt = function(target) {
-    var vector = { x: target.x - ship.position.x, y: target.y - ship.position.y };
-    var theta = Math.atan2(-vector.y, vector.x);
-    if (theta < 0) {
-      theta += 2 * Math.PI;
-    }
+        // debug
+        me.debug.renderHitBox = true;
 
-    var angle = (theta * (180 / Math.PI)) - 90;
-    if(angle < 0) {
-      angle += 360;
-    }
+        // add our player entity in the entity pool
+        me.entityPool.add("mainPlayer", game.PlayerEntity);
+             
+        // enable the keyboard
+        me.input.bindKey(me.input.KEY.Y, "shoot");
+        // map the left button click on the X key
+        me.input.bindMouse(me.input.mouse.LEFT, me.input.KEY.Y);
 
-    this.position.x -= 15;
-    this.position.x -= 18;
-    this.rotate(-angle);
-    this.position.x += 15;
-    this.position.x += 18;
-  }
+        me.input.bindKey(me.input.KEY.LEFT,  "left");
+        me.input.bindKey(me.input.KEY.RIGHT, "right");
+        me.input.bindKey(me.input.KEY.UP, "up");
+        me.input.bindKey(me.input.KEY.DOWN, "down");
+        me.input.bindKey(me.input.KEY.X,     "jump", true);
 
-  canvas.addEventListener('mousemove', function(evt) {
-    var mousePos = getMousePos(canvas, evt);
-    ship.lookAt(mousePos);
-  }, false);
+        // Start the game.
+		me.state.change(me.state.PLAY);
 
-  canvas.addEventListener('mousedown', function(evt) {
-    var mousePos = getMousePos(canvas, evt);
-    ship.fireAt(mousePos);
-  }, false);
-
-  scene.addChild(ship);
-});
+        game.mp = new Multiplayer(function (x, y) { 
+        // Create a new player object 
+            var obj = me.entityPool.newInstanceOf("mainPlayer", x, y, { 
+                spritewidth : 48, 
+                spriteheight : 48, 
+                isMP : true }); 
+            me.game.add(obj, 1); 
+            me.game.sort(); return obj; });
+	}
+};
