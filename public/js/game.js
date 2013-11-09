@@ -17,7 +17,6 @@ var game = {
 		alert("Your browser does not support HTML5 canvas.");
 		return;
 	}
-
 	// add "#debug" to the URL to enable the debug Panel
 	if (document.location.hash === "#debug") {
 		window.onReady(function () {
@@ -50,9 +49,9 @@ var game = {
         me.entityPool.add("mainPlayer", game.PlayerEntity);
              
         // enable the keyboard
-        me.input.bindKey(me.input.KEY.Y, "shoot");
+        me.input.bindKey(me.input.KEY.SPACE, "shoot");
         // map the left button click on the X key
-        me.input.bindMouse(me.input.mouse.LEFT, me.input.KEY.Y);
+        me.input.bindMouse(0, me.input.KEY.SPACE);
 
         me.input.bindKey(me.input.KEY.LEFT,  "left");
         me.input.bindKey(me.input.KEY.RIGHT, "right");
