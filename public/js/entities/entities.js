@@ -140,58 +140,79 @@ game.PlayerEntity = me.ObjectEntity.extend({
 
 game.BulletEntity = me.ObjectEntity.extend({
 
+  init: function (x, y, settings) {
+    // call the constructor
+    this.parent(x, y, settings);
+    // disable gravity
+    this.gravity = 0;
+    this.collidable = true;
+    this.canBreakTile = true;
+
+    this.shotAngle = settings.angle;
+    this.renderable.angle = this.shotAngle;
+    this.maxVelocity = settings.maxVelocity || 15;
+
+    var localX = (settings.target.x - x);
+    var localY = (settings.target.y - y);
+
+    var localTargetVector = new me.Vector2d(localX, localY);
+    localTargetVector.normalize();
+    localTargetVector.scale(new me.Vector2d(this.maxVelocity, this.maxVelocity));
+
+    this.setVelocity(localTargetVector.x, localTargetVector.y);
+
+    var bullet = this;
+    this.timeout = setTimeout(function () {
+      me.game.remove(bullet);
+      console.log('bullet timed out');
+    }, 1500);
+
+    // check for direction
+    // this.direction = settings.direction;
+  },
+  onCollision: function () {
+    console.log("Collision omgwtfbbq!");
+  },
+
+  // Update bullet position
+  update: function () {
+    this.vel.x += this.accel.x * me.timer.tick;
+    this.vel.y += this.accel.y * me.timer.tick;
+    this.computeVelocity(this.vel);
+    this.updateMovement();
+
+    if (!this.renderable.visible) {
+      clearTimeout(this.timeout);
+      me.game.remove(this);
+    }
+    var res = me.game.collide(this);
+    if (res) {
+      // if we collide with an enemy
+      if (res.obj.type == me.game.COLLIDE_OBJECT) {
+        console.log("collide object");
+      }
+    }
+  }
+
+});
+game.CrateEntity = me.CollectableEntity.extend({
+    // extending the init function is not mandatory
+    // unless you need to add some extra initialization
     init: function (x, y, settings) {
-        // call the constructor
+        // call the parent constructor
         this.parent(x, y, settings);
-        // disable gravity
-        this.gravity = 0;
-        this.collidable = true;
-        this.canBreakTile = true;
-
-        this.shotAngle = settings.angle;
-        this.renderable.angle = this.shotAngle;
-        this.maxVelocity = settings.maxVelocity || 15;
-
-        var localX = (settings.target.x - x);
-        var localY = (settings.target.y - y);
-
-        var localTargetVector = new me.Vector2d(localX, localY);
-        localTargetVector.normalize();
-        localTargetVector.scale(new me.Vector2d(this.maxVelocity, this.maxVelocity));
-
-        this.setVelocity(localTargetVector.x, localTargetVector.y);
-
-        var bullet = this;
-        this.timeout = setTimeout(function() { 
-            me.game.remove(bullet);
-        }, 1500);
-
-        // check for direction
-        // this.direction = settings.direction;
-
-
-    },
-    
-    onCollision: function() {
-        console.log('Collision omgwtfbbq!');
+        this.type = me.game.COLLIDE_OBJECT;
     },
 
-    // Update bullet position
-    update: function () {
-        var collision = me.game.world.collideType(this);
-        if(collision && collision.obj.type != game.MAIN_PLAYER_OBJECT) {
-            console.log(collision.obj.type, game.MAIN_PLAYER_OBJECT);
-            console.log('BOOM');
-        }
-        this.vel.x += this.accel.x * me.timer.tick;
-        this.vel.y += this.accel.y * me.timer.tick;
-        this.computeVelocity(this.vel);
-        this.updateMovement();
-
-        if (!this.renderable.visible) {
-            clearTimeout(this.timeout);
-            me.game.remove(this);
-        }
+    // this function is called by the engine, when
+    // an object is touched by something (here collected)
+    onCollision: function () {
+        // do something when collected
+        console.log("hit crate");
+        // make sure it cannot be collected "again"
+        this.collidable = false;
+        // remove it
+        me.game.remove(this);
     }
 
 });
