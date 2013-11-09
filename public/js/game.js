@@ -40,9 +40,9 @@ var game = {
         me.debug.renderHitBox = true;
 
         // add our player entity in the entity pool
-        me.entityPool.add('mainPlayer', game.PlayerEntity);
-        me.entityPool.add('bullet', game.BulletEntity, true);
-
+        me.entityPool.add("mainPlayer", game.PlayerEntity);
+        me.entityPool.add("bullet", game.BulletEntity, true);
+        me.entityPool.add("CrateEntity", game.CrateEntity);
 
         // enable the keyboard
         me.input.bindKey(me.input.KEY.SPACE, 'shoot');
