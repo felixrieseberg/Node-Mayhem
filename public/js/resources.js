@@ -10,7 +10,8 @@ game.resources = [
     {name: "gripe_run_right", type:"image", src: "data/img/gripe_run_right.png"},
     {name: "boy", type:"image", src: "data/img/boy.png"},
     {name: "girl", type:"image", src: "data/img/girl.png"},
-     
+    {name: "bullet", type:"image", src: "data/img/bullet.png"},
+
     /* 
      * Maps. 
      */
@@ -42,4 +43,3 @@ game.resources = [
 	 * {name: "example_sfx", type: "audio", src: "data/sfx/", channel : 2}
 	 */
 ];
-

@@ -52,7 +52,15 @@ game.PlayerEntity = me.ObjectEntity.extend({
             if (me.input.isKeyPressed('shoot')) {
                 //  Shoot!
                 console.log("Shoot!"); 
+                //me.entityPool.add("bullet", game.BulletEntity);
+                
+                var obj = me.entityPool.newInstanceOf("bullet", this.pos.x, this.pos.y, {
+                image: "bullet",
+                spritewidth: 24,
+                spriteheight: 24 });
 
+                me.game.add(obj, 1);
+                me.game.sort(); return obj;
             }
             if (me.input.isKeyPressed('left')) {
                 // flip the sprite on horizontal axis
@@ -134,7 +142,7 @@ game.BulletEntity = me.ObjectEntity.extend({
     init: function (x, y, settings) {
         // call the constructor
         this.parent(x, y, settings);
-
+        console.log("Hello")
         // disable gravity
         this.gravity = 0;
 
@@ -142,7 +150,7 @@ game.BulletEntity = me.ObjectEntity.extend({
         this.canBreakTile = true;
 
         // check for direction
-        this.direction = settings.direction;
+        // this.direction = settings.direction;
 
         this.setVelocity(40, 0);
 
