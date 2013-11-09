@@ -56,7 +56,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 spritewidth: 24,
                 spriteheight: 24 });
 
-                me.game.add(obj, 1);
+                me.game.add(obj, this.z);
                 me.game.sort();
             }
 
