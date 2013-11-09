@@ -51,18 +51,15 @@ game.PlayerEntity = me.ObjectEntity.extend({
             this.vel.y = 0;
 
             if (me.input.isKeyPressed('shoot')) {
-                //  Shoot!
-                console.log('Shoot!'); 
-                //me.entityPool.add('bullet', game.BulletEntity);
-                
                 var obj = me.entityPool.newInstanceOf('bullet', this.pos.x, this.pos.y, {
                 image: 'bullet',
                 spritewidth: 24,
                 spriteheight: 24 });
 
                 me.game.add(obj, 1);
-                me.game.sort(); return obj;
+                me.game.sort();
             }
+
             if (me.input.isKeyPressed('left')) {
                 // flip the sprite on horizontal axis
                 this.flipX(true);
@@ -87,18 +84,6 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 // TODO: New sprite level
                 // update the entity velocity
                 this.vel.y = this.accel.y * me.timer.tick;
-            }
-
-            if (me.input.isKeyPressed('jump')) {
-                // make sure we are not already jumping or falling
-                if (!this.jumping && !this.falling) {
-                    // set current vel to the maximum defined value
-                    // gravity will then do the rest
-                    this.vel.y = -this.maxVel.y * me.timer.tick;
-                    // set the jumping flag
-                    this.jumping = true;
-                }
-
             }
 
             // check & update player movement
