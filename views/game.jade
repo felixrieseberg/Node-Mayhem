@@ -52,11 +52,15 @@ html
 
         socket.on('playerId', function(playerId) {
           game.playerId = playerId;
-          me.game.mainPlayer.id = playerId;
         });
         
         socket.on('addPlayer', function (data) {
           game.addEnemy(data);
+        });
+        
+        socket.on('addMainPlayer', function (data) {
+          console.log(data);
+          game.addMainPlayer(data);
         });
 
         socket.on('removePlayer', function (id) {
