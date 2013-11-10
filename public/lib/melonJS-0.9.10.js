@@ -6135,8 +6135,10 @@ window.me = window.me || {};
 		 */
 		onCollision : function(res, obj) {
 			// destroy the object if collectable
-			if (this.collidable	&& (this.type === me.game.COLLECTABLE_OBJECT))
-				me.game.remove(this);
+
+      //ONLY PLAYER CAN COLLIDE
+			//if (this.collidable	&& (this.type === me.game.COLLECTABLE_OBJECT))
+				//me.game.remove(this);
 		},
 
 		/**
