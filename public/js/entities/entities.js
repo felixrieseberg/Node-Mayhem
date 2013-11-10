@@ -25,29 +25,23 @@ game.NetworkPlayerEntity = me.CollectableEntity.extend({
         if(!Object.keys(this.state).length) {
             return false;
         }
-        console.log(this.state);
 
         if (this.state['left']) {
             this.renderable.setCurrentAnimation('run-left');
-            this.vel.x -= this.accel.x * me.timer.tick;
         }
 
         if (this.state['right']) {
             this.renderable.setCurrentAnimation('run-right');
-            this.vel.x += this.accel.x * me.timer.tick;
         }
 
         if (this.state['up']) {
             this.renderable.setCurrentAnimation('run-up');
-            this.vel.y = -this.accel.y * me.timer.tick;
         }
 
         if (this.state['down']) {
             this.renderable.setCurrentAnimation('run-down');
-            this.vel.y = this.accel.y * me.timer.tick;
         }
 
-        this.updateMovement();
         this.state = {};
         return true;
     }
@@ -191,7 +185,6 @@ game.BulletEntity = me.ObjectEntity.extend({
     if (res) {
       // if we collide with an enemy
       if (res.obj.type == me.game.COLLIDE_OBJECT) {
-        console.log("collide object");
         me.game.remove(bullet);
       }
     }

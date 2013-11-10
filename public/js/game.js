@@ -77,7 +77,9 @@ var game = {
   'updatePlayerState': function(data) {
     var player = this.players[data.id];
     if(player) {
-      player.state = data.s;  
+      player.state = data.s;
+      player.pos.x = data.p.x;
+      player.pos.y = data.p.y;
     }
   },
   'removeEnemy': function(data) {
