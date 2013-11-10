@@ -3,7 +3,7 @@ require('nko')('vwPITUrcgKik0DFV');
 var http = require('http'),
     path = require('path'),
     isProduction = (process.env.NODE_ENV === 'production'),
-    port = process.env.PORT || 8000,
+    port = isProduction ? 80 : process.env.PORT || 8000,
     express = require('express'),
     app = express(),
     socketio = require('socket.io');
