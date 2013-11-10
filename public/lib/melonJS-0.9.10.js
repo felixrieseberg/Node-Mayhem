@@ -10256,7 +10256,7 @@ window.me = window.me || {};
 				} else {
                     // Regular `touch****` events for iOS/Android devices
 				    if (me.device.touch) {
-						activeEventList = touchEventList;
+						activeEventList = mouseEventList;
 						registerEventListener(activeEventList, onPointerEvent);
 				    } else {
 						// Regular Mouse events
