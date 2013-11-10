@@ -73,8 +73,14 @@ io.on('connection', function(socket) {
   });
 
   socket.on('playerHit', function(data) {
-    console.log(data);
     socket.broadcast.emit('playerHit', data);
+  });
+
+  socket.on('scoreHit', function() {
+    var player = players[socket.id];
+    player.score = player.score ? player.score + 100 : 100;
+    socket.emit('score', player.score);
+    socket.broadcast.emit('playerScore', { id: player.id, score: player.score });
   });
 
   socket.on('resetPlayer', function() {

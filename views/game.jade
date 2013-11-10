@@ -76,6 +76,10 @@ html
           game.updatePlayerState(data);
         });
 
+        socket.on('score', function(score) {
+          game.data.score = score;
+        });
+
         socket.on('remotePlayerHit', function(data) {
           game.remotePlayerHealthChanged(data);
         });
