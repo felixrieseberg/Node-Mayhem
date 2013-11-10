@@ -74,6 +74,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
 
         // set up health (top 3, bottom 0)
         this.health = 3;
+        this.id = settings.id;
 
         // set up multiplayer
         this.isMP = settings.isMP;
@@ -84,6 +85,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
 
         this.isCollidable = true;
         this.type = game.MAIN_PLAYER_OBJECT;
+        this.state = {};
 
         this.renderable.addAnimation('run-down', [0, 1, 2, 3], 1);
         this.renderable.addAnimation('run-left', [4, 5, 6, 7], 1);
@@ -99,6 +101,17 @@ game.PlayerEntity = me.ObjectEntity.extend({
     update: function () {
         this.vel.x = 0;
         this.vel.y = 0;
+
+        if(this.state['ghost']) {
+            var ghost = this;
+            ghost.renderable.alpha = 0.25;
+            ghost.invincible = true;
+            setTimeout(function() { 
+                ghost.renderable.alpha = 1; 
+                ghost.invincible = false; 
+            }, 1500);
+        }
+
 
         if (me.input.isKeyPressed('shoot')) {
             if (!this.isWeaponCoolDown && me.input.isKeyPressed('shoot')) {
@@ -147,7 +160,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
         if (stateChanged) {
             game.socket.emit('updatePlayerState', { x: this.pos.x, y: this.pos.y }, state);
         }
-
+        this.state = {};
         //check for collisions
         var res = me.game.collide(this);
 

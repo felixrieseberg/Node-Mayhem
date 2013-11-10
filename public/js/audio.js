@@ -9,8 +9,6 @@
             console.log("Audio manager init");
         },
         playBackgroundMusic: function (enabled) {
-            console.log("Playing background music");
-            // Playing background music as defined in resources.js
             if (enabled) {
                 me.audio.playTrack("backgroundmusic1", .5 * game.data.volume);
             } else if (enabled === false) {
