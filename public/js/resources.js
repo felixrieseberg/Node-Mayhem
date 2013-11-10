@@ -11,6 +11,7 @@ game.resources = [
 
   /* Map */
   { name: "testmap", type: "tmx", src: "data/map/map.tmx" },
+  { name: "beachmap", type: "tmx", src: "data/map/beachmap.tmx" },
   { name: "middleearth", type: "tmx", src: "data/map/middleearth.tmx" },
   { name: "tilemap", type: "image", src: "data/map/tilemap.png" },
   { name: "tileset", type: "image", src: "data/map/tileset.png" },
