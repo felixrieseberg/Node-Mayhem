@@ -1,0 +1,88 @@
+html {
+  background-color: #e2e2e2;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  background-image: url('/img/wild_oliva.png');
+  background-color: #fff;
+  color: #333;
+  font-size: .85em;
+  font-family: 'Open Sans', "Segoe UI", Verdana, Helvetica, Sans-Serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body:before 
+{ 
+   content: "";
+   position: fixed;
+   top: -10px;
+   left: 0;
+   width: 100%;
+   height: 10px;
+   z-index: 100;
+   -webkit-box-shadow: 0px 0px 10px rgba(0,0,0,.8);
+   -moz-box-shadow: 0px 0px 10px rgba(0,0,0,.8);
+   box-shadow: 0px 0px 10px rgba(0,0,0,.8);
+}
+
+.wrapper {
+    height: 100%;
+    
+    /* flexbox, por favor */
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+ 
+    display: -moz-box;
+    -moz-box-orient: horizontal;
+    -moz-box-pack: center;
+    -moz-box-align: center;
+  
+    display: box;
+    box-orient: horizontal;
+    box-pack: center;
+    box-align: center;
+    
+    display: -ms-flexbox;
+    -ms-box-orient: horizontal;
+    -ms-box-pack: center;
+    -ms-box-align: center;
+}
+
+#screen {
+    background-image: url('/img/title.png');
+    background-repeat: no-repeat;
+    background-position: top;
+    height: 723px;
+    
+    /* flexbox, por favor */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: end;
+    -webkit-box-align: end;
+ 
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-pack: end;
+    -moz-box-align: end;
+  
+    display: box;
+    box-orient: vertical;
+    box-pack: end;
+    box-align: end;
+    
+    display: -ms-flexbox;
+    -ms-box-orient: vertical;
+    -ms-box-pack: end;
+    -ms-box-align: end;    
+}
+
+#screen.canvas {
+    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    -moz-box-shadow: 0 1px 2px rgba(34,25,25,0.4);
+    -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+}
