@@ -99,9 +99,16 @@ var game = {
     me.game.remove(enemy);
     delete this.players[data.id];
   },
+  'remotePlayerHealthChanged': function (data) {
+    if (!data.id || !this.players[data.id]) { return; }
+    this.game.players[data.id].health = data.health;
+  },
   'killPlayer': function (id) {
     if (!id || !this.players[id]) { return; }
+    this.socket.emit('resetPlayer');
+    this.mainPlayer = {};
     me.game.remove(this.players[id]);
+    delete this.players[id];
   },
   'hitPlayer': function (id) {
     if (!id || !this.players[id]) { return; }
@@ -112,10 +119,11 @@ var game = {
 
     if(id === game.mainPlayer.id) {
       game.data.health--;
-    }
-    
-    if (player.health <= 0) {
-      game.killPlayer(id);
+      this.socket.emit('playerHit', { id: id, health: player.health });
+
+      if (player.health <= 0) {
+        game.killPlayer(id);
+      }
     }
   },
   'addEnemy': function (data) {

@@ -71,6 +71,22 @@ io.on('connection', function(socket) {
     playerActive();
     socket.broadcast.emit('fireBullet', id, source, target);
   });
+
+  socket.on('playerHit', function(data) {
+    console.log(data);
+    socket.broadcast.emit('playerHit', data);
+  });
+
+  socket.on('resetPlayer', function() {
+    player = { id: socket.id, z: 4, p: { x: 8 * 48, y: 2 * 48 } };
+    socket.broadcast.emit('removePlayer', player.id);
+    socket.broadcast.emit('addPlayer', player);
+    socket.emit('addMainPlayer', player);
+  });
+
+  socket.on('playerHealed', function(data) {
+    socket.broadcast.emit('playerHealed', data);
+  });
 });
 
 server.listen(app.get('port'), function() {

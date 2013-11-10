@@ -1252,6 +1252,10 @@ window.me = window.me || {};
 		 * <strong>WARNING</strong>: Not safe to force asynchronously (e.g. onCollision callbacks)
 		 */
 		api.remove = function(obj, force) {
+			if(!obj) {
+				console.log('OBJ', obj);
+				return;
+			}
 			if (obj.ancestor) {
 				// remove the object from the object list
 				if (force===true) {

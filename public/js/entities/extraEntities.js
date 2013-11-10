@@ -5,7 +5,6 @@ game.CrateEntity = me.CollectableEntity.extend({
   },
 
   onCollision: function (res, obj) {
-    console.log(obj);
     if (obj.type != game.MAIN_PLAYER_OBJECT) {
       this.collidable = false;
       me.game.remove(this);
@@ -56,15 +55,25 @@ game.MedpackEntity = me.CollectableEntity.extend({
   onCollision: function (res, obj) {
     //only collected by player
     if (obj.type == game.MAIN_PLAYER_OBJECT) {
+      console.log('PLAYER HEALED');
       this.collidable = false;
       // remove it
       me.game.remove(this);
       obj.health++;
       game.data.health++;
-      console.log(game.data.health);
+      if(game.data.health > 5) {
+        game.data.health = 5;
+      }
+      if(obj.health > 5) {
+        obj.health = 5;
+      }
+      game.socket.emit('playerHealed', { id: obj.id, health: game.data.health });
+    } else if (obj.type == game.ENEMY_OBJECT) {
+      console.log('ENEMY HEALED');
+      me.game.remove(this);
     }
     else {
-      console.log("not player");
+      console.log("CWTFOMGBBQ!");
     }
   }
 });

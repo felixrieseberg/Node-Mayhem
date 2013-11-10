@@ -59,7 +59,6 @@ html
         });
         
         socket.on('addMainPlayer', function (data) {
-          console.log(data);
           game.addMainPlayer(data);
         });
 
@@ -75,6 +74,14 @@ html
         
         socket.on('updatePlayerState', function(data) {
           game.updatePlayerState(data);
+        });
+
+        socket.on('remotePlayerHit', function(data) {
+          game.remotePlayerHealthChanged(data);
+        });
+
+        socket.on('remotePlayerHealed', function(data) {
+          game.remotePlayerHealthChanged(data);
         });
 
         socket.on('fireBullet', function(id, source, target) {
