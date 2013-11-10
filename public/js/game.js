@@ -24,7 +24,6 @@ var game = {
       }
       me.input.registerPointerEvent('mousemove', me.game.viewport, function(e) {
         game.mouseTarget = { x: e.gameWorldX, y: e.gameWorldY };
-        console.log(e);
       });
       me.audio.init('mp3,ogg');
       me.loader.onload = this.loaded.bind(this);
