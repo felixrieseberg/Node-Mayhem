@@ -31,6 +31,10 @@ var game = {
       me.state.set(me.state.MENU, new game.TitleScreen());
       me.state.set(me.state.PLAY, new game.PlayScreen());
 
+      //Audio
+      audioMngr = new audioManager();
+      audioMngr.playBackgroundMusic(true);
+
       // debug
       me.debug.renderHitBox = true;
 
