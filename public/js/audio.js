@@ -7,6 +7,7 @@
 
             //me.audio.init('ogg');
             console.log("Audio manager init");
+            audioManager.playBackgroundMusic(true);
         },
         playBackgroundMusic: function (enabled) {
             if (enabled) {
