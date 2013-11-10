@@ -38,8 +38,7 @@ var game = {
       me.state.set(me.state.PLAY, new game.PlayScreen());
 
       //Audio
-      audioMngr = new audioManager();
-      audioMngr.playBackgroundMusic(true);
+      audioManager.playBackgroundMusic(true);
 
       // debug
       me.debug.renderHitBox = true;
