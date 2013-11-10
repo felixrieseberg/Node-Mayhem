@@ -38,6 +38,7 @@
             } else {
                 console.log("Unmuting!");
                 me.audio.enable();
+                audioManager.playBackgroundMusic(true);
                 document.getElementById("soundSwitch").textContent = "DISABLE ALL SOUNDS";
             }
         },
