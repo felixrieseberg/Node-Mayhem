@@ -24,6 +24,7 @@ game.resources = [
   { name: "plowed_soil", type: "image", src: "data/map/tilesets/plowed_soil.png" },
   { name: "youngwheat", type: "image", src: "data/map/tilesets/youngwheat.png" },
   { name: "grass", type: "image", src: "data/map/tilesets/grass.png" },
+  { name: "fence", type: "image", src: "data/map/tilesets/fence.png" },
 
   /* Audio files */
   {name: "backgroundmusic1", type: "audio", src: "data/bgm/", channel: 2 },
