@@ -24,15 +24,13 @@ game.HUD.Container = me.ObjectContainer.extend({
 		this.name = "HUD";
 		
 		// add our child score object at the top left corner
-		this.addChild(new game.HUD.ScoreItem(600, 550));
+		this.addChild(new game.HUD.ScoreItem(1180, 20));
+        this.addChild(new game.HUD.HealthItem(20, 20));
 	}
 });
 
-
-/** 
- * a basic HUD item to display score
- */
-game.HUD.ScoreItem = me.Renderable.extend({
+// Health
+game.HUD.HealthItem = me.Renderable.extend({
     /** 
     * constructor
     */
@@ -44,7 +42,7 @@ game.HUD.ScoreItem = me.Renderable.extend({
 
         // create a font
         this.font = new me.BitmapFont("32x32_font", 32);
-        this.font.set("center");
+        this.font.set("left");
         //this.font = new me.Font("Lucida Console", 20, "white", "center");
 
         // local copy of the global score
@@ -72,7 +70,54 @@ game.HUD.ScoreItem = me.Renderable.extend({
     */
     draw: function (context) {
         // draw it baby !
-        this.font.draw(context, "HEALTH " + "100" + " SCORE " + "1000", this.pos.x, this.pos.y);
+        this.font.draw(context, "$$$$$", this.pos.x, this.pos.y);
+        //console.log("Drawing score");
+    }
+
+});
+
+// Score
+game.HUD.ScoreItem = me.Renderable.extend({
+    /** 
+    * constructor
+    */
+    init: function (x, y) {
+
+        // call the parent constructor 
+        // (size does not matter here)
+        this.parent(new me.Vector2d(x, y), 10, 10);
+
+        // create a font
+        this.font = new me.BitmapFont("32x32_font", 32);
+        this.font.set("right");
+        //this.font = new me.Font("Lucida Console", 20, "white", "center");
+
+        // local copy of the global score
+        this.score = -1;
+
+        // make sure we use screen coordinates
+        this.floating = true;
+    },
+
+    /**
+    * update function
+    */
+    update: function () {
+        // we don't draw anything fancy here, so just
+        // return true if the score has been updated
+        if (this.score !== game.data.score) {
+            this.score = game.data.score;
+            return true;
+        }
+        return false;
+    },
+
+    /**
+    * draw the score
+    */
+    draw: function (context) {
+        // draw it baby !
+        this.font.draw(context, "12345", this.pos.x, this.pos.y);
         //console.log("Drawing score");
     }
 
