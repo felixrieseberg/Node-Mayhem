@@ -1,51 +1,65 @@
 game.NetworkPlayerEntity = me.CollectableEntity.extend({
-    init: function (x, y, settings) {
-        this.parent(x, y, settings);
+  init: function (x, y, settings) {
+    this.parent(x, y, settings);
+    this.gravity = 0;
+    this.step = 0;
+    this.id = settings.id;
+    this.health = 3;
 
-        this.gravity = 0;
+    this.isCollidable = true;
+    this.type = game.ENEMY_OBJECT;
 
-        this.step = 0;
+    this.renderable.addAnimation('run-down', [0, 4, 8, 12], 1);
+    this.renderable.addAnimation('run-left', [1, 5, 9, 13], 1);
+    this.renderable.addAnimation('run-up', [2, 6, 10, 14], 1);
+    this.renderable.addAnimation('run-right', [3, 7, 11, 15], 1);
+    this.renderable.addAnimation('hit', [0, 1, 2, 3], 1);
+    this.renderable.setCurrentAnimation('run-down');
+    // set the default horizontal & vertical speed (accel vector)
+    this.setVelocity(4, 4);
+    this.state = {};
+  },
 
-        this.isCollidable = true;
-        this.type = game.ENEMY_OBJECT;
-
-        this.renderable.addAnimation('run-down', [0,4,8,12], 1);
-        this.renderable.addAnimation('run-left', [1,5,9,13], 1);
-        this.renderable.addAnimation('run-up', [2,6,10,14], 1);
-        this.renderable.addAnimation('run-right', [3,7,11,15], 1);
-        this.renderable.addAnimation('hit', [0,1,2,3], 1);
-        this.renderable.setCurrentAnimation('run-down');
-        // set the default horizontal & vertical speed (accel vector)
-        this.setVelocity(4, 4);
-        this.state = {};
-    },
-
-    update: function () {
-        this.vel.x = 0;
-        this.vel.y = 0;
-        if(!Object.keys(this.state).length) {
-            return false;
-        }
-
-        if (this.state['left']) {
-            this.renderable.setCurrentAnimation('run-left');
-        }
-
-        if (this.state['right']) {
-            this.renderable.setCurrentAnimation('run-right');
-        }
-
-        if (this.state['up']) {
-            this.renderable.setCurrentAnimation('run-up');
-        }
-
-        if (this.state['down']) {
-            this.renderable.setCurrentAnimation('run-down');
-        }
-
-        this.state = {};
-        return true;
+  update: function () {
+    this.vel.x = 0;
+    this.vel.y = 0;
+    if (!Object.keys(this.state).length) {
+      return false;
     }
+
+    if(this.state['ghost']) {
+        var ghost = this;
+        ghost.renderable.alpha = 0.25;
+        ghost.invincible = true;
+        setTimeout(function() { 
+            ghost.renderable.alpha = 1; 
+            ghost.invincible = false; 
+        }, 1500);
+    }
+
+    if (this.state['left']) {
+        this.renderable.setCurrentAnimation('run-left');
+    }
+
+    if (this.state['left']) {
+      this.renderable.setCurrentAnimation('run-left');
+    }
+
+    if (this.state['right']) {
+      this.renderable.setCurrentAnimation('run-right');
+    }
+
+    if (this.state['up']) {
+      this.renderable.setCurrentAnimation('run-up');
+    }
+
+    if (this.state['down']) {
+      this.renderable.setCurrentAnimation('run-down');
+    }
+
+    this.state = {};
+    return true;
+  }
 });
 
 game.PlayerEntity = me.ObjectEntity.extend({
@@ -174,16 +188,16 @@ game.BulletEntity = me.ObjectEntity.extend({
        me.game.remove(bullet);
     }
     
-    /*var bullet = this;
+    var bullet = this;
     // check for collision
     var res = me.game.collide(this);
-    if (res) {
-      // if we collide with an enemy
-      if (res.obj.type == me.game.COLLIDE_OBJECT) {
+    if (res && res.obj.type === game.ENEMY_OBJECT && !res.obj.invincible) {
         me.game.remove(bullet);
-      }
-    }*/
-
+        game.hitPlayer(res.obj.id);
+    }
+    else if (res && res.obj.type === game.COLLIDE_OBJECT) {
+        me.game.remove(bullet);
+    }
   }
 });
 
@@ -195,11 +209,10 @@ game.CrateEntity = me.CollectableEntity.extend({
 
     onCollision: function () {
         this.collidable = false;
-        // remove it
         me.game.remove(this);
 
-        var gun = me.entityPool.newInstanceOf('gun', this.pos.x, this.pos.y, {
-            image: 'gun',
+        var gun = me.entityPool.newInstanceOf('medpack', this.pos.x, this.pos.y, {
+            image: 'medpack',
             spritewidth: 48,
             spriteheight: 48
         });
@@ -233,4 +246,28 @@ game.GunEntity = me.CollectableEntity.extend({
         // remove it
         me.game.remove(this);
     }
+});
+
+game.MedpackEntity = me.CollectableEntity.extend({
+  // extending the init function is not mandatory
+  // unless you need to add some extra initialization
+  init: function (x, y, settings) {
+    // call the parent constructor
+    this.parent(x, y, settings);
+    this.type = me.game.COLLECTABLE_OBJECT;
+  },
+  onCollision: function (res, obj) {
+    //only collected by player
+    if (obj.type == game.MAIN_PLAYER_OBJECT) {
+      // do something when collected
+      console.log("got da medpack");
+      // make sure it cannot be collected "again"
+      this.collidable = false;
+      // remove it
+      me.game.remove(this);
+    }
+    else {
+      console.log("not player");
+    }
+  }
 });
