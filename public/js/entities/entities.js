@@ -104,7 +104,6 @@ game.PlayerEntity = me.ObjectEntity.extend({
             if (!this.isWeaponCoolDown && me.input.isKeyPressed('shoot')) {
                 this.isWeaponCoolDown = true;
                 var player = this;
-
                 audioManager.playSound("shoot");
 
                 setTimeout(function () { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
