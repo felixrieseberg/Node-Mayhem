@@ -5,7 +5,6 @@ game.CrateEntity = me.ObjectEntity.extend({
   },
 
   onCollision: function (res, obj) {
-    console.log("crate hit");
     if (obj.type != game.MAIN_PLAYER_OBJECT) {
       this.collidable = false;
       me.game.remove(this);
@@ -22,20 +21,14 @@ game.CrateEntity = me.ObjectEntity.extend({
 });
 
 game.RockEntity = me.ObjectEntity.extend({
-    // extending the init function is not mandatory
-    // unless you need to add some extra initialization
     init: function (x, y, settings) {
-        // call the parent constructor
         this.parent(x, y, settings);
         this.collidable = true;
         this.type = me.game.COLLIDE_OBJECT;
     }
 });
 game.GunEntity = me.CollectableEntity.extend({
-    // extending the init function is not mandatory
-    // unless you need to add some extra initialization
     init: function (x, y, settings) {
-        // call the parent constructor
         this.parent(x, y, settings);
         this.type = me.game.COLLIDE_OBJECT;
     },
@@ -46,8 +39,6 @@ game.GunEntity = me.CollectableEntity.extend({
 });
 
 game.MedpackEntity = me.CollectableEntity.extend({
-    // extending the init function is not mandatory
-    // unless you need to add some extra initialization
     init: function (x, y, settings) {
         // call the parent constructor
         this.parent(x, y, settings);
@@ -56,7 +47,6 @@ game.MedpackEntity = me.CollectableEntity.extend({
     onCollision: function (res, obj) {
         //only collected by player
         if (obj.type == game.MAIN_PLAYER_OBJECT) {
-            console.log('PLAYER HEALED');
             this.collidable = false;
             // remove it
             me.game.remove(this);
@@ -71,11 +61,7 @@ game.MedpackEntity = me.CollectableEntity.extend({
             }
             game.socket.emit('playerHealed', { id: obj.id, health: game.data.health });
         } else if (obj.type == game.ENEMY_OBJECT) {
-            console.log('ENEMY HEALED');
             me.game.remove(this);
-        }
-        else {
-            console.log("CWTFOMGBBQ!");
         }
     }
 });

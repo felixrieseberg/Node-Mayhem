@@ -53,10 +53,10 @@ io.on('connection', function(socket) {
   });
 
   function playerActive() {
-    //if(playerInactiveTimeout) {
-    //  clearTimeout(playerInactiveTimeout);
-    //}
-    //playerInactiveTimeout = setTimeout(removeInactivePlayer, 120000);
+    if(playerInactiveTimeout) {
+      clearTimeout(playerInactiveTimeout);
+    }
+    playerInactiveTimeout = setTimeout(removeInactivePlayer, 120000);
   }
 
   function removeInactivePlayer() {

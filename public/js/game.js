@@ -40,7 +40,7 @@ var game = {
     me.state.set(me.state.PLAY, new game.PlayScreen());
 
     audioManager.playBackgroundMusic(false);
-    me.debug.renderHitBox = true;
+    //me.debug.renderHitBox = true;
 
     me.entityPool.add("mainPlayer", game.PlayerEntity);
     me.entityPool.add("enemyPlayer", game.NetworkPlayerEntity);
