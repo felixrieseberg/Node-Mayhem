@@ -58,6 +58,8 @@ body:before
     background-repeat: no-repeat;
     background-position: top;
     padding-top: 73px;
+    height: 653px;
+    width: 1200px;
     
     /* flexbox, por favor */
     display: -webkit-box;
@@ -123,4 +125,54 @@ footer h3 {
     margin: 0px;
     padding: 0px;
     color: #fff;
+}
+
+#primer {
+    background-color: #6d6d6d;
+    width: 1200px;
+    height: 603px;
+}
+
+#primer #nameinput {
+    width: 350px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 200px;
+}
+
+#nameinput h2 {
+    color: #fff;
+}
+
+#nameinput input {
+    width: 200px;
+    height: 40px;
+    font-size: 20px;
+    font-family: 'Lucida Console','Open Sans', "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    text-align: center;
+}
+
+#nameinput a:link, #nameinput a:active, #nameinput a:visited {
+    font-size: 20px;
+    color: #fff;
+    width: 200px;
+    height: 40px;
+    background-color: #a32300;
+    padding: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    text-decoration: none;
+}
+
+#nameinput a:hover {
+    font-size: 20px;
+    color: #a32300;
+    width: 200px;
+    height: 40px;
+    background-color: #fff;
+    padding: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    text-decoration: none;
 }

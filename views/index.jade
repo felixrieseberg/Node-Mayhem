@@ -1,1 +1,36 @@
-extends game
+doctype 5
+html
+  head
+    title Node Mayham 
+    link(rel='stylesheet' href='/css/game.css')
+
+    meta(id='viewport', name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes')
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name='apple-mobile-web-app-status-bar-style', content='black')
+
+    script.
+        function enterGame() {
+            var playerName = document.getElementById("playerName").value;
+            if (playerName == "") {
+                document.getElementById("playerName").value = "YOUR NAME?";
+            } else {
+                window.location.href = "./game?user=" + playerName;
+            }
+        }
+
+  body
+    div(class="wrapper")
+        div(id="screen")
+            div(id="primer")
+                div#nameinput
+                    h2="Welcome, Node warrior! Please enter your name."
+                    input#playerName(type='text')
+                    br
+                    br
+                    br
+                    a(href="#", onclick="enterGame()")="Enter Game"
+    footer
+        h3="This game has been made for Node Knockout 2013 by Timothy Strimple, Helen Zeng & Felix Rieseberg"
+        small="Credits: Music (CC) by Wizwards, sound effects (CC) by timgormly"
+    
+        
