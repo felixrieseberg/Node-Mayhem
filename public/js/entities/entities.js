@@ -104,6 +104,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
             if (!this.isWeaponCoolDown && me.input.isKeyPressed('shoot')) {
                 this.isWeaponCoolDown = true;
                 var player = this;
+
                 audioManager.playSound("shoot");
 
                 setTimeout(function () { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
@@ -246,20 +247,27 @@ game.GunEntity = me.CollectableEntity.extend({
         me.game.remove(this);
     }
 });
+
 game.MedpackEntity = me.CollectableEntity.extend({
-    // extending the init function is not mandatory
-    // unless you need to add some extra initialization
-    init: function (x, y, settings) {
-        // call the parent constructor
-        this.parent(x, y, settings);
-        this.type = me.game.COLLIDE_OBJECT;
-    },
-    onCollision: function () {
-        // do something when collected
-        console.log("got da medpack");
-        // make sure it cannot be collected "again"
-        this.collidable = false;
-        // remove it
-        me.game.remove(this);
+  // extending the init function is not mandatory
+  // unless you need to add some extra initialization
+  init: function (x, y, settings) {
+    // call the parent constructor
+    this.parent(x, y, settings);
+    this.type = me.game.COLLECTABLE_OBJECT;
+  },
+  onCollision: function (res, obj) {
+    //only collected by player
+    if (obj.type == game.MAIN_PLAYER_OBJECT) {
+      // do something when collected
+      console.log("got da medpack");
+      // make sure it cannot be collected "again"
+      this.collidable = false;
+      // remove it
+      me.game.remove(this);
     }
+    else {
+      console.log("not player");
+    }
+  }
 });
