@@ -24,19 +24,19 @@
             // shoot, death, powerup, hit, explosion
             switch (effect) {
                 case "shoot":
-                    me.audio.play("shoot", false, game.data.volume);
+                    me.audio.play("shoot", false, null, game.data.volume);
                     break;
                 case "death":
-                    me.audio.play("death", false, game.data.volume);
+                    me.audio.play("death", false, null, game.data.volume);
                     break;
                 case "powerup":
-                    me.audio.play("powerup", false, game.data.volume);
+                    me.audio.play("powerup", false, null, game.data.volume);
                     break;
                 case "hit":
-                    me.audio.play("hit", false, game.data.volume);
+                    me.audio.play("hit", false, null, game.data.volume);
                     break;
                 case "explosion":
-                    me.audio.play("explosion", false, game.data.volume);
+                    me.audio.play("explosion", false, null, game.data.volume);
                     break;
                 default:
                     break;
