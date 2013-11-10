@@ -1,3 +1,4 @@
+
 var game = {
   data: {
       score: 0
@@ -37,6 +38,7 @@ var game = {
       me.entityPool.add("mainPlayer", game.PlayerEntity);
       me.entityPool.add("enemyPlayer", game.NetworkPlayerEntity);
       me.entityPool.add("bullet", game.BulletEntity, true);
+      me.entityPool.add("gun", game.GunEntity, true);
       me.entityPool.add("CrateEntity", game.CrateEntity);
       // enable the keyboard
       me.input.bindKey(me.input.KEY.SPACE, 'shoot');

@@ -8,5 +8,6 @@ game.resources = [
   {name: "bullet", type:"image", src: "data/img/bullet.png"},
   {name: "tileset", type:"image", src: "data/img/tileset.png"},
   {name: "testmap", type: "tmx", src: "data/map/map.tmx"},
-  {name: "crate",  type:"image", src: "data/img/crate.png"}
+  {name: "crate",  type:"image", src: "data/img/crate.png"},
+  {name: "gun", type:"image", src: "data/img/gun.png"}
 ];
