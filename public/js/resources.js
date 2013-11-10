@@ -13,7 +13,7 @@ game.resources = [
   { name: "testmap", type: "tmx", src: "data/map/map.tmx" },
   { name: "middleearth", type: "tmx", src: "data/map/middleearth.tmx" },
   { name: "tilemap", type: "image", src: "data/map/tilemap.png" },
-  { name: "wood_tileset_3", type: "image", src: "data/img/wood_tileset_3.png" },
+  { name: "wood_tileset_3", type: "image", src: "data/map/wood_tileset_3.png" },
 
   /* Audio files */
   {name: "backgroundmusic1", type: "audio", src: "data/bgm/", channel: 2 },
