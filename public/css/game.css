@@ -101,15 +101,11 @@ footer h3 {
 }
 
 #container {
-<<<<<<< HEAD
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: -ms-fit-content;
   width: fit-content;
   margin: auto;
-=======
-  width: 100%;
->>>>>>> 0bf6b17361bc8dd065caa00d94ebfb072b801557
 }
 
 #primer {
