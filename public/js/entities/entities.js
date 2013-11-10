@@ -108,7 +108,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 audioManager.playSound("shoot");
 
                 setTimeout(function () { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
-                game.fireBullet({ x: this.pos.x + 12, y: this.pos.y + 12 }, game.mouseTarget, true);
+                game.fireBullet({ x: this.pos.x + 12, y: this.pos.y + 12 }, game.mouseTarget, game.playerId, true);
             }
         }
 
@@ -158,6 +158,7 @@ game.BulletEntity = me.ObjectEntity.extend({
     this.gravity = 0;
     this.collidable = true;
     this.canBreakTile = true;
+    this.id = settings.id;
 
     this.shotAngle = settings.angle;
     this.renderable.angle = this.shotAngle;
@@ -173,10 +174,6 @@ game.BulletEntity = me.ObjectEntity.extend({
     this.setVelocity(localTargetVector.x, localTargetVector.y);
   },
 
-  onCollision: function () {
-    console.log("Collision omgwtfbbq!");
-  },
-
   update: function () {
     this.vel.x += this.accel.x * me.timer.tick;
     this.vel.y += this.accel.y * me.timer.tick;
@@ -188,10 +185,10 @@ game.BulletEntity = me.ObjectEntity.extend({
        me.game.remove(bullet);
     }
     
-    var bullet = this;
     // check for collision
     var res = me.game.collide(this);
-    if (res && res.obj.type === game.ENEMY_OBJECT && !res.obj.invincible) {
+    console.log(res.obj.id, bullet.id);
+    if (res && res.obj.id != bullet.id && !res.obj.invincible) {
         me.game.remove(bullet);
         game.hitPlayer(res.obj.id);
     }

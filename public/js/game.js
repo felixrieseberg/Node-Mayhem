@@ -5,7 +5,7 @@ var game = {
       health: 3,
       volume: 1
   },
-
+  playerId: '',
   players: {},
   mouseTarget: {},
   gameReady: function() { console.log('default game ready'); }, 
@@ -38,7 +38,7 @@ var game = {
       me.state.set(me.state.MENU, new game.TitleScreen());
       me.state.set(me.state.PLAY, new game.PlayScreen());
 
-      audioManager.playBackgroundMusic(false);
+      audioManager.playBackgroundMusic(true);
       me.debug.renderHitBox = true;
 
       me.entityPool.add("mainPlayer", game.PlayerEntity);
@@ -67,18 +67,20 @@ var game = {
 
       setTimeout(this.gameReady);
   },
-  'fireBullet': function(source, target, broadcast) {
+  'fireBullet': function(source, target, id, broadcast) {
+    console.log("MUST HAVE ID", id);
     var obj = me.entityPool.newInstanceOf('bullet', source.x, source.y, {
         image: 'bullet',
         spritewidth: 24,
         spriteheight: 24,
-        target: target
+        target: target,
+        id: id
     });
 
     me.game.add(obj, 4);
     me.game.sort();
     if(broadcast) {
-      this.socket.emit('fireBullet', source, target);
+      this.socket.emit('fireBullet', id, source, target);
     }
   },
   'updatePlayerState': function(data) {
@@ -106,7 +108,6 @@ var game = {
     player.health--;
     player.state['ghost'] = true;
 
-    console.log(player.id, player.health);
     if(player.health <= 0) {
       game.killPlayer(id);
     }
