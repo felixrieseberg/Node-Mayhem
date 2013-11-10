@@ -20,6 +20,7 @@ game.CrateEntity = me.CollectableEntity.extend({
     }
   }
 });
+
 game.RockEntity = me.ObjectEntity.extend({
     // extending the init function is not mandatory
     // unless you need to add some extra initialization
@@ -39,11 +40,7 @@ game.GunEntity = me.CollectableEntity.extend({
         this.type = me.game.COLLIDE_OBJECT;
     },
     onCollision: function () {
-        // do something when collected
-        console.log("got da gun");
-        // make sure it cannot be collected "again"
         this.collidable = false;
-        // remove it
         me.game.remove(this);
     }
 });
@@ -59,9 +56,6 @@ game.MedpackEntity = me.CollectableEntity.extend({
   onCollision: function (res, obj) {
     //only collected by player
     if (obj.type == game.MAIN_PLAYER_OBJECT) {
-      // do something when collected
-      console.log("got da medpack");
-      // make sure it cannot be collected "again"
       this.collidable = false;
       // remove it
       me.game.remove(this);

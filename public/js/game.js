@@ -11,6 +11,7 @@ var game = {
   gameReady: function () { console.log('default game ready'); },
   MAIN_PLAYER_OBJECT: 4,
   ENEMY_OBJECT: 5,
+  mainPlayer: {},
 
   'onload': function () {
     me.sys.pauseOnBlur = false;
@@ -61,6 +62,8 @@ var game = {
     me.input.bindKey(me.input.KEY.W, 'up');
     me.input.bindKey(me.input.KEY.DOWN, 'down');
     me.input.bindKey(me.input.KEY.S, 'down');
+
+    this.mainPlayer = new 
 
     // Start the game.
     me.state.change(me.state.PLAY);
@@ -126,6 +129,20 @@ var game = {
     });
     this.players[data.id] = player;
     me.game.add(player, data.z);
+    me.game.sort();
+  },
+  'addMainPlayer': function (data) {
+    if (!data) { return; }
+
+    console.log('adding MAIN player', data);
+    this.mainPlayer = me.entityPool.newInstanceOf('mainPlayer', data.p.x, data.p.y, {
+      image: 'girl',
+      spritewidth: 48,
+      spriteheight: 48,
+      id: data.id
+    });
+    this.players[data.id] = this.mainPlayer;
+    me.game.add(this.mainPlayer, data.z);
     me.game.sort();
   }
 };
