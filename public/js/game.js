@@ -108,7 +108,7 @@ var game = {
 
     var player = this.players[id];
     player.health--;
-    player.state['hit'] = true;
+    player.state['ghost'] = true;
     console.log(player.id, player.health);
     if(player.health <= 0) {
       game.killPlayer(id);

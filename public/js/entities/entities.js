@@ -32,6 +32,16 @@ game.NetworkPlayerEntity = me.CollectableEntity.extend({
             return true;
         }
 
+        if(this.state['ghost']) {
+            var ghost = this;
+            ghost.renderable.alpha = 0.25;
+            ghost.invincible = true;
+            setTimeout(function() { 
+                ghost.renderable.alpha = 1; 
+                ghost.invincible = false; 
+            }, 1500);
+        }
+
         if (this.state['left']) {
             this.renderable.setCurrentAnimation('run-left');
         }
@@ -183,7 +193,7 @@ game.BulletEntity = me.ObjectEntity.extend({
     var bullet = this;
     // check for collision
     var res = me.game.collide(this);
-    if (res && res.obj.type === game.ENEMY_OBJECT) {
+    if (res && res.obj.type === game.ENEMY_OBJECT && !res.obj.invincible) {
         me.game.remove(bullet);
         game.hitPlayer(res.obj.id);
     }
