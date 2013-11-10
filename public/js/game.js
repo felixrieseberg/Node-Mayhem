@@ -40,7 +40,7 @@ var game = {
 
       //Audio
       audioMngr = new audioManager();
-      audioMngr.playBackgroundMusic(true);
+      audioMngr.playBackgroundMusic(false);
 
       // debug
       me.debug.renderHitBox = true;
@@ -108,6 +108,7 @@ var game = {
 
     var player = this.players[id];
     player.health--;
+    player.state['hit'] = true;
     console.log(player.id, player.health);
     if(player.health <= 0) {
       game.killPlayer(id);
