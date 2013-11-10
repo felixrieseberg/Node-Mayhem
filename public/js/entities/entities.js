@@ -163,7 +163,6 @@ game.PlayerEntity = me.ObjectEntity.extend({
     this.state = {};
     //check for collisions
     var res = me.game.collide(this);
-    //check for crate collisions
     var solidtest = this.collideType("SOLID");
     if (solidtest) {
       this.pos.x -= res.x;
