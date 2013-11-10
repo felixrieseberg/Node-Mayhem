@@ -185,7 +185,17 @@ game.BulletEntity = me.ObjectEntity.extend({
       me.game.remove(this);
     }
 
+    var bullet = this;
+    // check for collision
     var res = me.game.collide(this);
+    if (res) {
+      // if we collide with an enemy
+      if (res.obj.type == me.game.COLLIDE_OBJECT) {
+        console.log("collide object");
+        me.game.remove(bullet);
+      }
+    }
+
   }
 });
 
@@ -215,6 +225,7 @@ game.RockEntity = me.ObjectEntity.extend({
     init: function (x, y, settings) {
         // call the parent constructor
         this.parent(x, y, settings);
+        this.collidable = true;
         this.type = me.game.COLLIDE_OBJECT;
     }
 });
