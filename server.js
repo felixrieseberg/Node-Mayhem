@@ -19,7 +19,7 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
-  res.render('game');
+  res.render('index');
 });
 
 app.get('/game', function(req, res) {
