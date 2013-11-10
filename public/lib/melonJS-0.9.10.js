@@ -19,6 +19,8 @@ window.me = window.me || {};
 	// Use the correct document accordingly to window argument
 	var document = $.document;
 
+    console.log('Hello there!');
+
 	/**
 	 * me global references
 	 * @ignore
@@ -10190,7 +10192,7 @@ window.me = window.me || {};
 	    // list of supported mouse & touch events
 		var activeEventList = null;
 		var mouseEventList =   ['mousewheel', 'mousemove', 'mousedown', 'mouseup', undefined, 'click', 'dblclick'];
-		var touchEventList =   [undefined, 'touchmove', 'touchstart', 'touchend', 'touchcancel', 'tap', 'dbltap'];
+		var touchEventList =   [undefined, 'touchmove', 'touchstart', 'touchend', 'touchcancel', 'tap', 'dbltap', 'mousewheel', 'mousemove', 'mousedown', 'mouseup', undefined, 'click', 'dblclick'];
 		// (a polyfill will probably be required at some stage, once this will be fully standardized
 		var pointerEventList = ['mousewheel', 'PointerMove', 'PointerDown', 'PointerUp', 'PointerCancel', undefined, undefined ];
 		
@@ -10214,6 +10216,7 @@ window.me = window.me || {};
 		function registerEventListener(eventList, callback) {
 			for (var x = 2; x < eventList.length; ++x) {
 				if (eventList[x] !== undefined) {
+                    console.log('Registering event listener: ' + eventList[x]);
 					me.video.getScreenCanvas().addEventListener(eventList[x], callback, false);
 				}
 			}
@@ -10225,6 +10228,7 @@ window.me = window.me || {};
 		 * @ignore
 		 */
 		function enablePointerEvent() {
+            console.log('Enabling pointer events')
 			if (!pointerInitialized) {
 				// initialize mouse pos (0,0)
 				obj.changedTouches.push({ x: 0, y: 0 });
@@ -10255,6 +10259,7 @@ window.me = window.me || {};
 					registerEventListener(activeEventList, onPointerEvent);
 				} else {
                     // Regular `touch****` events for iOS/Android devices
+                    // Fix for touch-enabled devices
 				    if (me.device.touch) {
 						activeEventList = mouseEventList;
 						registerEventListener(activeEventList, onPointerEvent);
