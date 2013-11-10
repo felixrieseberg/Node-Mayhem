@@ -22,7 +22,7 @@ var game = {
               me.plugin.register.defer(debugPanel, 'debug');
           });
       }
-      me.input.registerPointerEvent('mousedown', me.game.viewport, function(e) {
+      me.input.registerPointerEvent('mousemove', me.game.viewport, function(e) {
         game.mouseTarget = { x: e.gameWorldX, y: e.gameWorldY };
         console.log(e);
       });
