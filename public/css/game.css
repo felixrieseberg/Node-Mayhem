@@ -36,6 +36,7 @@ body:before
     -webkit-box-orient:  horizontal;
     -webkit-box-pack: center;
     -webkit-box-align: center;
+    
  
     display: -moz-box;
     -moz-box-orient: horizontal;
@@ -49,44 +50,60 @@ body:before
     
     display: -ms-flexbox;
     -ms-box-orient: horizontal;
-    -ms-box-pack: center;
+    -ms-box-pack: start;
     -ms-box-align: center;
-}
-
-.wrapper #score {
-    width: 200px;
-    height: 600px;
-    background-color: #a32300;
 }
 
 #screen {
     background-image: url('/img/title.png');
     background-repeat: no-repeat;
     background-position: top;
-    padding-top: 73px;
+    padding-top: 95px;
     height: 653px;
     width: 1400px;
     
     /* flexbox, por favor */
     display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-box-pack: end;
-    -webkit-box-align: end;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
  
     display: -moz-box;
-    -moz-box-orient: vertical;
-    -moz-box-pack: end;
-    -moz-box-align: end;
+    -moz-box-orient: horizontal;
+    -moz-box-pack: center;
+    -moz-box-align:  center;
   
     display: box;
-    box-orient: vertical;
-    box-pack: end;
-    box-align: end;
+    box-orient: horizontal;
+    box-pack: center;
+    box-align: center;
     
     display: -ms-flexbox;
-    -ms-box-orient: vertical;
+    -ms-box-orient: horizontal;
     -ms-box-pack: end;
-    -ms-box-align: end;    
+    -ms-box-align: middle;    
+}
+
+#screen #score {
+    -webkit-flex-order: 1;
+    -ms-flex-order: 1;
+    -moz-flex-order: 1;
+    width: 180px;
+    height: 588px;
+    background-color: #a32300;
+    margin-top: -1px;
+    padding: 10px;
+    padding-top: 2px;
+    font-family: 'Lucida Console','Open Sans', "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    color: #fff;
+    font-weight: bold;
+}
+
+#screen canvas {
+    margin-top: 2px;
+    -webkit-flex-order: 2;
+    -ms-flex-order: 2;
+    -moz-flex-order: 2;
 }
 
 #screen #settings {
