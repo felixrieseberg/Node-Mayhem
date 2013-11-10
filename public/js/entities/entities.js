@@ -1,10 +1,10 @@
 game.NetworkPlayerEntity = me.CollectableEntity.extend({
     init: function (x, y, settings) {
         this.parent(x, y, settings);
-
         this.gravity = 0;
-
         this.step = 0;
+        this.id = settings.id;
+        this.health = 3;
 
         this.isCollidable = true;
         this.type = game.ENEMY_OBJECT;
@@ -168,16 +168,13 @@ game.BulletEntity = me.ObjectEntity.extend({
        me.game.remove(bullet);
     }
     
-    /*var bullet = this;
+    var bullet = this;
     // check for collision
     var res = me.game.collide(this);
-    if (res) {
-      // if we collide with an enemy
-      if (res.obj.type == me.game.COLLIDE_OBJECT) {
+    if (res && res.obj.type === game.ENEMY_OBJECT) {
         me.game.remove(bullet);
-      }
-    }*/
-
+        game.hitPlayer(res.obj.id);
+    }
   }
 });
 
@@ -189,7 +186,6 @@ game.CrateEntity = me.CollectableEntity.extend({
 
     onCollision: function () {
         this.collidable = false;
-        // remove it
         me.game.remove(this);
 
         var gun = me.entityPool.newInstanceOf('gun', this.pos.x, this.pos.y, {

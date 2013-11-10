@@ -10,7 +10,6 @@ var audioManager = Object.extend({
 
     },
     playBackgroundMusic: function (enabled) {
-        console.log("Playing background music");
         // Playing background music as defined in resources.js
         if (enabled) {
             me.audio.playTrack("backgroundmusic1", .5);
