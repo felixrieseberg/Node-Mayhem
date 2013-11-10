@@ -15,6 +15,7 @@ var game = {
 
     'onload': function () {
         me.sys.pauseOnBlur = false;
+        me.sys.fps = 120;
         if (!me.video.init('screen', 1200, 600, true)) {
             alert('Your browser does not support HTML5 canvas.');
             return;
