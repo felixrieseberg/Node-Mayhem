@@ -4,10 +4,6 @@ html
     title Node Mayhem 
     link(rel='stylesheet' href='/css/game.css')
 
-    meta(id='viewport', name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes')
-    meta(name='apple-mobile-web-app-capable', content='yes')
-    meta(name='apple-mobile-web-app-status-bar-style', content='black')
-
     script(src='lib/melonJS-0.9.10.js')
     script(src='lib/plugins/debugPanel.js')
     script(src='js/mp.js')
@@ -23,6 +19,23 @@ html
     script(src='/socket.io/socket.io.js')
 
   body
+    h1#title Node Mayhem
+    #settings
+        a#musicSwitch(href="#", onclick="audioManager.switchMusic()")="DISABLE MUSIC"
+        a#soundSwitch(href="#", onclick="audioManager.switchMute()")="DISABLE ALL SOUND"
+    #screen
+    #score
+        h4="PLAYERS"
+        ul#individualScores
+    footer
+        h3="This game has been made for Node Knockout 2013 by Timothy Strimple, Helen Zeng & Felix Rieseberg"
+        p(style='font-size:10px;')="Credits: Music (CC) by Wizwards, sound effects (CC) by timgormly"
+        p(style='font-size:10px;')
+          span Art CC from OpenGameArt
+          a(href="http://lpc.opengameart.org/")="LPC, "
+          a(href="http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects")=" Zabin, Daneeklu, Jetrel, Hyptosis, Redshrike, Bertram, "          
+          a(href="http://opengameart.org/users/prozi")="and Prozi"
+
     script.
       function createUUID() {
         // http://www.ietf.org/rfc/rfc4122.txt
@@ -116,6 +129,7 @@ html
 
         socket.on('removePlayer', function (id) {
           if(game.playerId == id) {
+            alert('omgwtfbbq');
             window.location = '/';
           }
           game.removeEnemy({ id: id });
@@ -151,25 +165,3 @@ html
           game.fireBullet(source, target, id);
         });
       });
-
-    div(class="wrapper")
-        div(id="screen")
-            div#score
-                h4="YOU ARE PLAYING WITH "
-                ul#individualScores
-            //div#settings
-                a#musicSwitch(href="#", onclick="audioManager.switchMusic()")="DISABLE MUSIC"
-                a#soundSwitch(href="#", onclick="audioManager.switchMute()")="DISABLE ALL SOUND"
-                br
-    footer
-        h3="This game has been made for Node Knockout 2013 by Timothy Strimple, Helen Zeng & Felix Rieseberg"
-        p(style='font-size:10px;')="Credits: Music (CC) by Wizwards, sound effects (CC) by timgormly"
-        p(style='font-size:10px;')
-          span Art CC from OpenGameArt
-          a(href="http://lpc.opengameart.org/")="LPC, "
-          a(href="http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects")=" Zabin, Daneeklu, Jetrel, Hyptosis, Redshrike, Bertram, "          
-          a(href="http://opengameart.org/users/prozi")="and Prozi"
-        
-        
-    
-        
