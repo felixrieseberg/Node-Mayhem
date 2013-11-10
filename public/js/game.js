@@ -50,6 +50,7 @@ var game = {
       me.entityPool.add("enemyPlayer", game.NetworkPlayerEntity);
       me.entityPool.add("bullet", game.BulletEntity, true);
       me.entityPool.add("gun", game.GunEntity, true);
+      me.entityPool.add("medpack", game.MedpackEntity, true);
       me.entityPool.add("CrateEntity", game.CrateEntity);
       me.entityPool.add("RockEntity", game.RockEntity);
       // enable the keyboard
@@ -109,6 +110,7 @@ var game = {
     var player = this.players[id];
     player.health--;
     player.state['hit'] = true;
+    player.renderable.flicker(100);
     console.log(player.id, player.health);
     if(player.health <= 0) {
       game.killPlayer(id);
