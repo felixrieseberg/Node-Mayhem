@@ -43,8 +43,9 @@ game.HUD.ScoreItem = me.Renderable.extend({
         this.parent(new me.Vector2d(x, y), 10, 10);
 
         // create a font
-        //this.font = new me.BitmapFont("32x32_font", 32);
-        this.font = new me.Font("Consolas", 20, "white", "center");
+        this.font = new me.BitmapFont("32x32_font", 32);
+        this.font.set("center");
+        //this.font = new me.Font("Lucida Console", 20, "white", "center");
 
         // local copy of the global score
         this.score = -1;
@@ -71,7 +72,7 @@ game.HUD.ScoreItem = me.Renderable.extend({
     */
     draw: function (context) {
         // draw it baby !
-        this.font.draw(context, "♥ " + "100" + " SCORE " + "1000", this.pos.x, this.pos.y);
+        this.font.draw(context, "HEALTH " + "100" + " SCORE " + "1000", this.pos.x, this.pos.y);
         //console.log("Drawing score");
     }
 
