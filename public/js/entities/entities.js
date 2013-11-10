@@ -92,7 +92,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 var player = this;
 
                 var amgr = new audioManager();
-                audioManager.playSound("shoot");
+                amgr.playSound("shoot");
 
                 setTimeout(function () { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
                 game.fireBullet({ x: this.pos.x + 12, y: this.pos.y + 12 }, game.mouseTarget, true);
