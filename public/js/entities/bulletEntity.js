@@ -35,7 +35,7 @@ game.BulletEntity = me.ObjectEntity.extend({
     var res = me.game.collide(this);
     if (res && res.obj.id != bullet.id && !res.obj.invincible) {
         me.game.remove(bullet);
-        game.hitPlayer(res.obj.id);
+        game.hitPlayer(bullet.id, res.obj.id);
     }
     else if (res && res.obj.type === game.COLLIDE_OBJECT) {
         me.game.remove(bullet);

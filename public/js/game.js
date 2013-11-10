@@ -110,20 +110,24 @@ var game = {
     me.game.remove(this.players[id]);
     delete this.players[id];
   },
-  'hitPlayer': function (id) {
-    if (!id || !this.players[id]) { return; }
+  'hitPlayer': function (sourceId, targetId) {
+    if (!targetId || !this.players[targetId]) { return; }
 
-    var player = this.players[id];
+    var player = this.players[targetId];
     player.health--;
     player.state['ghost'] = true;
 
-    if(id === game.mainPlayer.id) {
+    if(targetId === game.mainPlayer.id) {
       game.data.health--;
-      this.socket.emit('playerHit', { id: id, health: player.health });
+      this.socket.emit('playerHit', { id: targetId, health: player.health });
 
       if (player.health <= 0) {
-        game.killPlayer(id);
+        game.killPlayer(targetId);
       }
+    }
+
+    if(game.mainPlayer.id == sourceId) {
+      this.socket.emit('scoreHit');
     }
   },
   'addEnemy': function (data) {
