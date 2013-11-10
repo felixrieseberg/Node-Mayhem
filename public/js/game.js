@@ -2,7 +2,8 @@
 var game = {
   data: {
       score: 0,
-      health: 3
+      health: 3,
+      volume: 10
   },
 
   players: {},
@@ -23,9 +24,8 @@ var game = {
               me.plugin.register.defer(debugPanel, 'debug');
           });
       }
-      me.input.registerPointerEvent('mousedown', me.game.viewport, function(e) {
+      me.input.registerPointerEvent('mousemove', me.game.viewport, function(e) {
         game.mouseTarget = { x: e.gameWorldX, y: e.gameWorldY };
-        console.log(e);
       });
       me.audio.init('mp3,ogg');
       me.loader.onload = this.loaded.bind(this);
