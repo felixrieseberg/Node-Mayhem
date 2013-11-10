@@ -1,4 +1,0 @@
-Express server listening on port \\.\pipe\d1e036d4-48d1-4ef7-8d41-68af6c612989
-[90mGET / [32m200 [90m1292ms - 294b[0m
-[90mGET /css/style.css [33m404 [90m9ms[0m
-[90mGET /game [32m200 [90m147ms - 1.33kb[0m
