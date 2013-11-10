@@ -50,10 +50,10 @@ io.on('connection', function(socket) {
   });
 
   function playerActive() {
-    if(window.playerInactiveTimeout) {
-      clearTimeout(window.playerInactiveTimeout);
+    if(playerInactiveTimeout) {
+      clearTimeout(playerInactiveTimeout);
     }
-    window.playerInactiveTimeout = setTimeout(removeInactivePlayer, 120000);
+    playerInactiveTimeout = setTimeout(removeInactivePlayer, 120000);
   }
 
   function removeInactivePlayer() {
