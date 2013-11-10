@@ -31,8 +31,7 @@ var server = http.createServer(app);
 var io = socketio.listen(server);
 
 var players = {};
-var idMap = {};
-
+io.set('log level', 0);
 io.on('connection', function(socket) {
   var playerInactiveTimeout;
   socket.on('gameReady', function(data) {
@@ -58,7 +57,6 @@ io.on('connection', function(socket) {
   }
 
   function removeInactivePlayer() {
-    console.log('removing player');
     io.sockets.emit('removePlayer', socket.sessionId);
     delete players[socket.sessionId];
   }

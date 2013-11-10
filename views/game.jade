@@ -142,7 +142,6 @@ html
         });
 
         socket.on('fireBullet', function(id, source, target) {
-          console.log('REMOTE FIRE', id);
           game.fireBullet(source, target, id);
         });
       });
