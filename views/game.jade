@@ -23,13 +23,13 @@ html
   body
     #container
       h1#title Node Mayhem
-      #settings
-          a#musicSwitch(href="#", onclick="audioManager.switchMusic()")="DISABLE MUSIC"
-          a#soundSwitch(href="#", onclick="audioManager.switchMute()")="DISABLE ALL SOUND"
       #screen
       #score
           h4="PLAYERS"
           ul#individualScores
+          a#musicSwitch(href="#", onclick="audioManager.switchMusic()")="DISABLE MUSIC"
+          br
+          a#soundSwitch(href="#", onclick="audioManager.switchMute()")="DISABLE SOUND"
     footer
         h3="This game has been made for Node Knockout 2013 by Timothy Strimple, Helen Zeng & Felix Rieseberg"
         p(style='font-size:10px;')="Credits: Music (CC) by Wizwards, sound effects (CC) by timgormly"
