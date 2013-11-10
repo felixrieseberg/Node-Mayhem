@@ -33,7 +33,7 @@ var io = socketio.listen(server);
 var players = {};
 io.set('log level', 0);
 io.on('connection', function(socket) {
-  var playerInactiveTimeout;
+  socket.playerInactiveTimeout = null;
   socket.on('gameReady', function(data) {
     socket.sessionId = data.id;
     socket.playerName = data.name;
@@ -50,10 +50,10 @@ io.on('connection', function(socket) {
   });
 
   function playerActive() {
-    if(window.playerInactiveTimeout) {
-      clearTimeout(window.playerInactiveTimeout);
+    if(socket.playerInactiveTimeout) {
+      clearTimeout(socket.playerInactiveTimeout);
     }
-    window.playerInactiveTimeout = setTimeout(removeInactivePlayer, 120000);
+    socket.playerInactiveTimeout = setTimeout(removeInactivePlayer, 120000);
   }
 
   function removeInactivePlayer() {
