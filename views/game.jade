@@ -18,22 +18,26 @@ html
     script(src='js/entities/HUD.js')
     script(src='js/screens/title.js')
     script(src='js/screens/play.js')
+    script(src='/socket.io/socket.io.js')
 
   body
     script.
       window.onReady(function onReady() {
+        var socket = io.connect();
+        game.socket = socket;
+        game.gameReady = function() {
+          socket.emit('gameReady');
+        }
+
         game.onload();
 
-        // Mobile browser hacks
         if (me.device.isMobile && !navigator.isCocoonJS) {
-          // Prevent the webview from moving on a swipe
           window.document.addEventListener("touchmove", function (e) {
             e.preventDefault();
             window.scroll(0, 0);
             return false;
           }, false);
 
-          // Scroll away mobile GUI
           (function () {
             window.scrollTo(0, 1);
             me.video.onresize(null);
@@ -43,6 +47,29 @@ html
             window.scrollTo(0, 1);
           });
         }
+        
+        socket.on('addPlayer', function (data) {
+          console.log('adding new player', data);
+          game.addEnemy(data);
+        });
+
+        socket.on('removePlayer', function (id) {
+          game.removeEnemy({ id: id });
+        });
+
+        socket.on('addPlayers', function(players) {
+          for(var id in players) {
+            game.addEnemy(players[id]);
+          }
+        });
+        
+        socket.on('updatePlayerState', function(data) {
+          game.updatePlayerState(data);
+        });
+
+        socket.on('fireBullet', function(source, target) {
+          game.fireBullet(source, target);
+        });
       });
     div(class="wrapper")
         div(id="screen")
