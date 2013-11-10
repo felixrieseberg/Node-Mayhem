@@ -163,15 +163,13 @@ game.PlayerEntity = me.ObjectEntity.extend({
     this.state = {};
     //check for collisions
     var res = me.game.collide(this);
-    if (res) {
-      // if we collide with an crate
-      if (res.obj.name == "crateentity") {
-        console.log("bounce");
-        this.vel.x -= this.accel.x * me.timer.tick;
-        this.vel.y -= this.accel.y * me.timer.tick;
-      }
+    //check for crate collisions
+    var solidtest = this.collideType("SOLID");
+    if (solidtest) {
+      this.pos.x -= res.x;
+      this.pos.y -= res.y;
+      if (res.x) this.vel.x = 0;
+      if (res.y) this.vel.y = 0;
     }
-
-    return true;
   }
 });

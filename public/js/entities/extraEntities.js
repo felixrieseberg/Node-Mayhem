@@ -1,10 +1,11 @@
-game.CrateEntity = me.CollectableEntity.extend({
+game.CrateEntity = me.ObjectEntity.extend({
   init: function (x, y, settings) {
     this.parent(x, y, settings);
-    this.type = me.game.COLLIDE_OBJECT;
+    this.type = "SOLID";
   },
 
   onCollision: function (res, obj) {
+    console.log("crate hit");
     if (obj.type != game.MAIN_PLAYER_OBJECT) {
       this.collidable = false;
       me.game.remove(this);
