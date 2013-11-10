@@ -27,6 +27,11 @@ game.NetworkPlayerEntity = me.CollectableEntity.extend({
             return false;
         }
 
+        if (this.state['hit']) {
+            this.renderable.setCurrentAnimation('hit');
+            return true;
+        }
+
         if (this.state['left']) {
             this.renderable.setCurrentAnimation('run-left');
         }
