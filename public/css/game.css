@@ -97,6 +97,10 @@ footer h3 {
     color: #fff;
 }
 
+#container {
+  width: 900px;
+}
+
 #primer {
     background-color: #6d6d6d;
     width: 1400px;
