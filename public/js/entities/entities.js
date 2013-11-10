@@ -170,5 +170,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
       if (res.x) this.vel.x = 0;
       if (res.y) this.vel.y = 0;
     }
+
+    return true;
   }
 });
