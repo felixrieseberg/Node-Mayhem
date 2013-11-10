@@ -180,22 +180,24 @@ game.BulletEntity = me.ObjectEntity.extend({
     this.vel.y += this.accel.y * me.timer.tick;
     this.computeVelocity(this.vel);
     this.updateMovement();
-
+    var bullet = this;
     if (!this.renderable.visible) {
       clearTimeout(this.timeout);
       me.game.remove(this);
     }
     var res = me.game.collide(this);
+    console.log(res);
     if (res) {
       // if we collide with an enemy
       if (res.obj.type == me.game.COLLIDE_OBJECT) {
         console.log("collide object");
+        me.game.remove(bullet);
       }
     }
   }
 
 });
-game.CrateEntity = me.CollectableEntity.extend({
+game.CrateEntity = me.ObjectEntity.extend({
     // extending the init function is not mandatory
     // unless you need to add some extra initialization
     init: function (x, y, settings) {
@@ -216,3 +218,14 @@ game.CrateEntity = me.CollectableEntity.extend({
     }
 
 });
+game.RockEntity = me.ObjectEntity.extend({
+    // extending the init function is not mandatory
+    // unless you need to add some extra initialization
+    init: function (x, y, settings) {
+        // call the parent constructor
+        this.parent(x, y, settings);
+        this.type = me.game.COLLIDE_OBJECT;
+    },
+
+});
+
