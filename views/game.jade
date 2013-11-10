@@ -1,13 +1,13 @@
 doctype 5
 html
   head
-    title melonJS Template
+    title Node Mayham 
     link(rel='stylesheet' href='/css/game.css')
-    meta(id='viewport', name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+
+    meta(id='viewport', name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='black')
-  body
-    #screen
+
     script(src='lib/melonJS-0.9.10-min.js')
     script(src='lib/plugins/debugPanel.js')
     script(src='js/mp.js')
@@ -19,6 +19,7 @@ html
     script(src='js/screens/play.js')
     script(src='/socket.io/socket.io.js')
 
+  body
     script.
       window.onReady(function onReady() {
         var socket = io.connect();
@@ -69,3 +70,5 @@ html
           game.fireBullet(source, target);
         });
       });
+    div(class="wrapper")
+        div(id="screen")
