@@ -234,8 +234,6 @@ game.GunEntity = me.CollectableEntity.extend({
         me.game.remove(this);
     }
 });
-<<<<<<< HEAD
-=======
 game.MedpackEntity = me.CollectableEntity.extend({
   // extending the init function is not mandatory
   // unless you need to add some extra initialization
@@ -259,4 +257,3 @@ game.MedpackEntity = me.CollectableEntity.extend({
     }
   }
 });
->>>>>>> medpacks are for humans
