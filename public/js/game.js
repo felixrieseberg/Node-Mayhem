@@ -97,6 +97,21 @@ var game = {
     me.game.remove(enemy);
     delete this.players[data.id];
   },
+  'killPlayer': function(id) {
+    if(!id || !this.players[id]) { return; }
+    me.game.remove(this.players[id]);
+  },
+  'hitPlayer': function(id) {
+    if(!id || !this.players[id]) { return; }
+
+    var player = this.players[id];
+    player.health--;
+    player.state['hit'] = true;
+    console.log(player.id, player.health);
+    if(player.health <= 0) {
+      game.killPlayer(id);
+    }
+  },
   'addEnemy': function(data) {
     if(!data || this.players[data.id]) { return; }
 
