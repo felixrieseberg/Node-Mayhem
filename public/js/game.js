@@ -71,7 +71,6 @@ var game = {
     setTimeout(this.gameReady);
   },
   'fireBullet': function(source, target, id, broadcast) {
-    console.log("MUST HAVE ID", id);
     var obj = me.entityPool.newInstanceOf('bullet', source.x, source.y, {
         image: 'bullet',
         spritewidth: 24,
@@ -109,10 +108,12 @@ var game = {
 
     var player = this.players[id];
     player.health--;
-    game.data.health--;
     player.state['ghost'] = true;
 
-    console.log(player.id, player.health);
+    if(id === game.mainPlayer.id) {
+      game.data.health--;
+    }
+    
     if (player.health <= 0) {
       game.killPlayer(id);
     }
@@ -134,13 +135,13 @@ var game = {
   'addMainPlayer': function (data) {
     if (!data) { return; }
 
-    console.log('adding MAIN player', data);
     this.mainPlayer = me.entityPool.newInstanceOf('mainPlayer', data.p.x, data.p.y, {
       image: 'girl',
       spritewidth: 48,
       spriteheight: 48,
       id: data.id
     });
+
     this.players[data.id] = this.mainPlayer;
     me.game.add(this.mainPlayer, data.z);
     me.game.sort();

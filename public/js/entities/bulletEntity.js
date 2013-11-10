@@ -33,8 +33,8 @@ game.BulletEntity = me.ObjectEntity.extend({
     
     // check for collision
     var res = me.game.collide(this);
-    console.log(res.obj.id, bullet.id);
     if (res && res.obj.id != bullet.id && !res.obj.invincible) {
+        console.log(res.obj.id, bullet.id);
         me.game.remove(bullet);
         game.hitPlayer(res.obj.id);
     }

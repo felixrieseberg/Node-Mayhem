@@ -18,9 +18,6 @@ window.me = window.me || {};
 (function($) {
 	// Use the correct document accordingly to window argument
 	var document = $.document;
-
-    console.log('Hello there!');
-
 	/**
 	 * me global references
 	 * @ignore
@@ -10218,7 +10215,6 @@ window.me = window.me || {};
 		function registerEventListener(eventList, callback) {
 			for (var x = 2; x < eventList.length; ++x) {
 				if (eventList[x] !== undefined) {
-                    console.log('Registering event listener: ' + eventList[x]);
 					me.video.getScreenCanvas().addEventListener(eventList[x], callback, false);
 				}
 			}
@@ -10230,7 +10226,6 @@ window.me = window.me || {};
 		 * @ignore
 		 */
 		function enablePointerEvent() {
-            console.log('Enabling pointer events')
 			if (!pointerInitialized) {
 				// initialize mouse pos (0,0)
 				obj.changedTouches.push({ x: 0, y: 0 });
