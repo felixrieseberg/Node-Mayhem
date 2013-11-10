@@ -45,35 +45,36 @@ game.GunEntity = me.CollectableEntity.extend({
 });
 
 game.MedpackEntity = me.CollectableEntity.extend({
-  // extending the init function is not mandatory
-  // unless you need to add some extra initialization
-  init: function (x, y, settings) {
-    // call the parent constructor
-    this.parent(x, y, settings);
-    this.type = me.game.COLLECTABLE_OBJECT;
-  },
-  onCollision: function (res, obj) {
-    //only collected by player
-    if (obj.type == game.MAIN_PLAYER_OBJECT) {
-      console.log('PLAYER HEALED');
-      this.collidable = false;
-      // remove it
-      me.game.remove(this);
-      obj.health++;
-      game.data.health++;
-      if(game.data.health > 5) {
-        game.data.health = 5;
-      }
-      if(obj.health > 5) {
-        obj.health = 5;
-      }
-      game.socket.emit('playerHealed', { id: obj.id, health: game.data.health });
-    } else if (obj.type == game.ENEMY_OBJECT) {
-      console.log('ENEMY HEALED');
-      me.game.remove(this);
+    // extending the init function is not mandatory
+    // unless you need to add some extra initialization
+    init: function (x, y, settings) {
+        // call the parent constructor
+        this.parent(x, y, settings);
+        this.type = me.game.COLLECTABLE_OBJECT;
+    },
+    onCollision: function (res, obj) {
+        //only collected by player
+        if (obj.type == game.MAIN_PLAYER_OBJECT) {
+            console.log('PLAYER HEALED');
+            this.collidable = false;
+            // remove it
+            me.game.remove(this);
+            audioManager.playSound("powerup");
+            obj.health++;
+            game.data.health++;
+            if (game.data.health > 5) {
+                game.data.health = 5;
+            }
+            if (obj.health > 5) {
+                obj.health = 5;
+            }
+            game.socket.emit('playerHealed', { id: obj.id, health: game.data.health });
+        } else if (obj.type == game.ENEMY_OBJECT) {
+            console.log('ENEMY HEALED');
+            me.game.remove(this);
+        }
+        else {
+            console.log("CWTFOMGBBQ!");
+        }
     }
-    else {
-      console.log("CWTFOMGBBQ!");
-    }
-  }
 });
