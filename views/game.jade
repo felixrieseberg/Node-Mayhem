@@ -27,7 +27,6 @@ html
         game.socket = socket;
         game.gameReady = function() {
           socket.emit('gameReady');
-          game.addEnemy({id: 123, p: { x: 333, y: 333 }, z: 4});
         }
 
         game.onload();
@@ -48,6 +47,11 @@ html
             window.scrollTo(0, 1);
           });
         }
+
+        socket.on('playerId', function(playerId) {
+          game.playerId = playerId;
+          me.game.mainPlayer.id = playerId;
+        });
         
         socket.on('addPlayer', function (data) {
           game.addEnemy(data);
@@ -67,8 +71,9 @@ html
           game.updatePlayerState(data);
         });
 
-        socket.on('fireBullet', function(source, target) {
-          game.fireBullet(source, target);
+        socket.on('fireBullet', function(id, source, target) {
+          console.log('REMOTE FIRE', id);
+          game.fireBullet(source, target, id);
         });
       });
 

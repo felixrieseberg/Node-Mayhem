@@ -38,6 +38,7 @@ io.on('connection', function(socket) {
     var player = { id: socket.id, z: 4, p: { x: 8 * 48, y: 2 * 48 } };
     socket.broadcast.emit('addPlayer', player);
     socket.emit('addPlayers', players);
+    socket.emit('playerId', socket.id);
     players[socket.id] = player;
     playerActive();
   });
@@ -65,9 +66,9 @@ io.on('connection', function(socket) {
     socket.broadcast.emit('updatePlayerState', { id: socket.id, p: position, s: state });
   }); 
 
-  socket.on('fireBullet', function(source, target) {
+  socket.on('fireBullet', function(id, source, target) {
     playerActive();
-    socket.broadcast.emit('fireBullet', source, target);
+    socket.broadcast.emit('fireBullet', id, source, target);
   });
 });
 
