@@ -13,11 +13,16 @@ var audioManager = Object.extend({
         console.log("Playing background music");
         // Playing background music as defined in resources.js
         if (enabled) {
-            me.audio.playTrack("backgroundmusic1");
+            me.audio.playTrack("backgroundmusic1", .5);
         } else if (enabled === false) {
             me.audio.pauseTrack();
         } else {
             me.audio.playTrack("backgroundmusic1");
         }
     }
+
+    playShotSound: function() {
+        me.audio.play
+    }
+
 });
