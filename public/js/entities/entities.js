@@ -179,7 +179,7 @@ game.BulletEntity = me.ObjectEntity.extend({
       me.game.remove(this);
     }
 
-    var bullet = this;
+    /*var bullet = this;
     // check for collision
     var res = me.game.collide(this);
     if (res) {
@@ -187,7 +187,7 @@ game.BulletEntity = me.ObjectEntity.extend({
       if (res.obj.type == me.game.COLLIDE_OBJECT) {
         me.game.remove(bullet);
       }
-    }
+    }*/
 
   }
 });
