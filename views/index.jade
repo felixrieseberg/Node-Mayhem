@@ -19,18 +19,18 @@ html
         }
 
   body
-    div(class="wrapper")
-        div(id="screen")
-            div(id="primer")
-                div#nameinput
-                    h2="Welcome, Node warrior! Please enter your name."
-                    input#playerName(type='text')
-                    br
-                    br
-                    br
-                    a(href="#", onclick="enterGame()")="Enter Game"
+    h1#title Node Mayhem
+    #nameinput
+        h2="Welcome, Node warrior! Please enter your name."
+        input#playerName(type='text')
+        a(href="#", onclick="enterGame()")="Enter Game"
     footer
         h3="This game has been made for Node Knockout 2013 by Timothy Strimple, Helen Zeng & Felix Rieseberg"
-        small="Credits: Music (CC) by Wizwards, sound effects (CC) by timgormly"
+        p(style='font-size:10px;')="Credits: Music (CC) by Wizwards, sound effects (CC) by timgormly"
+        p(style='font-size:10px;')
+          span Art CC from OpenGameArt
+          a(href="http://lpc.opengameart.org/")="LPC, "
+          a(href="http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects")=" Zabin, Daneeklu, Jetrel, Hyptosis, Redshrike, Bertram, "          
+          a(href="http://opengameart.org/users/prozi")="and Prozi"
     
         

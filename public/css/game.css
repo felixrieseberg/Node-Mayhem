@@ -4,6 +4,12 @@ html {
   padding: 0;
   height: 100%;
 }
+
+#title {
+  margin-top: 0px;
+  color: white;
+}
+
 body {
   background-image: url('/img/wild_oliva.png');
   background-color: #fff;
@@ -13,108 +19,49 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-}
-body:before 
-{ 
-   content: "";
-   position: fixed;
-   top: -10px;
-   left: 0;
-   width: 100%;
-   height: 10px;
-   z-index: 100;
-   -webkit-box-shadow: 0px 0px 10px rgba(0,0,0,.8);
-   -moz-box-shadow: 0px 0px 10px rgba(0,0,0,.8);
-   box-shadow: 0px 0px 10px rgba(0,0,0,.8);
+  width: 100%;
 }
 
 .wrapper {
     height: 90%;
-    
-    /* flexbox, por favor */
-    display: -webkit-box;
-    -webkit-box-orient:  horizontal;
-    -webkit-box-pack: center;
-    -webkit-box-align: center;
-    
- 
-    display: -moz-box;
-    -moz-box-orient: horizontal;
-    -moz-box-pack: center;
-    -moz-box-align: center;
-  
-    display: box;
-    box-orient: horizontal;
-    box-pack: center;
-    box-align: center;
-    
-    display: -ms-flexbox;
-    -ms-box-orient: horizontal;
-    -ms-box-pack: start;
-    -ms-box-align: center;
 }
 
-#screen {
-    background-image: url('/img/title.png');
-    background-repeat: no-repeat;
-    background-position: top;
-    padding-top: 95px;
-    height: 653px;
-    width: 1400px;
-    
-    /* flexbox, por favor */
-    display: -webkit-box;
-    -webkit-box-orient: horizontal;
-    -webkit-box-pack: center;
-    -webkit-box-align: center;
- 
-    display: -moz-box;
-    -moz-box-orient: horizontal;
-    -moz-box-pack: center;
-    -moz-box-align:  center;
-  
-    display: box;
-    box-orient: horizontal;
-    box-pack: center;
-    box-align: center;
-    
-    display: -ms-flexbox;
-    -ms-box-orient: horizontal;
-    -ms-box-pack: end;
-    -ms-box-align: middle;    
-}
-
-#screen #score {
-    -webkit-flex-order: 1;
-    -ms-flex-order: 1;
-    -moz-flex-order: 1;
+#score {
+    float: left;
     width: 180px;
-    height: 588px;
+    min-height: 284px;
     background-color: #a32300;
     margin-top: -1px;
-    padding: 10px;
-    padding-top: 2px;
+    padding: 8px;
     font-family: 'Lucida Console','Open Sans', "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #fff;
     font-weight: bold;
 }
 
-#screen canvas {
-    margin-top: 2px;
-    -webkit-flex-order: 2;
-    -ms-flex-order: 2;
-    -moz-flex-order: 2;
+#score h4 {
+  margin: 0px;
 }
 
-#screen #settings {
+#screen {
+  margin: 0px 20px;
+  clear: left;
+  float: left;
+}
+
+#title {
+  float: left;
+}
+
+#settings {
+    float: left;
     height: 42px;
     margin-top: 8px;
-    padding-right: 30px;
+    margin-left: 300px;
 }
 
 #settings #musicSwitch:link, settings #musicSwitch:active, 
-#settings #musicSwitch:visited, #screen #soundSwitch:link,
-#screen #soundSwitch:active, #screen #soundSwitch:visited {
+#settings #musicSwitch:visited, #soundSwitch:link,
+#soundSwitch:active, #soundSwitch:visited {
     background-color: #a32300;
     color: #fff;
     margin: 2px;
@@ -122,7 +69,7 @@ body:before
     text-decoration: none;
 }
 
-#settings #musicSwitch:hover, #screen #soundSwitch:hover {
+#settings #musicSwitch:hover, #soundSwitch:hover {
     background-color: #fff;
     color: #a32300;
     margin: 2px;
@@ -138,9 +85,9 @@ body:before
 /* Footer */
 
 footer {
+  clear: both;
     text-align: center;
-    margin: 0px;
-    padding: 0px;
+    padding: 40px 0px 0px 0px;
     color: #e2e2e2;
 }
 
@@ -156,12 +103,12 @@ footer h3 {
     height: 603px;
 }
 
-#primer #nameinput {
+#nameinput {
+    clear: left;
     width: 350px;
-    text-align: center;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 200px;
+    text-align: center;
 }
 
 #nameinput h2 {
@@ -169,6 +116,7 @@ footer h3 {
 }
 
 #nameinput input {
+  display: inline-block;
     width: 200px;
     height: 40px;
     font-size: 20px;
@@ -177,25 +125,20 @@ footer h3 {
 }
 
 #nameinput a:link, #nameinput a:active, #nameinput a:visited {
-    font-size: 20px;
-    color: #fff;
-    width: 200px;
-    height: 40px;
-    background-color: #a32300;
-    padding: 10px;
-    padding-left: 40px;
-    padding-right: 40px;
-    text-decoration: none;
+  margin-top: 12px;
+  display: inline-block;
+  width: 200px;
+  font-size: 20px;
+  color: #fff;
+  width: 200px;
+  height: 40px;
+  background-color: #a32300;
+  padding: 8px 3px 0px 3px;
+  text-align: center;
+  text-decoration: none;
 }
 
 #nameinput a:hover {
-    font-size: 20px;
     color: #a32300;
-    width: 200px;
-    height: 40px;
     background-color: #fff;
-    padding: 10px;
-    padding-left: 40px;
-    padding-right: 40px;
-    text-decoration: none;
 }
