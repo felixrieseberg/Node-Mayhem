@@ -53,13 +53,19 @@ body:before
     -ms-box-align: center;
 }
 
+.wrapper #score {
+    width: 200px;
+    height: 600px;
+    background-color: #a32300;
+}
+
 #screen {
     background-image: url('/img/title.png');
     background-repeat: no-repeat;
     background-position: top;
     padding-top: 73px;
     height: 653px;
-    width: 1200px;
+    width: 1400px;
     
     /* flexbox, por favor */
     display: -webkit-box;
@@ -129,7 +135,7 @@ footer h3 {
 
 #primer {
     background-color: #6d6d6d;
-    width: 1200px;
+    width: 1400px;
     height: 603px;
 }
 

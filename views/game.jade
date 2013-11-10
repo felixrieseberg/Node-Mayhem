@@ -60,6 +60,11 @@ html
         return null;
       }
 
+      function getParameterByName(name) {
+        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+      }
+
       function eraseCookie(name) {
         createCookie(name,"",-1);
       }
@@ -74,7 +79,8 @@ html
         var socket = io.connect();
         game.socket = socket;
         game.gameReady = function() {
-          socket.emit('gameReady', { id: sessionId, name: 'joe bob' });
+          socket.emit('gameReady', { id: sessionId, name: getParameterByName("user") });
+          console.log('Username: ' + getParameterByName("user"));
         }
 
         game.onload();
@@ -156,6 +162,8 @@ html
         }
       }
     div(class="wrapper")
+        div#score
+            small="Hello"
         div(id="screen")
             div#settings
                 a#musicSwitch(href="#", onclick="audioManager.switchMusic()")="DISABLE MUSIC"
