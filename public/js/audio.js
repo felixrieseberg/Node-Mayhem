@@ -19,10 +19,29 @@ var audioManager = Object.extend({
         } else {
             me.audio.playTrack("backgroundmusic1");
         }
-    }
+    },
 
-    playShotSound: function() {
-        me.audio.play
+    playSound: function (effect) {
+        // shoot, death, powerup, hit, explosion
+        switch (effect) {
+            case "shoot":
+                me.audio.play("shoot", false);
+                break;
+            case "death":
+                me.audio.play("death", false);
+                break;
+            case "powerup":
+                me.audio.play("powerup", false);
+                break;
+            case "hit":
+                me.audio.play("hit", false);
+                break;
+            case "explosion":
+                me.audio.play("explosion", false);
+                break;
+            default:
+                break;
+        }
     }
 
 });
