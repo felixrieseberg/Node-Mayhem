@@ -91,6 +91,10 @@ footer {
     color: #e2e2e2;
 }
 
+footer a:link, footer a:active, footer a:visited, footer a:hover {
+    color: #e2e2e2;
+}
+
 footer h3 {
     margin: 0px;
     padding: 0px;
