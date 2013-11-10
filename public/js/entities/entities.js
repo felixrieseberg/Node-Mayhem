@@ -1,149 +1,152 @@
-/*------------------- 
-a player entity
--------------------------------- */
-game.PlayerEntity = me.ObjectEntity.extend({
-
+game.NetworkPlayerEntity = me.CollectableEntity.extend({
     init: function (x, y, settings) {
         this.parent(x, y, settings);
 
         this.gravity = 0;
-        this.isWeaponCoolDown = false;
-        this.weaponCoolDownTime = 500;
 
-        // set up multiplayer
-        this.isMP = settings.isMP;
         this.step = 0;
 
-        // set up mouseCoordinates
-        game.felix_mouseX = 0;
-        game.felix_mouseY = 0;
-
         this.isCollidable = true;
-        this.type = game.MAIN_PLAYER_OBJECT;
+        this.type = game.ENEMY_OBJECT;
 
-        this.renderable.addAnimation('run-down', [0,1,2,3], 1);
-        this.renderable.addAnimation('run-left', [4,5,6,7], 1);
-        this.renderable.addAnimation('run-up', [8,9,10,11], 1);
-        this.renderable.addAnimation('run-right', [12,13,14,15], 1);
+        this.renderable.addAnimation('run-down', [0,4,8,12], 1);
+        this.renderable.addAnimation('run-left', [1,5,9,13], 1);
+        this.renderable.addAnimation('run-up', [2,6,10,14], 1);
+        this.renderable.addAnimation('run-right', [3,7,11,15], 1);
         this.renderable.setCurrentAnimation('run-down');
         // set the default horizontal & vertical speed (accel vector)
         this.setVelocity(4, 4);
-
-        // set the display to follow our position on both axis
-        if (!this.isMP) {
-            me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
-
-            window.onmousemove = this.handleMouseMove;
-
-        }
+        this.state = {};
     },
+
+    update: function () {
+        this.vel.x = 0;
+        this.vel.y = 0;
+        if(!Object.keys(this.state).length) {
+            return false;
+        }
+        console.log(this.state);
+
+        if (this.state['left']) {
+            this.renderable.setCurrentAnimation('run-left');
+            this.vel.x -= this.accel.x * me.timer.tick;
+        }
+
+        if (this.state['right']) {
+            this.renderable.setCurrentAnimation('run-right');
+            this.vel.x += this.accel.x * me.timer.tick;
+        }
+
+        if (this.state['up']) {
+            this.renderable.setCurrentAnimation('run-up');
+            this.vel.y = -this.accel.y * me.timer.tick;
+        }
+
+        if (this.state['down']) {
+            this.renderable.setCurrentAnimation('run-down');
+            this.vel.y = this.accel.y * me.timer.tick;
+        }
+
+        this.updateMovement();
+        this.state = {};
+        return true;
+    }
+});
+
+game.PlayerEntity = me.ObjectEntity.extend({
+    init: function (x, y, settings) {
+    this.parent(x, y, settings);
+
+    this.gravity = 0;
+    this.isWeaponCoolDown = false;
+    this.weaponCoolDownTime = 500;
+
+    // set up multiplayer
+    this.isMP = settings.isMP;
+    this.step = 0;
+
+    // set up mouseCoordinates
+    game.mouseTarget = { x: 0, y: 0 };
+
+    this.isCollidable = true;
+    this.type = game.MAIN_PLAYER_OBJECT;
+
+    this.renderable.addAnimation('run-down', [0,1,2,3], 1);
+    this.renderable.addAnimation('run-left', [4,5,6,7], 1);
+    this.renderable.addAnimation('run-up', [8,9,10,11], 1);
+    this.renderable.addAnimation('run-right', [12,13,14,15], 1);
+    this.renderable.setCurrentAnimation('run-down');
+    // set the default horizontal & vertical speed (accel vector)
+    this.setVelocity(4, 4);
+
+    me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+    window.onmousemove = this.handleMouseMove;
+},
 
     handleMouseMove: function (event) {
         event = event || window.event; // IE-ism
-        // event.clientX and event.clientY contain the mouse position
-        game.felix_mouseX = event.clientX;
-        game.felix_mouseY = event.clientY;
+        game.mouseTarget.x = event.clientX;
+        game.mouseTarget.y = event.clientY;
     },
-
-    /* -----
- 
-    update the player pos
- 
-    ------ */
     update: function () {
+        this.vel.x = 0;
+        this.vel.y = 0;
 
-        if (!this.isMP) {
-            this.vel.x = 0;
-            this.vel.y = 0;
+        if (me.input.isKeyPressed('shoot')) {
+            if (!this.isWeaponCoolDown && me.input.isKeyPressed('shoot')) {
+                this.isWeaponCoolDown = true;
+                var player = this;
+                setTimeout(function () { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
 
-            if (me.input.isKeyPressed('shoot')) {
+                var pos = me.input.globalToLocal(game.mouseTarget.x, game.mouseTarget.y);
 
-                if (!this.isWeaponCoolDown && me.input.isKeyPressed('shoot')) {
-                    this.isWeaponCoolDown = true;
-                    var player = this;
-                    setTimeout(function () { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
-
-                    var pos = me.input.globalToLocal(game.felix_mouseX, game.felix_mouseY);
-                    var anglePlayerToBullet = this.angleToPoint(pos);
-                    
-                    var obj = me.entityPool.newInstanceOf('bullet', this.pos.x + 12, this.pos.y + 12, {
-                        image: 'bullet',
-                        spritewidth: 24,
-                        spriteheight: 24,
-                        angle: anglePlayerToBullet,
-                        target: pos
-                    });
-
-                    me.game.add(obj, this.z);
-                    me.game.sort();
-                }
+                game.fireBullet({ x: this.pos.x + 12, y: this.pos.y + 12 }, pos, true);
             }
-
-            if (me.input.isKeyPressed('left')) {
-                // update the entity velocity
-                this.renderable.setCurrentAnimation('run-left');
-                this.vel.x -= this.accel.x * me.timer.tick;
-            }
-
-            if (me.input.isKeyPressed('right')) {
-                // update the entity velocity
-                this.renderable.setCurrentAnimation('run-right');
-                this.vel.x += this.accel.x * me.timer.tick;
-            }
-
-            if (me.input.isKeyPressed('up')) {
-                // TODO: New sprite level
-                // update the entity velocity
-                this.renderable.setCurrentAnimation('run-up');
-                this.vel.y = -this.accel.y * me.timer.tick;
-            }
-
-            if (me.input.isKeyPressed('down')) {
-                // TODO: New sprite level
-                // update the entity velocity
-                this.renderable.setCurrentAnimation('run-down');
-                this.vel.y = this.accel.y * me.timer.tick;
-            }
-
-            // check & update player movement
-            this.updateMovement();
-
-            // Multiplayer: Fix player position
-            if (this.vel.x !== 0 || this.vel.y !== 0) {
-                // Whatever we need to do hee
-            }
-
-            // Multiplayer: Let's communicate our new position
-            if (!this.isMP) { // Check if it's time to send a message 
-                if (this.step == 0) {
-                    game.mp.sendMessage({
-                        action: 'update',
-                        pos: {
-                            x: this.pos.x,
-                            y: this.pos.y
-                        },
-                        vel: {
-                            x: this.vel.x,
-                            y: this.vel.y
-                        }
-                    });
-                }
-                if (this.step++ > 3) this.step = 0;
-            }
-
-            // update animation if necessary
-            return true;
         }
-    }
 
+        var stateChanged = false;
+        var state = {};
+        if (me.input.isKeyPressed('left')) {
+            this.renderable.setCurrentAnimation('run-left');
+            this.vel.x -= this.accel.x * me.timer.tick;
+            state['left'] = true;
+            stateChanged = true;
+        }
+
+        if (me.input.isKeyPressed('right')) {
+            this.renderable.setCurrentAnimation('run-right');
+            this.vel.x += this.accel.x * me.timer.tick;
+            state['right'] = true;
+            stateChanged = true;
+        }
+
+        if (me.input.isKeyPressed('up')) {
+            this.renderable.setCurrentAnimation('run-up');
+            this.vel.y = -this.accel.y * me.timer.tick;
+            state['up'] = true;
+            stateChanged = true;
+        }
+
+        if (me.input.isKeyPressed('down')) {
+            this.renderable.setCurrentAnimation('run-down');
+            this.vel.y = this.accel.y * me.timer.tick;
+            state['down'] = true;
+            stateChanged = true;
+        }
+
+        this.updateMovement();
+
+        if(stateChanged) {
+            game.socket.emit('updatePlayerState', { x: this.pos.x, y: this.pos.y }, state);
+        }
+
+        return true;
+    }
 });
 
 game.BulletEntity = me.ObjectEntity.extend({
-
   init: function (x, y, settings) {
-    // call the constructor
     this.parent(x, y, settings);
-    // disable gravity
     this.gravity = 0;
     this.collidable = true;
     this.canBreakTile = true;
@@ -164,17 +167,13 @@ game.BulletEntity = me.ObjectEntity.extend({
     var bullet = this;
     this.timeout = setTimeout(function () {
       me.game.remove(bullet);
-      console.log('bullet timed out');
     }, 1500);
-
-    // check for direction
-    // this.direction = settings.direction;
   },
+
   onCollision: function () {
     console.log("Collision omgwtfbbq!");
   },
 
-  // Update bullet position
   update: function () {
     this.vel.x += this.accel.x * me.timer.tick;
     this.vel.y += this.accel.y * me.timer.tick;
@@ -185,34 +184,19 @@ game.BulletEntity = me.ObjectEntity.extend({
       clearTimeout(this.timeout);
       me.game.remove(this);
     }
-    var res = me.game.collide(this);
-    if (res) {
-      // if we collide with an enemy
-      if (res.obj.type == me.game.COLLIDE_OBJECT) {
-        console.log("collide object");
-      }
-    }
-  }
 
+    var res = me.game.collide(this);
+  }
 });
+
 game.CrateEntity = me.CollectableEntity.extend({
-    // extending the init function is not mandatory
-    // unless you need to add some extra initialization
     init: function (x, y, settings) {
-        // call the parent constructor
         this.parent(x, y, settings);
         this.type = me.game.COLLIDE_OBJECT;
     },
 
-    // this function is called by the engine, when
-    // an object is touched by something (here collected)
     onCollision: function () {
-        // do something when collected
-        console.log("hit crate");
-        // make sure it cannot be collected "again"
         this.collidable = false;
-        // remove it
         me.game.remove(this);
     }
-
 });
