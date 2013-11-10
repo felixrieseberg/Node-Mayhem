@@ -148,6 +148,9 @@ game.PlayerEntity = me.ObjectEntity.extend({
             game.socket.emit('updatePlayerState', { x: this.pos.x, y: this.pos.y }, state);
         }
 
+        //check for collisions
+        var res = me.game.collide(this);
+
         return true;
     }
 });
@@ -202,23 +205,26 @@ game.BulletEntity = me.ObjectEntity.extend({
 });
 
 game.CrateEntity = me.CollectableEntity.extend({
-    init: function (x, y, settings) {
-        this.parent(x, y, settings);
-        this.type = me.game.COLLIDE_OBJECT;
-    },
+  init: function (x, y, settings) {
+    this.parent(x, y, settings);
+    this.type = me.game.COLLIDE_OBJECT;
+  },
 
-    onCollision: function () {
-        this.collidable = false;
-        me.game.remove(this);
+  onCollision: function (res, obj) {
+    console.log(obj);
+    if (obj.type != game.MAIN_PLAYER_OBJECT) {
+      this.collidable = false;
+      me.game.remove(this);
 
-        var gun = me.entityPool.newInstanceOf('medpack', this.pos.x, this.pos.y, {
-            image: 'medpack',
-            spritewidth: 48,
-            spriteheight: 48
-        });
-        me.game.add(gun, this.z);
-        me.game.sort();
+      var medpack = me.entityPool.newInstanceOf('medpack', this.pos.x, this.pos.y, {
+        image: 'medpack',
+        spritewidth: 48,
+        spriteheight: 48
+      });
+      me.game.add(medpack, this.z);
+      me.game.sort();
     }
+  }
 });
 game.RockEntity = me.ObjectEntity.extend({
     // extending the init function is not mandatory
@@ -265,6 +271,9 @@ game.MedpackEntity = me.CollectableEntity.extend({
       this.collidable = false;
       // remove it
       me.game.remove(this);
+      obj.health++;
+      game.data.health++;
+      console.log(game.data.health);
     }
     else {
       console.log("not player");
