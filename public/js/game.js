@@ -1,7 +1,8 @@
 
 var game = {
   data: {
-      score: 0
+      score: 0,
+      health: 3
   },
 
   players: {},
