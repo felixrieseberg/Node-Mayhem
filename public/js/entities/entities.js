@@ -74,14 +74,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
     this.setVelocity(4, 4);
 
     me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
-    window.onmousemove = this.handleMouseMove;
 },
-
-    handleMouseMove: function (event) {
-        event = event || window.event; // IE-ism
-        game.mouseTarget.x = event.clientX;
-        game.mouseTarget.y = event.clientY;
-    },
     update: function () {
         this.vel.x = 0;
         this.vel.y = 0;
@@ -91,8 +84,8 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 this.isWeaponCoolDown = true;
                 var player = this;
                 setTimeout(function () { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
-
-                var pos = me.input.globalToLocal(game.mouseTarget.x, game.mouseTarget.y);
+                var local = me.input.globalToLocal(me.input.mouse.pos.x, me.input.mouse.pos.y);
+                var world = me.game.viewport.localToWorld(local.x, local.y);
 
                 game.fireBullet({ x: this.pos.x + 12, y: this.pos.y + 12 }, pos, true);
             }
