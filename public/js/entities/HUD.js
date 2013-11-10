@@ -70,7 +70,23 @@ game.HUD.HealthItem = me.Renderable.extend({
     */
     draw: function (context) {
         // draw it baby !
-        this.font.draw(context, "$$$$$", this.pos.x, this.pos.y);
+        var playerHealth;
+
+        if (game.data.health == 5) {
+            playerHealth = "$$$$$";
+        } else if (game.data.health == 4) {
+            playerHealth = "$$$$";
+        } else if (game.data.health == 3) {
+            playerHealth = "$$$";
+        } else if (game.data.health == 2) {
+            playerHealth = "$$";
+        } else if (game.data.health == 1) {
+            playerHealth = "$";
+        } else if (game.data.health == 0) {
+            playerHealth = "";
+        }
+
+        this.font.draw(context, playerHealth, this.pos.x, this.pos.y);
         //console.log("Drawing score");
     }
 
