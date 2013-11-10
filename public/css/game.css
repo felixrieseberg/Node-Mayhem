@@ -93,10 +93,15 @@ footer {
     text-align: center;
     margin: 0px;
     padding: 0px;
+    color: #e2e2e2;
+}
+
+footer a:link, footer a:hover, footer a:active, footer a:visited {
+    color: #e2e2e2;
 }
 
 footer h3 {
     margin: 0px;
     padding: 0px;
-    color: #e2e2e2;
+    color: #fff;
 }
