@@ -152,20 +152,12 @@ html
         });
       });
 
-      var audioOn = true;
-      function switchSound() {
-        if (audioOn == true) {
-            me.audio.muteAll()
-            document.getElementById("soundSwitch").text = "Enable Sound";
-        } else {
-            me.audio.unmuteAll()
-        }
-      }
     div(class="wrapper")
-        div#score
-            small="Hello"
         div(id="screen")
-            div#settings
+            div#score
+                h4="YOU ARE PLAYING WITH "
+                ul#individualScores
+            //div#settings
                 a#musicSwitch(href="#", onclick="audioManager.switchMusic()")="DISABLE MUSIC"
                 a#soundSwitch(href="#", onclick="audioManager.switchMute()")="DISABLE ALL SOUND"
                 br
