@@ -55,7 +55,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
         this.isWeaponCoolDown = false;
         this.weaponCoolDownTime = 500;
 
-        // set up health
+        // set up health (top 3, bottom 0)
         this.health = 3;
 
         // set up multiplayer
