@@ -31,6 +31,7 @@ var server = http.createServer(app);
 var io = socketio.listen(server);
 
 var players = {};
+var highScores = {};
 io.set('log level', 0);
 io.on('connection', function(socket) {
   var playerInactiveTimeout;
@@ -40,12 +41,14 @@ io.on('connection', function(socket) {
     if(players[data.id]) {
       removeInactivePlayer();
     }
-    var player = { id: data.id, z: 4, health: 3, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
+    var player = { id: data.id, z: 4, health: 3, score: 0, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
+    highScores[data.id] = { name: socket.playerName, score: 0 };
     socket.broadcast.emit('addPlayer', player);
-    socket.emit('addPlayers', players);
-    socket.emit('addMainPlayer', player);
-    socket.emit('playerId', data.id);
     players[data.id] = player;
+    socket.emit('playerId', data.id);
+    socket.emit('addMainPlayer', player);
+    socket.emit('addPlayers', players);
+    io.sockets.emit('highScores', highScores);
     playerActive();
   });
 
@@ -87,11 +90,12 @@ io.on('connection', function(socket) {
     }
     player.score = player.score ? player.score + 100 : 100;
     socket.emit('score', player.score);
-    socket.broadcast.emit('playerScore', { id: player.id, score: player.score });
+    highScores[player.id] = { name: player.n, score: player.score };
+    io.sockets.emit('highScores', highScores);
   });
 
   socket.on('resetPlayer', function() {
-    player = { id: socket.sessionId, z: 4, health: 3, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
+    player = { id: socket.sessionId, z: 4, score: 0, health: 3, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
     socket.broadcast.emit('removePlayer', player.id);
     socket.broadcast.emit('addPlayer', player);
     socket.emit('addMainPlayer', player);
