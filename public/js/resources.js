@@ -10,6 +10,7 @@ game.resources = [
   { name: "testmap", type: "tmx", src: "data/map/map.tmx" },
   { name: "crate", type: "image", src: "data/img/crate.png" },
   { name: "gun", type: "image", src: "data/img/gun.png" },
+  { name: "medpack", type: "image", src: "data/img/medpack.png" },
 
   /* Audio files */
   {name: "backgroundmusic1", type: "audio", src: "data/bgm/", channel: 2 },
