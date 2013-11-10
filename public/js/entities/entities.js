@@ -85,9 +85,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 var player = this;
 
                 setTimeout(function () { player.isWeaponCoolDown = false; }, this.weaponCoolDownTime);
-                var local = me.input.globalToLocal(me.input.mouse.pos.x, me.input.mouse.pos.y);
-                var world = me.game.viewport.localToWorld(local.x, local.y);
-                game.fireBullet({ x: this.pos.x + 12, y: this.pos.y + 12 }, world, true);
+                game.fireBullet({ x: this.pos.x + 12, y: this.pos.y + 12 }, game.mouseTarget, true);
             }
         }
 
