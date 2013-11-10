@@ -52,29 +52,28 @@ body {
   float: left;
 }
 
+#individualScores {
+    margin-bottom: 50px;
+}
+
 #settings {
-    float: left;
     height: 42px;
-    margin-top: 8px;
-    margin-left: 300px;
 }
 
-#settings #musicSwitch:link, settings #musicSwitch:active, 
-#settings #musicSwitch:visited, #soundSwitch:link,
+#soundSwitch, #musicSwitch {
+    margin-top: 10px;
+}
+
+#musicSwitch:link, #musicSwitch:active, 
+#musicSwitch:visited, #soundSwitch:link,
 #soundSwitch:active, #soundSwitch:visited {
-    background-color: #a32300;
     color: #fff;
-    margin: 2px;
-    padding: 5px;
     text-decoration: none;
 }
 
-#settings #musicSwitch:hover, #soundSwitch:hover {
-    background-color: #fff;
-    color: #a32300;
-    margin: 2px;
-    padding: 5px;
-    text-decoration: none;
+#musicSwitch:hover, #soundSwitch:hover {
+    color: #fff;
+    text-decoration: underline;
 }
 
 #settings a:active, #settings a:visited {
@@ -102,7 +101,11 @@ footer h3 {
 }
 
 #container {
-  width: 900px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: -ms-fit-content;
+  width: fit-content;
+  margin: auto;
 }
 
 #primer {
