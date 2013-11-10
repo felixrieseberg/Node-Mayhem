@@ -86,6 +86,10 @@ var game = {
     }
   },
   'updatePlayerState': function (data) {
+    //  data.id
+    //  data.score
+  },
+  'updatePlayerState': function (data) {
     var player = this.players[data.id];
     if (player) {
       player.state = data.s;
