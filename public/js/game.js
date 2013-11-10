@@ -43,7 +43,7 @@ var game = {
         me.entityPool.add("mainPlayer", game.PlayerEntity);
         me.entityPool.add("bullet", game.BulletEntity, true);
         me.entityPool.add("CrateEntity", game.CrateEntity);
-
+        me.entityPool.add("RockEntity", game.RockEntity);
         // enable the keyboard
         me.input.bindKey(me.input.KEY.SPACE, 'shoot');
         // map the left button click on the X key
