@@ -1,0 +1,16 @@
+Express server listening on port \\.\pipe\99ed557f-635f-4943-ba5e-b6b9abcd5488
+[90mGET / [32m200 [90m1989ms - 294b[0m
+[90mGET /css/style.css [33m404 [90m8ms[0m
+[90mGET / [32m200 [90m106ms - 294b[0m
+[90mGET / [32m200 [90m310ms - 294b[0m
+[90mGET /game [36m304 [90m370ms[0m
+[90mGET /game [36m304 [90m241ms[0m
+[90mGET /game [36m304 [90m154ms[0m
+[90mGET /game [36m304 [90m212ms[0m
+[90mGET /game [36m304 [90m140ms[0m
+[90mGET / [32m200 [90m64ms - 294b[0m
+[90mGET /css/style.css [33m404 [90m19ms[0m
+[90mGET /game [36m304 [90m92ms[0m
+[90mGET /game [36m304 [90m133ms[0m
+[90mGET /game [36m304 [90m306ms[0m
+[90mGET /game [36m304 [90m151ms[0m

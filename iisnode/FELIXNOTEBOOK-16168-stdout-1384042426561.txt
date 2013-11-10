@@ -1,0 +1,8 @@
+Express server listening on port \\.\pipe\86de70a8-d7d2-4f89-b7a4-919648f54dea
+[90mGET /game [32m200 [90m3121ms - 1.33kb[0m
+[90mGET /game [36m304 [90m213ms[0m
+[90mGET /game [36m304 [90m180ms[0m
+[90mGET /game [36m304 [90m234ms[0m
+[90mGET /game [36m304 [90m142ms[0m
+[90mGET /game [36m304 [90m130ms[0m
+[90mGET /game [36m304 [90m153ms[0m
