@@ -1,0 +1,18 @@
+Express server listening on port \\.\pipe\f7a7353f-1ec8-40bc-88d0-9ecd18a97f04
+[90mGET /game [32m200 [90m2274ms - 1.36kb[0m
+[90mGET /game [36m304 [90m216ms[0m
+[90mGET /img/wild_olivia.png [33m404 [90m6ms[0m
+[90mGET /game [36m304 [90m243ms[0m
+[90mGET /img/wild_olivia.png [33m404 [90m3ms[0m
+[90mGET /img/wild_olivia.png [33m404 [90m2ms[0m
+[90mGET /img/wild_olivia.png [33m404 [90m3ms[0m
+[90mGET /game/img/wild_olivia.png [33m404 [90m1ms[0m
+[90mGET /img/wild_olivia.png [33m404 [90m6ms[0m
+[90mGET /img/gui/titlescreen.png [33m404 [90m4ms[0m
+[90mGET /img/wild_olivia.png [33m404 [90m2ms[0m
+[90mGET / [32m200 [90m68ms - 294b[0m
+[90mGET /css/style.css [33m404 [90m5ms[0m
+[90mGET /img/wild_olivia.png [33m404 [90m2ms[0m
+[90mGET /img/wild_olivia.png [33m404 [90m4ms[0m
+[90mGET /img/wild_olivia.png [33m404 [90m5ms[0m
+[90mGET /game [36m304 [90m134ms[0m
