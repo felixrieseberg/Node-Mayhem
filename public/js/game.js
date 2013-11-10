@@ -67,7 +67,6 @@ var game = {
 
     setTimeout(this.gameReady);
   },
-<<<<<<< HEAD
   'fireBullet': function(source, target, id, broadcast) {
     console.log("MUST HAVE ID", id);
     var obj = me.entityPool.newInstanceOf('bullet', source.x, source.y, {
@@ -76,25 +75,12 @@ var game = {
         spriteheight: 24,
         target: target,
         id: id
-=======
-  'fireBullet': function (source, target, broadcast) {
-    var obj = me.entityPool.newInstanceOf('bullet', source.x, source.y, {
-      image: 'bullet',
-      spritewidth: 24,
-      spriteheight: 24,
-      target: target
->>>>>>> 8d5ea9b082ed5cb0eb0bcaf10d2bd51dd1614953
     });
 
     me.game.add(obj, 4);
     me.game.sort();
-<<<<<<< HEAD
     if(broadcast) {
       this.socket.emit('fireBullet', id, source, target);
-=======
-    if (broadcast) {
-      this.socket.emit('fireBullet', source, target);
->>>>>>> 8d5ea9b082ed5cb0eb0bcaf10d2bd51dd1614953
     }
   },
   'updatePlayerState': function (data) {
@@ -123,12 +109,8 @@ var game = {
     game.data.health--;
     player.state['ghost'] = true;
 
-<<<<<<< HEAD
-    if(player.health <= 0) {
-=======
     console.log(player.id, player.health);
     if (player.health <= 0) {
->>>>>>> 8d5ea9b082ed5cb0eb0bcaf10d2bd51dd1614953
       game.killPlayer(id);
     }
   },
