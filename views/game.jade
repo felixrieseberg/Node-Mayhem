@@ -28,7 +28,7 @@ html
         var socket = io.connect();
         game.socket = socket;
         game.gameReady = function() {
-          socket.emit('gameReady');
+          socket.emit('gameReady', 'joe bob');
         }
 
         game.onload();
@@ -78,6 +78,10 @@ html
 
         socket.on('score', function(score) {
           game.data.score = score;
+        });
+
+        socket.on('playerScore', function(data) {
+          game.updatePlayerScore(data);
         });
 
         socket.on('remotePlayerHit', function(data) {
