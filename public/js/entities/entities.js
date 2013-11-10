@@ -49,33 +49,33 @@ game.NetworkPlayerEntity = me.CollectableEntity.extend({
 
 game.PlayerEntity = me.ObjectEntity.extend({
     init: function (x, y, settings) {
-        this.parent(x, y, settings);
+    this.parent(x, y, settings);
 
-        this.gravity = 0;
-        this.isWeaponCoolDown = false;
-        this.weaponCoolDownTime = 500;
+    this.gravity = 0;
+    this.isWeaponCoolDown = false;
+    this.weaponCoolDownTime = 500;
 
-        // set up multiplayer
-        this.isMP = settings.isMP;
-        this.step = 0;
+    // set up multiplayer
+    this.isMP = settings.isMP;
+    this.step = 0;
 
-        // set up mouseCoordinates
-        game.mouseTarget = { x: 0, y: 0 };
+    // set up mouseCoordinates
+    game.mouseTarget = { x: 0, y: 0 };
 
-        this.isCollidable = true;
-        this.type = game.MAIN_PLAYER_OBJECT;
+    this.isCollidable = true;
+    this.type = game.MAIN_PLAYER_OBJECT;
 
-        this.renderable.addAnimation('run-down', [0, 1, 2, 3], 1);
-        this.renderable.addAnimation('run-left', [4, 5, 6, 7], 1);
-        this.renderable.addAnimation('run-up', [8, 9, 10, 11], 1);
-        this.renderable.addAnimation('run-right', [12, 13, 14, 15], 1);
-        this.renderable.setCurrentAnimation('run-down');
-        // set the default horizontal & vertical speed (accel vector)
-        this.setVelocity(4, 4);
+    this.renderable.addAnimation('run-down', [0,1,2,3], 1);
+    this.renderable.addAnimation('run-left', [4,5,6,7], 1);
+    this.renderable.addAnimation('run-up', [8,9,10,11], 1);
+    this.renderable.addAnimation('run-right', [12,13,14,15], 1);
+    this.renderable.setCurrentAnimation('run-down');
+    // set the default horizontal & vertical speed (accel vector)
+    this.setVelocity(4, 4);
 
-        me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
-        window.onmousemove = this.handleMouseMove;
-    },
+    me.game.viewport.follow(this.pos, me.game.viewport.AXIS.BOTH);
+    window.onmousemove = this.handleMouseMove;
+},
 
     handleMouseMove: function (event) {
         event = event || window.event; // IE-ism
@@ -95,9 +95,6 @@ game.PlayerEntity = me.ObjectEntity.extend({
                 var pos = me.input.globalToLocal(game.mouseTarget.x, game.mouseTarget.y);
 
                 game.fireBullet({ x: this.pos.x + 12, y: this.pos.y + 12 }, pos, true);
-
-                var am = new audioManager();
-                am.playSound("shoot");
             }
         }
 
@@ -133,7 +130,7 @@ game.PlayerEntity = me.ObjectEntity.extend({
 
         this.updateMovement();
 
-        if (stateChanged) {
+        if(stateChanged) {
             game.socket.emit('updatePlayerState', { x: this.pos.x, y: this.pos.y }, state);
         }
 
@@ -142,60 +139,61 @@ game.PlayerEntity = me.ObjectEntity.extend({
 });
 
 game.BulletEntity = me.ObjectEntity.extend({
-    init: function (x, y, settings) {
-        this.parent(x, y, settings);
-        this.gravity = 0;
-        this.collidable = true;
-        this.canBreakTile = true;
+  init: function (x, y, settings) {
+    this.parent(x, y, settings);
+    this.gravity = 0;
+    this.collidable = true;
+    this.canBreakTile = true;
 
-        this.shotAngle = settings.angle;
-        this.renderable.angle = this.shotAngle;
-        this.maxVelocity = settings.maxVelocity || 15;
+    this.shotAngle = settings.angle;
+    this.renderable.angle = this.shotAngle;
+    this.maxVelocity = settings.maxVelocity || 15;
 
-        var localX = (settings.target.x - x);
-        var localY = (settings.target.y - y);
+    var localX = (settings.target.x - x);
+    var localY = (settings.target.y - y);
 
-        var localTargetVector = new me.Vector2d(localX, localY);
-        localTargetVector.normalize();
-        localTargetVector.scale(new me.Vector2d(this.maxVelocity, this.maxVelocity));
+    var localTargetVector = new me.Vector2d(localX, localY);
+    localTargetVector.normalize();
+    localTargetVector.scale(new me.Vector2d(this.maxVelocity, this.maxVelocity));
 
-        this.setVelocity(localTargetVector.x, localTargetVector.y);
+    this.setVelocity(localTargetVector.x, localTargetVector.y);
 
-        var bullet = this;
-        this.timeout = setTimeout(function () {
-            me.game.remove(bullet);
-        }, 1500);
-    },
+    var bullet = this;
+    this.timeout = setTimeout(function () {
+      me.game.remove(bullet);
+    }, 1500);
+  },
 
-    onCollision: function () {
-        console.log("Collision omgwtfbbq!");
-    },
+  onCollision: function () {
+    console.log("Collision omgwtfbbq!");
+  },
 
-    update: function () {
-        this.vel.x += this.accel.x * me.timer.tick;
-        this.vel.y += this.accel.y * me.timer.tick;
-        this.computeVelocity(this.vel);
-        this.updateMovement();
-        var bullet = this;
-        if (this.vel.x == 0 || this.vel.y == 0) {
-            me.game.remove(bullet);
-        }
-        if (!this.renderable.visible) {
-            clearTimeout(this.timeout);
-            me.game.remove(this);
-        }
-
-        /*var bullet = this;
-        // check for collision
-        var res = me.game.collide(this);
-        if (res) {
-        // if we collide with an enemy
-        if (res.obj.type == me.game.COLLIDE_OBJECT) {
-        me.game.remove(bullet);
-        }
-        }*/
-
+  update: function () {
+    this.vel.x += this.accel.x * me.timer.tick;
+    this.vel.y += this.accel.y * me.timer.tick;
+    this.computeVelocity(this.vel);
+    this.updateMovement();
+    var bullet = this;
+    if (this.vel.x==0 || this.vel.y==0)
+    {
+       me.game.remove(bullet);
     }
+    if (!this.renderable.visible) {
+      clearTimeout(this.timeout);
+      me.game.remove(this);
+    }
+
+    /*var bullet = this;
+    // check for collision
+    var res = me.game.collide(this);
+    if (res) {
+      // if we collide with an enemy
+      if (res.obj.type == me.game.COLLIDE_OBJECT) {
+        me.game.remove(bullet);
+      }
+    }*/
+
+  }
 });
 
 game.CrateEntity = me.CollectableEntity.extend({
