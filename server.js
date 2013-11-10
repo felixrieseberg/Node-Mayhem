@@ -31,16 +31,21 @@ var server = http.createServer(app);
 var io = socketio.listen(server);
 
 var players = {};
-
+io.set('log level', 0);
 io.on('connection', function(socket) {
   var playerInactiveTimeout;
-  socket.on('gameReady', function() {
-    var player = { id: socket.id, z: 4, health: 3, p: { x: 8 * 48, y: 2 * 48 } };
+  socket.on('gameReady', function(data) {
+    socket.sessionId = data.id;
+    socket.playerName = data.name;
+    if(players[data.id]) {
+      removeInactivePlayer();
+    }
+    var player = { id: data.id, z: 4, health: 3, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
     socket.broadcast.emit('addPlayer', player);
     socket.emit('addPlayers', players);
     socket.emit('addMainPlayer', player);
-    socket.emit('playerId', socket.id);
-    players[socket.id] = player;
+    socket.emit('playerId', data.id);
+    players[data.id] = player;
     playerActive();
   });
 
@@ -52,19 +57,18 @@ io.on('connection', function(socket) {
   }
 
   function removeInactivePlayer() {
-    console.log('removing player');
-    socket.broadcast.emit('removePlayer', socket.id);
-    delete players[socket.id];
+    io.sockets.emit('removePlayer', socket.sessionId);
+    delete players[socket.sessionId];
   }
 
   socket.on('updatePlayerState', function(position, state) {
-    if(!players[socket.id]) {
+    if(!players[socket.sessionId]) {
       return;
     }
 
     playerActive();
-    players[socket.id].p = position;
-    socket.broadcast.emit('updatePlayerState', { id: socket.id, p: position, s: state });
+    players[socket.sessionId].p = position;
+    socket.broadcast.emit('updatePlayerState', { id: socket.sessionId, p: position, s: state });
   }); 
 
   socket.on('fireBullet', function(id, source, target) {
@@ -77,14 +81,17 @@ io.on('connection', function(socket) {
   });
 
   socket.on('scoreHit', function() {
-    var player = players[socket.id];
+    var player = players[socket.sessionId];
+    if(!player) {
+      return;
+    }
     player.score = player.score ? player.score + 100 : 100;
     socket.emit('score', player.score);
     socket.broadcast.emit('playerScore', { id: player.id, score: player.score });
   });
 
   socket.on('resetPlayer', function() {
-    player = { id: socket.id, z: 4, health: 3, p: { x: 8 * 48, y: 2 * 48 } };
+    player = { id: socket.sessionId, z: 4, health: 3, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
     socket.broadcast.emit('removePlayer', player.id);
     socket.broadcast.emit('addPlayer', player);
     socket.emit('addMainPlayer', player);
