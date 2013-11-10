@@ -213,6 +213,39 @@ game.CrateEntity = me.CollectableEntity.extend({
         this.collidable = false;
         // remove it
         me.game.remove(this);
-    }
 
+        var gun = me.entityPool.newInstanceOf('gun', this.pos.x, this.pos.y, {
+            image: 'gun',
+            spritewidth: 48,
+            spriteheight: 48
+        });
+        me.game.add(gun, this.z);
+        me.game.sort();
+    }
+});
+game.RockEntity = me.ObjectEntity.extend({
+    // extending the init function is not mandatory
+    // unless you need to add some extra initialization
+    init: function (x, y, settings) {
+        // call the parent constructor
+        this.parent(x, y, settings);
+        this.type = me.game.COLLIDE_OBJECT;
+    }
+});
+game.GunEntity = me.CollectableEntity.extend({
+    // extending the init function is not mandatory
+    // unless you need to add some extra initialization
+    init: function (x, y, settings) {
+        // call the parent constructor
+        this.parent(x, y, settings);
+        this.type = me.game.COLLIDE_OBJECT;
+    },
+    onCollision: function () {
+        // do something when collected
+        console.log("got da gun");
+        // make sure it cannot be collected "again"
+        this.collidable = false;
+        // remove it
+        me.game.remove(this);
+    }
 });
