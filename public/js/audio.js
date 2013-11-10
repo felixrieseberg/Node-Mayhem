@@ -5,6 +5,6 @@ var audioManager = Object.extend({
         // on Opera the loader will however load audio.ogg files
         me.audio.init('mp3,ogg');
 
-        me.audio.playTrack("gamemusic");
+        //me.audio.playTrack("gamemusic");
     }
 });
