@@ -14,9 +14,31 @@
             if (enabled) {
                 me.audio.playTrack("backgroundmusic1", .5 * game.data.volume);
             } else if (enabled === false) {
-                me.audio.pauseTrack();
+                me.audio.stopTrack();
             } else {
                 me.audio.playTrack("backgroundmusic1", .5 * game.data.volume);
+            }
+        },
+
+        switchMusic: function () {
+            if (me.audio.getCurrentTrack() != null) {
+                audioManager.playBackgroundMusic(false);
+                document.getElementById("musicSwitch").textContent = "ENABLE MUSIC";
+            } else {
+                audioManager.playBackgroundMusic(true);
+                document.getElementById("musicSwitch").textContent = "DISABLE MUSIC";
+            }
+        },
+
+        switchMute: function () {
+            if (me.audio.isAudioEnable()) {
+                console.log("Muting!");
+                me.audio.disable();
+                document.getElementById("soundSwitch").textContent = "ENABLE ALL SOUNDS";
+            } else {
+                console.log("Unmuting!");
+                me.audio.enable();
+                document.getElementById("soundSwitch").textContent = "DISABLE ALL SOUNDS";
             }
         },
 

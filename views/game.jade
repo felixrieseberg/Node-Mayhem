@@ -85,7 +85,9 @@ html
         div(id="screen")
     footer
         small
-            a#soundSwitch(href="#", onclick="me.audio.muteAll()")="Disable Sound"
+            a#musicSwitch(href="#", onclick="audioManager.switchMusic()")="DISABLE MUSIC"
+            span=" "
+            a#soundSwitch(href="#", onclick="audioManager.switchMute()")="DISABLE ALL SOUND"
         h3="This game has been made for Node Knockout 2013 by Timothy Strimple, Helen Zeng & Felix Rieseberg"
         small="Credits: Music (CC) by Wizwards, sound effects (CC) by timgormly"
     
