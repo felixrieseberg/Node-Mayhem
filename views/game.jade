@@ -17,16 +17,19 @@ html
     script(src='js/screens/title.js')
     script(src='js/screens/play.js')
     script(src='/socket.io/socket.io.js')
+    script(src='http://code.jquery.com/jquery-1.10.2.min.js')
+    script(src='http://underscorejs.org/underscore-min.js')
 
   body
-    h1#title Node Mayhem
-    #settings
-        a#musicSwitch(href="#", onclick="audioManager.switchMusic()")="DISABLE MUSIC"
-        a#soundSwitch(href="#", onclick="audioManager.switchMute()")="DISABLE ALL SOUND"
-    #screen
-    #score
-        h4="PLAYERS"
-        ul#individualScores
+    #container
+      h1#title Node Mayhem
+      #settings
+          a#musicSwitch(href="#", onclick="audioManager.switchMusic()")="DISABLE MUSIC"
+          a#soundSwitch(href="#", onclick="audioManager.switchMute()")="DISABLE ALL SOUND"
+      #screen
+      #score
+          h4="PLAYERS"
+          ul#individualScores
     footer
         h3="This game has been made for Node Knockout 2013 by Timothy Strimple, Helen Zeng & Felix Rieseberg"
         p(style='font-size:10px;')="Credits: Music (CC) by Wizwards, sound effects (CC) by timgormly"
@@ -121,7 +124,7 @@ html
         
         socket.on('addPlayer', function (data) {
           game.addEnemy(data);
-        });
+         });
         
         socket.on('addMainPlayer', function (data) {
           game.addMainPlayer(data);
@@ -129,7 +132,6 @@ html
 
         socket.on('removePlayer', function (id) {
           if(game.playerId == id) {
-            alert('omgwtfbbq');
             window.location = '/';
           }
           game.removeEnemy({ id: id });
@@ -137,7 +139,9 @@ html
 
         socket.on('addPlayers', function(players) {
           for(var id in players) {
-            game.addEnemy(players[id]);
+            if(id != game.mainPlayer.id) {
+              game.addEnemy(players[id]);
+            }
           }
         });
         
@@ -149,8 +153,17 @@ html
           game.data.score = score;
         });
 
-        socket.on('playerScore', function(data) {
-          game.updatePlayerScore(data);
+        socket.on('highScores', function(scores) {
+          scores = _.sortBy(scores, function(player){ return player.score * -1; });
+          console.log('SCORES');
+          $('#individualScores').html('');
+          for(var id in scores) {
+            if(id == 'remove') {
+              continue;
+            }
+            var score = scores[id];
+            $('#individualScores').append('<li>' + score.name + ' (' + score.score + ')</li>');
+          }
         });
 
         socket.on('remotePlayerHit', function(data) {
