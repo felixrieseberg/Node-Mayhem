@@ -44,12 +44,14 @@ body {
 
 #screen {
   margin: 0px 20px;
+  margin-left: 0px;
   clear: left;
   float: left;
 }
 
 #title {
   float: left;
+  padding-top: 10px;
 }
 
 #individualScores {
