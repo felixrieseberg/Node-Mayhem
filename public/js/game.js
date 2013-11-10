@@ -3,7 +3,7 @@ var game = {
   data: {
       score: 0,
       health: 3,
-      volume: 10
+      volume: 1
   },
 
   players: {},
