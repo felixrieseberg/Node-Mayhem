@@ -15,8 +15,9 @@ game.resources = [
   /* Audio files */
   {name: "backgroundmusic1", type: "audio", src: "data/bgm/", channel: 2 },
   {name: "powerup", type: "audio", src: "data/sfx/", channel: 1 },
-  //{name: "death", type: "audio", src: "data/sfx/", channel: 1 },
+  {name: "death", type: "audio", src: "data/sfx/", channel: 1 },
   {name: "shoot", type: "audio", src: "data/sfx/", channel: 1 },
+  {name: "hit", type: "audio", src: "data/sfx/", channel: 1 },
 
   /* Font */
   {name: "32x32_font", type:"image", src: "data/font/32x32_font.png"}
