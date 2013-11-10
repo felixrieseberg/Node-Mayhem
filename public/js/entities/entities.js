@@ -173,7 +173,7 @@ game.BulletEntity = me.ObjectEntity.extend({
     this.vel.y += this.accel.y * me.timer.tick;
     this.computeVelocity(this.vel);
     this.updateMovement();
-
+    var bullet = this;
     if (this.vel.x==0 || this.vel.y==0)
     {
        me.game.remove(bullet);
