@@ -133,7 +133,7 @@ game.HUD.ScoreItem = me.Renderable.extend({
     */
     draw: function (context) {
         // draw it baby !
-        this.font.draw(context, "12345", this.pos.x, this.pos.y);
+        this.font.draw(context, game.data.score, this.pos.x, this.pos.y);
         //console.log("Drawing score");
     }
 
