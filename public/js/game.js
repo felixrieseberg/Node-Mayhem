@@ -8,9 +8,8 @@ var game = {
 
   players: {},
   mouseTarget: {},
-  gameReady: function() { console.log('default game ready'); }, 
+  gameReady: function() { console.log('default game ready'); },
   MAIN_PLAYER_OBJECT: 4,
-  ENEMY_OBJECT: 5,
 
   'onload': function () {
       me.sys.pauseOnBlur = false;
@@ -39,8 +38,7 @@ var game = {
       me.state.set(me.state.PLAY, new game.PlayScreen());
 
       //Audio
-      audioMngr = new audioManager();
-      audioMngr.playBackgroundMusic(false);
+      audioManager.playBackgroundMusic(true);
 
       // debug
       me.debug.renderHitBox = true;
@@ -50,7 +48,6 @@ var game = {
       me.entityPool.add("enemyPlayer", game.NetworkPlayerEntity);
       me.entityPool.add("bullet", game.BulletEntity, true);
       me.entityPool.add("gun", game.GunEntity, true);
-      me.entityPool.add("medpack", game.MedpackEntity, true);
       me.entityPool.add("CrateEntity", game.CrateEntity);
       me.entityPool.add("RockEntity", game.RockEntity);
       // enable the keyboard
@@ -100,22 +97,6 @@ var game = {
     me.game.remove(enemy);
     delete this.players[data.id];
   },
-  'killPlayer': function(id) {
-    if(!id || !this.players[id]) { return; }
-    me.game.remove(this.players[id]);
-  },
-  'hitPlayer': function(id) {
-    if(!id || !this.players[id]) { return; }
-
-    var player = this.players[id];
-    player.health--;
-    player.state['ghost'] = true;
-
-    console.log(player.id, player.health);
-    if(player.health <= 0) {
-      game.killPlayer(id);
-    }
-  },
   'addEnemy': function(data) {
     if(!data || this.players[data.id]) { return; }
 
@@ -124,7 +105,6 @@ var game = {
         image: 'boy',
         spritewidth: 48,
         spriteheight: 48,
-        id: data.id
     });
     this.players[data.id] = player;
     me.game.add(player, data.z);
