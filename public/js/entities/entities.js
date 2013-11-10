@@ -150,11 +150,6 @@ game.BulletEntity = me.ObjectEntity.extend({
     localTargetVector.scale(new me.Vector2d(this.maxVelocity, this.maxVelocity));
 
     this.setVelocity(localTargetVector.x, localTargetVector.y);
-
-    var bullet = this;
-    this.timeout = setTimeout(function () {
-      me.game.remove(bullet);
-    }, 1500);
   },
 
   onCollision: function () {
@@ -171,11 +166,7 @@ game.BulletEntity = me.ObjectEntity.extend({
     {
        me.game.remove(bullet);
     }
-    if (!this.renderable.visible) {
-      clearTimeout(this.timeout);
-      me.game.remove(this);
-    }
-
+    
     /*var bullet = this;
     // check for collision
     var res = me.game.collide(this);

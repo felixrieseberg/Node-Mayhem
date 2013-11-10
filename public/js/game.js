@@ -61,8 +61,8 @@ var game = {
 
       // Start the game.
       me.state.change(me.state.PLAY);
-      console.log('entities loaded, keys bound.');
-      this.gameReady();
+
+      setTimeout(this.gameReady);
   },
   'fireBullet': function(source, target, broadcast) {
     var obj = me.entityPool.newInstanceOf('bullet', source.x, source.y, {
@@ -93,20 +93,15 @@ var game = {
     delete this.players[data.id];
   },
   'addEnemy': function(data) {
-    if(!data) { return; }
-    if(this.players[data.id]) {
-      console.log('player already added');
-      return;
-    }
+    if(!data || this.players[data.id]) { return; }
 
-    console.log('adding player', data.id);
+    console.log('adding player', data);
     var player = me.entityPool.newInstanceOf('enemyPlayer', data.p.x, data.p.y, {
         image: 'boy',
         spritewidth: 48,
         spriteheight: 48,
     });
-    this.players[data.id] = player; 
-    console.log(this.players);
+    this.players[data.id] = player;
     me.game.add(player, data.z);
     me.game.sort();
   }
