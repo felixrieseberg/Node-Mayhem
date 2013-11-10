@@ -85,7 +85,7 @@ var game = {
       this.socket.emit('fireBullet', id, source, target);
     }
   },
-  'updatePlayerState': function (data) {
+  'updatePlayerScore': function (data) {
     //  data.id
     //  data.score
   },
