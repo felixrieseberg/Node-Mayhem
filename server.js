@@ -34,12 +34,19 @@ var players = {};
 var highScores = {};
 io.set('log level', 0);
 io.on('connection', function(socket) {
-  var playerInactiveTimeout;
+  socket.on('disconnect', function () {
+    socket.broadcast.emit('removePlayer', socket.sessionId);
+    delete highScores[socket.sessionId];
+    io.sockets.emit('highScores', highScores);
+  });
+
   socket.on('gameReady', function(data) {
     socket.sessionId = data.id;
     socket.playerName = data.name;
     if(players[data.id]) {
-      removeInactivePlayer();
+      socket.broadcast.emit('removePlayer', socket.sessionId);
+      delete highScores[socket.sessionId];
+      io.sockets.emit('highScores', highScores);
     }
     var player = { id: data.id, z: 4, health: 3, score: 0, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
     highScores[data.id] = { name: socket.playerName, score: 0 };
@@ -49,33 +56,18 @@ io.on('connection', function(socket) {
     socket.emit('addMainPlayer', player);
     socket.emit('addPlayers', players);
     io.sockets.emit('highScores', highScores);
-    playerActive();
   });
-
-  function playerActive() {
-    if(playerInactiveTimeout) {
-      clearTimeout(playerInactiveTimeout);
-    }
-    playerInactiveTimeout = setTimeout(removeInactivePlayer, 120000);
-  }
-
-  function removeInactivePlayer() {
-    io.sockets.emit('removePlayer', socket.sessionId);
-    delete players[socket.sessionId];
-  }
 
   socket.on('updatePlayerState', function(position, state) {
     if(!players[socket.sessionId]) {
       return;
     }
 
-    playerActive();
     players[socket.sessionId].p = position;
     socket.broadcast.emit('updatePlayerState', { id: socket.sessionId, p: position, s: state });
   }); 
 
   socket.on('fireBullet', function(id, source, target) {
-    playerActive();
     socket.broadcast.emit('fireBullet', id, source, target);
   });
 
