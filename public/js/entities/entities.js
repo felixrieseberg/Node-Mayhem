@@ -174,6 +174,10 @@ game.BulletEntity = me.ObjectEntity.extend({
     this.computeVelocity(this.vel);
     this.updateMovement();
 
+    if (this.vel.x==0 || this.vel.y==0)
+    {
+       me.game.remove(bullet);
+    }
     if (!this.renderable.visible) {
       clearTimeout(this.timeout);
       me.game.remove(this);
