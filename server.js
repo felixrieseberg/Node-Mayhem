@@ -36,6 +36,7 @@ io.set('log level', 0);
 io.on('connection', function(socket) {
   socket.on('disconnect', function () {
     socket.broadcast.emit('removePlayer', socket.sessionId);
+    delete players[socket.sessionId];
     delete highScores[socket.sessionId];
     io.sockets.emit('highScores', highScores);
   });
@@ -45,6 +46,7 @@ io.on('connection', function(socket) {
     socket.playerName = data.name;
     if(players[data.id]) {
       socket.broadcast.emit('removePlayer', socket.sessionId);
+      delete players[socket.sessionId];
       delete highScores[socket.sessionId];
       io.sockets.emit('highScores', highScores);
     }
