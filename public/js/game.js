@@ -134,7 +134,8 @@ var game = {
       image: 'boy',
       spritewidth: 48,
       spriteheight: 48,
-      id: data.id
+      id: data.id,
+      health: data.health
     });
     this.players[data.id] = player;
     me.game.add(player, data.z);
@@ -147,8 +148,11 @@ var game = {
       image: 'girl',
       spritewidth: 48,
       spriteheight: 48,
-      id: data.id
+      id: data.id,
+      health: data.health
     });
+
+    game.data.health = data.health;
 
     this.players[data.id] = this.mainPlayer;
     me.game.add(this.mainPlayer, data.z);

@@ -35,7 +35,7 @@ var players = {};
 io.on('connection', function(socket) {
   var playerInactiveTimeout;
   socket.on('gameReady', function() {
-    var player = { id: socket.id, z: 4, p: { x: 8 * 48, y: 2 * 48 } };
+    var player = { id: socket.id, z: 4, health: 3, p: { x: 8 * 48, y: 2 * 48 } };
     socket.broadcast.emit('addPlayer', player);
     socket.emit('addPlayers', players);
     socket.emit('addMainPlayer', player);
@@ -78,7 +78,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('resetPlayer', function() {
-    player = { id: socket.id, z: 4, p: { x: 8 * 48, y: 2 * 48 } };
+    player = { id: socket.id, z: 4, health: 3, p: { x: 8 * 48, y: 2 * 48 } };
     socket.broadcast.emit('removePlayer', player.id);
     socket.broadcast.emit('addPlayer', player);
     socket.emit('addMainPlayer', player);
