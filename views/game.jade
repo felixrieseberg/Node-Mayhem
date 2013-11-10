@@ -27,6 +27,7 @@ html
         game.socket = socket;
         game.gameReady = function() {
           socket.emit('gameReady');
+          game.addEnemy({id: 123, p: { x: 333, y: 333 }, z: 4});
         }
 
         game.onload();
@@ -49,7 +50,6 @@ html
         }
         
         socket.on('addPlayer', function (data) {
-          console.log('adding new player', data);
           game.addEnemy(data);
         });
 
