@@ -1,0 +1,32 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'start' ]
+2 info using npm@1.2.11
+3 info using node@v0.8.20
+4 verbose node symlink C:\Program Files (x86)\nodejs\\node.exe
+5 verbose read json C:\Users\feriese\Documents\My Web Sites\west-coast-hackers\package.json
+6 verbose run-script [ 'prestart', 'start', 'poststart' ]
+7 info prestart nko4-west-coast-hackers@0.0.0
+8 info start nko4-west-coast-hackers@0.0.0
+9 verbose unsafe-perm in lifecycle true
+10 silly exec cmd "/c" "node server.js"
+11 silly cmd,/c,node server.js,C:\Users\feriese\Documents\My Web Sites\west-coast-hackers spawning
+12 info nko4-west-coast-hackers@0.0.0 Failed to exec start script
+13 error nko4-west-coast-hackers@0.0.0 start: `node server.js`
+13 error `cmd "/c" "node server.js"` failed with 1
+14 error Failed at the nko4-west-coast-hackers@0.0.0 start script.
+14 error This is most likely a problem with the nko4-west-coast-hackers package,
+14 error not with npm itself.
+14 error Tell the author that this fails on your system:
+14 error     node server.js
+14 error You can get their info via:
+14 error     npm owner ls nko4-west-coast-hackers
+14 error There is likely additional logging output above.
+15 error System Windows_NT 6.2.9200
+16 error command "C:\\Program Files (x86)\\nodejs\\\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
+17 error cwd C:\Users\feriese\Documents\My Web Sites\west-coast-hackers
+18 error node -v v0.8.20
+19 error npm -v 1.2.11
+20 error code ELIFECYCLE
+21 verbose exit [ 1, true ]
