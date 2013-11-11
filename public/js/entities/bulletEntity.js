@@ -1,4 +1,8 @@
+// Entity "Bullet": Managing the life cycle of the bullet once
+// it has been shot.
+/* ----------------------------------------------------------------- */
 game.BulletEntity = me.ObjectEntity.extend({
+  // Bullet is being created
   init: function (x, y, settings) {
     this.parent(x, y, settings);
     this.gravity = 0;
@@ -20,6 +24,7 @@ game.BulletEntity = me.ObjectEntity.extend({
     this.setVelocity(localTargetVector.x, localTargetVector.y);
   },
 
+  // Updating the state of the bullet every single frame
   update: function () {
     this.vel.x += this.accel.x * me.timer.tick;
     this.vel.y += this.accel.y * me.timer.tick;
@@ -31,7 +36,7 @@ game.BulletEntity = me.ObjectEntity.extend({
        me.game.remove(bullet);
     }
     
-    // check for collision
+    // check for collision with other objects
     var res = me.game.collide(this);
     if (res && res.obj.id != bullet.id && !res.obj.invincible) {
         me.game.remove(bullet);

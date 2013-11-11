@@ -1,5 +1,7 @@
-
+// Melon.js: Setting up the game object
+/* ----------------------------------------------------------------- */
 var game = {
+    // Some pseudo-global variables we want to have in game.*
     data: {
         score: 0,
         health: 3,
@@ -13,6 +15,7 @@ var game = {
     ENEMY_OBJECT: 5,
     mainPlayer: {},
 
+    // OnLoad: Executed once the game loads
     'onload': function () {
         me.sys.pauseOnBlur = false;
         me.sys.fps = 120;
@@ -21,15 +24,18 @@ var game = {
             return;
         }
 
+        // Is debug active? 
         if (document.location.hash === '#debug') {
             window.onReady(function () {
                 me.plugin.register.defer(debugPanel, 'debug');
             });
         }
+
+        // Set up pointer events
         me.input.registerPointerEvent('mousemove', me.game.viewport, function (e) {
             game.mouseTarget = { x: e.gameWorldX, y: e.gameWorldY };
         });
-        me.audio.init('mp3,ogg');
+        
         me.loader.onload = this.loaded.bind(this);
         me.loader.preload(game.resources);
         me.state.change(me.state.LOADING);
@@ -43,6 +49,7 @@ var game = {
         audioManager.init();
         me.debug.renderHitBox = true;
 
+        // Setting up the entitiy pool
         me.entityPool.add("mainPlayer", game.PlayerEntity);
         me.entityPool.add("enemyPlayer", game.NetworkPlayerEntity);
         me.entityPool.add("bullet", game.BulletEntity, true);
@@ -50,6 +57,7 @@ var game = {
         me.entityPool.add("medpack", game.MedpackEntity, true);
         me.entityPool.add("CrateEntity", game.CrateEntity);
         me.entityPool.add("RockEntity", game.RockEntity);
+
         // enable the keyboard
         me.input.bindKey(me.input.KEY.SPACE, 'shoot');
         // map the left button click on the X key
@@ -67,10 +75,10 @@ var game = {
         this.mainPlayer = new 
 
         // Start the game.
-    me.state.change(me.state.PLAY);
-
+        me.state.change(me.state.PLAY);
         setTimeout(this.gameReady);
     },
+
     'fireBullet': function (source, target, id, broadcast) {
         var obj = me.entityPool.newInstanceOf('bullet', source.x, source.y, {
             image: 'bullet',
@@ -86,10 +94,12 @@ var game = {
             this.socket.emit('fireBullet', id, source, target);
         }
     },
+
     'updatePlayerScore': function (data) {
         //  data.id
         //  data.score
     },
+
     'updatePlayerState': function (data) {
         var player = this.players[data.id];
         if (player) {
@@ -98,16 +108,19 @@ var game = {
             player.pos.y = data.p.y;
         }
     },
+
     'removeEnemy': function (data) {
         console.log('removing player', data.id);
         var enemy = this.players[data.id];
         me.game.remove(enemy);
         delete this.players[data.id];
     },
+
     'remotePlayerHealthChanged': function (data) {
         if (!data.id || !this.players[data.id]) { return; }
         this.game.players[data.id].health = data.health;
     },
+
     'killPlayer': function (id) {
         if (!id || !this.players[id]) { return; }
         this.socket.emit('resetPlayer');
@@ -115,6 +128,7 @@ var game = {
         me.game.remove(this.players[id]);
         delete this.players[id];
     },
+
     'hitPlayer': function (sourceId, targetId) {
         if (!targetId || !this.players[targetId]) { return; }
 
@@ -135,6 +149,7 @@ var game = {
             this.socket.emit('scoreHit');
         }
     },
+
     'addEnemy': function (data) {
         if (!data || this.players[data.id]) { return; }
 
@@ -150,6 +165,7 @@ var game = {
         me.game.add(player, data.z);
         me.game.sort();
     },
+
     'addMainPlayer': function (data) {
         if (!data) { return; }
 

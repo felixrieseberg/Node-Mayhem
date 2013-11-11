@@ -1,3 +1,31 @@
+/* Speed optimizations - make sure that those actually help! */
+body {
+	background-color: #000;
+	color: #fff;
+
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	
+	-ms-touch-action: none;
+	touch-action: none;
+	margin: 0;
+}
+
+#screen canvas {
+	margin: auto;
+	display: block;
+	image-rendering: optimizeSpeed;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: optimize-contrast;
+	-ms-interpolation-mode: nearest-neighbor;
+}
+
+/* "Normal" CSS */
 html {
   background-color: #e2e2e2;
   margin: 0;
@@ -82,8 +110,6 @@ body {
     color: #a32300;
     text-decoration: none;
 }
-
-/* Footer */
 
 footer {
   clear: both;
