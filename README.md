@@ -18,13 +18,13 @@ your own game, but please understand that we used art found online, so please
 respect their individiual licenses.
 
 ## Stuff used
- ### Code
+### Code
  - [Melon.js](http://melonjs.org)
  - [Node.js](http://nodejs.org)
  - [Socket.io](http://socket.io/)
  - [Express](http://expressjs.com/)
  - [Jade](http://jade-lang.com)
- ### Art
+### Art
  - [Liberated Pixel Cup](http://lpc.opengameart.org/)
  - [RPG Tiles](http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects)
  - [Prozi](http://opengameart.org/users/prozi)
