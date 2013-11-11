@@ -1,7 +1,6 @@
-/**
- * a HUD container and child items
- */
-
+// The HUD - responsible for displaying hearts and the points in the 
+// upper right
+/* ----------------------------------------------------------------- */
 game.HUD = game.HUD || {};
 
 

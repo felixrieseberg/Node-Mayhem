@@ -4,18 +4,22 @@ html
     title Node Mayhem 
     link(rel='stylesheet' href='/css/game.css')
 
+    // MelonJS
     script(src='lib/melonJS-0.9.10.js')
     script(src='lib/plugins/debugPanel.js')
-    script(src='js/mp.js')
+
+    // Custom stuff
     script(src='js/audio.js')
     script(src='js/game.js')
     script(src='js/resources.js')
-    script(src='js/entities/entities.js')
+    script(src='js/entities/player.js')
     script(src='js/entities/bulletEntity.js')
     script(src='js/entities/extraEntities.js')
     script(src='js/entities/HUD.js')
     script(src='js/screens/title.js')
     script(src='js/screens/play.js')
+
+    //jQuery & Socket.io
     script(src='/socket.io/socket.io.js')
     script(src='http://code.jquery.com/jquery-1.10.2.min.js')
     script(src='http://underscorejs.org/underscore-min.js')
@@ -35,7 +39,7 @@ html
       h3="This game has been made for Node Knockout 2013 by Timothy Strimple, Helen Zeng & Felix Rieseberg"
       p(style='font-size:10px;')="Credits: Music (CC) by Wizwards, sound effects (CC) by timgormly"
       p(style='font-size:10px;')
-        span Art CC from OpenGameArt
+        span="Art (CC) from OpenGameArt "
         a(href="http://lpc.opengameart.org/")="LPC, "
         a(href="http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects")=" Zabin, Daneeklu, Jetrel, Hyptosis, Redshrike, Bertram, "          
         a(href="http://opengameart.org/users/prozi")="and Prozi"

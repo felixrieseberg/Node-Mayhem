@@ -41,7 +41,8 @@ var highScores = {};
 io.set('log level', 0);
 
 // Socket.io: Setting up event handlers for all the messages that come
-// in from the client (check out /public/js/game.js for that).
+// in from the client (check out /public/js/game.js and /views/game.jade 
+// for that).
 
 io.on('connection', function(socket) {
   socket.on('disconnect', function () {

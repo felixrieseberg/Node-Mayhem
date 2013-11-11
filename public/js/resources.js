@@ -1,3 +1,5 @@
+// Game resources
+/* ----------------------------------------------------------------- */
 game.resources = [
   { name: "ground", type: "image", src: "data/img/ground.png" },
   { name: "rock", type: "image", src: "data/img/rock.png" },

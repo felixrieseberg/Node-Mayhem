@@ -1,17 +1,12 @@
 {
-  "name": "nko4-west-coast-hackers",
-  "version": "0.0.0",
-  "description": "West Coast Hackers",
+  "name": "Node Mayhem",
+  "version": "0.1.0",
+  "description": "A multiplayer browser game - more info at https://github.com/felixrieseberg/Node-Mayhem",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:nko4/west-coast-hackers.git"
-  },
   "dependencies": {
-    "nko": "*",
     "express": "~3.4.4",
     "socket.io": "~0.9.16",
     "jade": "~0.35.0"

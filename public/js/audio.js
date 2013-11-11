@@ -1,3 +1,5 @@
+// Audio manager, managing sound for the game
+/* ----------------------------------------------------------------- */
 (function () {
     audioManager = {
         init: function () {
@@ -5,7 +7,7 @@
             // i.e. on Safari, the loader will load all audio.mp3 files, 
             // on Opera the loader will however load audio.ogg files
 
-            //me.audio.init('ogg');
+            me.audio.init('mp3,ogg');
             console.log("Audio manager init");
             audioManager.playBackgroundMusic(true);
         },

@@ -1,3 +1,5 @@
+// Extra entitities - a rock, a crate and a medpack
+/* ----------------------------------------------------------------- */
 game.CrateEntity = me.ObjectEntity.extend({
   init: function (x, y, settings) {
     this.parent(x, y, settings);

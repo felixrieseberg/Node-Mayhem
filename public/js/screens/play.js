@@ -1,9 +1,9 @@
+// Play screen
+/* ----------------------------------------------------------------- */
 game.PlayScreen = me.ScreenObject.extend({
-	/**
-	 *  action to perform on state change
-	 */
+
 	onResetEvent: function() {
-         // load a level
+         // load the level
         me.levelDirector.loadLevel("beachmap");
 
 		// reset the score
@@ -14,10 +14,6 @@ game.PlayScreen = me.ScreenObject.extend({
 		me.game.world.addChild(game.HUD);
 	},
 
-
-	/**
-	 *  action to perform when leaving this screen (state change)
-	 */
 	onDestroyEvent: function() {
 		// remove the HUD from the game world
 		me.game.world.removeChild(game.HUD);
