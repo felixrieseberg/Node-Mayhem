@@ -24,6 +24,7 @@ respect their individiual licenses.
  - [Socket.io](http://socket.io/)
  - [Express](http://expressjs.com/)
  - [Jade](http://jade-lang.com)
+
 ### Art
  - [Liberated Pixel Cup](http://lpc.opengameart.org/)
  - [RPG Tiles](http://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects)
@@ -31,8 +32,8 @@ respect their individiual licenses.
  - Music (CC) by Wizwards, sound effects (CC) by timgormly
 
 ## Developers
- - Helen Zeng ()
- - Timothy Strimple ()
+ - Helen Zeng (https://twitter.com/hwz)
+ - Timothy Strimple (https://twitter.com/tstrimple)
  - Felix Rieseberg (http://www.felixrieseberg.com)
 
 ## License
