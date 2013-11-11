@@ -1,7 +1,6 @@
  ![nodemayhemlogo](http://i.imgur.com/AKHyegZ.png "Node Mayhem Logo")
  
 ### A simple multiplayer shooter built with Melon.js and Node.js
-=========================== 
 
 ## Introduction
 Over one weekend, we (Helen Zeng, Timothy Strimple & Felix Rieseberg) 
