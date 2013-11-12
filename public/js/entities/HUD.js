@@ -3,7 +3,6 @@
 /* ----------------------------------------------------------------- */
 game.HUD = game.HUD || {};
 
-
 game.HUD.Container = me.ObjectContainer.extend({
 
 	init: function() {

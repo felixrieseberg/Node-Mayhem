@@ -1,4 +1,5 @@
-// Player entities
+// Player entities - both for the local player as well as the 
+// network player
 /* ----------------------------------------------------------------- */
 game.NetworkPlayerEntity = me.CollectableEntity.extend({
   init: function (x, y, settings) {
