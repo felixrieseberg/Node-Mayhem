@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="45" height="25" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="tilemap" tilewidth="32" tileheight="32">
-  <image source="../../../../../../Desktop/tilemap.png" width="512" height="512"/>
+  <image source="tilemap.png" width="512" height="512"/>
  </tileset>
  <tileset firstgid="257" name="wood_tileset_3" tilewidth="32" tileheight="32">
-  <image source="../../../../../../Desktop/wood_tileset_3.png" width="512" height="512"/>
+  <image source="wood_tileset_3.png" width="512" height="512"/>
   <tile id="22">
    <properties>
     <property name="type" value="solid"/>
