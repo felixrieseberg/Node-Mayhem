@@ -85,7 +85,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('playerHit', function(data) {
-    socket.broadcast.emit('playerHit', data);
+    socket.broadcast.emit('remotePlayerHit', data);
   });
 
   socket.on('scoreHit', function() {
@@ -107,7 +107,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('playerHealed', function(data) {
-    socket.broadcast.emit('playerHealed', data);
+    socket.broadcast.emit('remotePlayerHealed', data);
   });
 });
 
