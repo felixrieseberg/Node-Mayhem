@@ -1,5 +1,5 @@
 {
-  "name": "Node Mayhem",
+  "name": "Node-Mayhem",
   "version": "0.1.0",
   "description": "A multiplayer browser game - more info at https://github.com/felixrieseberg/Node-Mayhem",
   "main": "server.js",

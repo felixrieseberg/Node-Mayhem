@@ -36,6 +36,7 @@ var game = {
             game.mouseTarget = { x: e.gameWorldX, y: e.gameWorldY };
         });
         
+        me.audio.init('mp3,ogg');
         me.loader.onload = this.loaded.bind(this);
         me.loader.preload(game.resources);
         me.state.change(me.state.LOADING);
