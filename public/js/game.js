@@ -24,19 +24,28 @@ var game = {
             return;
         }
 
+        /*
         // Is debug active? 
         if (document.location.hash === '#debug') {
             window.onReady(function () {
                 me.plugin.register.defer(debugPanel, 'debug');
             });
         }
+        */
+
+        // add "#debug" to the URL to enable the debug Panel
+        if (document.location.hash === "#debug") {
+            window.onReady(function () {
+                me.plugin.register.defer(this, debugPanel, "debug");
+            });
+        }
 
         // Set up pointer events
-        me.input.registerPointerEvent('mousemove', me.game.viewport, function (e) {
+        me.input.registerPointerEvent('pointermove', me.game.viewport, function (e) {
             game.mouseTarget = { x: e.gameWorldX, y: e.gameWorldY };
         });
         
-        me.audio.init('mp3,ogg');
+        me.audio.init('ogg,mp3');
         me.loader.onload = this.loaded.bind(this);
         me.loader.preload(game.resources);
         me.state.change(me.state.LOADING);
@@ -47,22 +56,22 @@ var game = {
         me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
 
-        audioManager.init();
+        
         me.debug.renderHitBox = true;
 
         // Setting up the entitiy pool
-        me.entityPool.add("mainPlayer", game.PlayerEntity);
-        me.entityPool.add("enemyPlayer", game.NetworkPlayerEntity);
-        me.entityPool.add("bullet", game.BulletEntity, true);
-        me.entityPool.add("gun", game.GunEntity, true);
-        me.entityPool.add("medpack", game.MedpackEntity, true);
-        me.entityPool.add("CrateEntity", game.CrateEntity);
-        me.entityPool.add("RockEntity", game.RockEntity);
+        me.pool.register("mainPlayer", game.PlayerEntity);
+        me.pool.register("enemyPlayer", game.NetworkPlayerEntity);
+        me.pool.register("bullet", game.BulletEntity, true);
+        me.pool.register("gun", game.GunEntity, true);
+        me.pool.register("medpack", game.MedpackEntity, true);
+        me.pool.register("CrateEntity", game.CrateEntity);
+        me.pool.register("RockEntity", game.RockEntity);
 
         // enable the keyboard
         me.input.bindKey(me.input.KEY.SPACE, 'shoot');
         // map the left button click on the X key
-        me.input.bindMouse(0, me.input.KEY.SPACE);
+        me.input.bindPointer(0, me.input.KEY.SPACE);
 
         me.input.bindKey(me.input.KEY.LEFT, 'left');
         me.input.bindKey(me.input.KEY.A, 'left');
@@ -73,24 +82,28 @@ var game = {
         me.input.bindKey(me.input.KEY.DOWN, 'down');
         me.input.bindKey(me.input.KEY.S, 'down');
 
-        this.mainPlayer = new 
+        //this.mainPlayer = new 
 
         // Start the game.
+        //this.gameReady();
         me.state.change(me.state.PLAY);
-        setTimeout(this.gameReady);
+        
     },
 
     'fireBullet': function (source, target, id, broadcast) {
-        var obj = me.entityPool.newInstanceOf('bullet', source.x, source.y, {
+        var obj = me.pool.pull('bullet', source.x, source.y, {
             image: 'bullet',
             spritewidth: 24,
             spriteheight: 24,
+            width:24,
+            height:24,
             target: target,
             id: id
         });
 
-        me.game.add(obj, 4);
-        me.game.sort();
+        me.game.world.addChild(obj, 6);
+        //me.game.world.sort();
+        audioManager.playSound("shoot");
         if (broadcast) {
             this.socket.emit('fireBullet', id, source, target);
         }
@@ -113,20 +126,20 @@ var game = {
     'removeEnemy': function (data) {
         console.log('removing player', data.id);
         var enemy = this.players[data.id];
-        me.game.remove(enemy);
+        me.game.world.removeChild(enemy);
         delete this.players[data.id];
     },
 
     'remotePlayerHealthChanged': function (data) {
         if (!data.id || !this.players[data.id]) { return; }
-        this.game.players[data.id].health = data.health;
+        this.players[data.id].health = data.health;
     },
 
     'killPlayer': function (id) {
         if (!id || !this.players[id]) { return; }
         this.socket.emit('resetPlayer');
         this.mainPlayer = {};
-        me.game.remove(this.players[id]);
+        me.game.world.removeChild(this.players[id]);
         delete this.players[id];
     },
 
@@ -135,7 +148,17 @@ var game = {
 
         var player = this.players[targetId];
         player.health--;
-        player.state['ghost'] = true;
+        
+        if (player.health > 0) { //if not killed by that last hit... since then object will be reseted .. and disapear.
+            player.state['ghost'] = true; //Not nececary .. will do every setting heare instead -- I think
+            player.renderable.alpha = 0.25;  
+            player.invincible = true;
+            var ghost = player;  //Think this is neccacey to make the function know who player is .. 
+            setTimeout(function() { 
+                player.renderable.alpha = 1; 
+                player.invincible = false; 
+            }, 1500);
+        }   
 
         if (targetId === game.mainPlayer.id) {
             game.data.health--;
@@ -155,33 +178,37 @@ var game = {
         if (!data || this.players[data.id]) { return; }
 
         console.log('adding player', data);
-        var player = me.entityPool.newInstanceOf('enemyPlayer', data.p.x, data.p.y, {
+        var player = me.pool.pull('enemyPlayer', data.p.x, data.p.y, {
             image: 'boy',
             spritewidth: 48,
             spriteheight: 48,
+            width:48,
+            height:48,
             id: data.id,
             health: data.health
         });
         this.players[data.id] = player;
-        me.game.add(player, data.z);
-        me.game.sort();
+        me.game.world.addChild(player, data.z);
+        me.game.world.sort();
     },
 
     'addMainPlayer': function (data) {
         if (!data) { return; }
-
-        this.mainPlayer = me.entityPool.newInstanceOf('mainPlayer', data.p.x, data.p.y, {
+        console.log("mainPlayer: at x:"+ data.p.x+", y:"+data.p.y);
+        this.mainPlayer = me.pool.pull('mainPlayer', data.p.x, data.p.y, {
             image: 'girl',
             spritewidth: 48,
             spriteheight: 48,
+            width:48,
+            height:48,
             id: data.id,
             health: data.health
         });
-
+        console.log("maxvel"+this.mainPlayer.maxVel.x);
         game.data.health = data.health;
 
         this.players[data.id] = this.mainPlayer;
-        me.game.add(this.mainPlayer, data.z);
-        me.game.sort();
+        me.game.world.addChild(this.mainPlayer, data.z);
+        //me.game.world.sort();
     }
 };

@@ -3,21 +3,24 @@
 game.CrateEntity = me.ObjectEntity.extend({
   init: function (x, y, settings) {
     this.parent(x, y, settings);
-    this.type = "SOLID";
+    this.type = "solid";
+    this.collidable = true;
   },
 
   onCollision: function (res, obj) {
     if (obj.type != game.MAIN_PLAYER_OBJECT) {
       this.collidable = false;
-      me.game.remove(this);
+      me.game.world.removeChild(this);
 
-      var medpack = me.entityPool.newInstanceOf('medpack', this.pos.x, this.pos.y, {
+      var medpack = me.pool.pull('medpack', this.pos.x, this.pos.y, {
         image: 'medpack',
         spritewidth: 48,
-        spriteheight: 48
+        spriteheight: 48,
+        width:48,
+        height:48
       });
-      me.game.add(medpack, this.z);
-      me.game.sort();
+      me.game.world.addChild(medpack, this.z);
+      //me.game.world.sort();
     }
   }
 });
@@ -36,7 +39,7 @@ game.GunEntity = me.CollectableEntity.extend({
     },
     onCollision: function () {
         this.collidable = false;
-        me.game.remove(this);
+        me.game.world.removeChild(this);
     }
 });
 
@@ -51,7 +54,7 @@ game.MedpackEntity = me.CollectableEntity.extend({
         if (obj.type == game.MAIN_PLAYER_OBJECT) {
             this.collidable = false;
             // remove it
-            me.game.remove(this);
+            me.game.world.removeChild(this);
             audioManager.playSound("powerup");
             obj.health++;
             game.data.health++;
@@ -63,7 +66,7 @@ game.MedpackEntity = me.CollectableEntity.extend({
             }
             game.socket.emit('playerHealed', { id: obj.id, health: game.data.health });
         } else if (obj.type == game.ENEMY_OBJECT) {
-            me.game.remove(this);
+            me.game.world.removeChild(this);
         }
     }
 });

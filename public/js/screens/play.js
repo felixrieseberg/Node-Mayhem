@@ -12,6 +12,8 @@ game.PlayScreen = me.ScreenObject.extend({
 		// add our HUD to the game world
 		game.HUD = new game.HUD.Container();
 		me.game.world.addChild(game.HUD);
+		game.gameReady();
+		audioManager.init();  //this ads some extra autiohandeling fetures via audio.js
 	},
 
 	onDestroyEvent: function() {

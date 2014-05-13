@@ -4,8 +4,11 @@ html
     title Node Mayhem 
     link(rel='stylesheet' href='/css/game.css')
 
+    //Socket.io .. neddes to load before melon.js for some still unknown reason
+    script(src='/socket.io/socket.io.js')
+    
     // MelonJS
-    script(src='lib/melonJS-0.9.10.js')
+    script(src='lib/melonJS-1.0.0.js')
     script(src='lib/plugins/debugPanel.js')
 
     // Custom stuff
@@ -19,8 +22,7 @@ html
     script(src='js/screens/title.js')
     script(src='js/screens/play.js')
 
-    //jQuery & Socket.io
-    script(src='/socket.io/socket.io.js')
+    //jQuery 
     script(src='http://code.jquery.com/jquery-1.10.2.min.js')
     script(src='http://underscorejs.org/underscore-min.js')
 

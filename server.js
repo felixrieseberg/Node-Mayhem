@@ -61,7 +61,7 @@ io.on('connection', function(socket) {
       delete highScores[socket.sessionId];
       io.sockets.emit('highScores', highScores);
     }
-    var player = { id: data.id, z: 4, health: 3, score: 0, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
+    var player = { id: data.id, z: 6, health: 3, score: 0, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
     highScores[data.id] = { name: socket.playerName, score: 0 };
     socket.broadcast.emit('addPlayer', player);
     players[data.id] = player;
@@ -100,7 +100,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('resetPlayer', function() {
-    player = { id: socket.sessionId, z: 4, score: 0, health: 3, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
+    player = { id: socket.sessionId, z: 6, score: 0, health: 3, p: { x: 8 * 48, y: 2 * 48 }, n: socket.playerName };
     socket.broadcast.emit('removePlayer', player.id);
     socket.broadcast.emit('addPlayer', player);
     socket.emit('addMainPlayer', player);

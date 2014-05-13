@@ -5,6 +5,7 @@ game.BulletEntity = me.ObjectEntity.extend({
   // Bullet is being created
   init: function (x, y, settings) {
     this.parent(x, y, settings);
+    this.addShape(new me.Rect(new me.Vector2d(0,0), 24, 24));
     this.gravity = 0;
     this.collidable = true;
     this.canBreakTile = true;
@@ -19,13 +20,13 @@ game.BulletEntity = me.ObjectEntity.extend({
 
     var localTargetVector = new me.Vector2d(localX, localY);
     localTargetVector.normalize();
-    localTargetVector.scale(new me.Vector2d(this.maxVelocity, this.maxVelocity));
+    localTargetVector.scaleV(new me.Vector2d(this.maxVelocity, this.maxVelocity));
 
     this.setVelocity(localTargetVector.x, localTargetVector.y);
   },
 
   // Updating the state of the bullet every single frame
-  update: function () {
+  update: function (dt) {
     this.vel.x += this.accel.x * me.timer.tick;
     this.vel.y += this.accel.y * me.timer.tick;
     this.computeVelocity(this.vel);
@@ -33,17 +34,17 @@ game.BulletEntity = me.ObjectEntity.extend({
     var bullet = this;
     if (this.vel.x==0 || this.vel.y==0)
     {
-       me.game.remove(bullet);
+       me.game.world.removeChild(bullet);
     }
     
     // check for collision with other objects
-    var res = me.game.collide(this);
+    var res = me.game.world.collide(this);
     if (res && res.obj.id != bullet.id && !res.obj.invincible) {
-        me.game.remove(bullet);
+        me.game.world.removeChild(bullet);
         game.hitPlayer(bullet.id, res.obj.id);
     }
     else if (res && res.obj.type === game.COLLIDE_OBJECT) {
-        me.game.remove(bullet);
+        me.game.wordl.removeChild(bullet);
     }
   }
 });
