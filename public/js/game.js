@@ -24,15 +24,6 @@ var game = {
             return;
         }
 
-        /*
-        // Is debug active? 
-        if (document.location.hash === '#debug') {
-            window.onReady(function () {
-                me.plugin.register.defer(debugPanel, 'debug');
-            });
-        }
-        */
-
         // add "#debug" to the URL to enable the debug Panel
         if (document.location.hash === "#debug") {
             window.onReady(function () {
@@ -110,8 +101,7 @@ var game = {
     },
 
     'updatePlayerScore': function (data) {
-        //  data.id
-        //  data.score
+
     },
 
     'updatePlayerState': function (data) {
@@ -209,6 +199,5 @@ var game = {
 
         this.players[data.id] = this.mainPlayer;
         me.game.world.addChild(this.mainPlayer, data.z);
-        //me.game.world.sort();
     }
 };
