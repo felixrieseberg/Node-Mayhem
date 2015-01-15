@@ -42,7 +42,7 @@ respect their individiual licenses.
 Unless noted otherwise, the licensing of this package is governed by the license described below:
 
 The MIT License (MIT)
-Copyright (c) 2013 Helen Zeng, Timothy Strimple, Felix Rieseberg
+Copyright (c) 2014 Helen Zeng, Timothy Strimple, Felix Rieseberg
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
