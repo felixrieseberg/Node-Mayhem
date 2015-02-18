@@ -1,28 +1,30 @@
+/* global audioManager */
+
 // Extra entitities - a rock, a crate and a medpack
 /* ----------------------------------------------------------------- */
 game.CrateEntity = me.ObjectEntity.extend({
-  init: function (x, y, settings) {
-    this.parent(x, y, settings);
-    this.type = "solid";
-    this.collidable = true;
-  },
+    init: function (x, y, settings) {
+        this.parent(x, y, settings);
+        this.type = 'solid';
+        this.collidable = true;
+    },
 
-  onCollision: function (res, obj) {
-    if (obj.type != game.MAIN_PLAYER_OBJECT) {
-      this.collidable = false;
-      me.game.world.removeChild(this);
+    onCollision: function (res, obj) {
+        if (obj.type !== game.MAIN_PLAYER_OBJECT) {
+            this.collidable = false;
+            me.game.world.removeChild(this);
 
-      var medpack = me.pool.pull('medpack', this.pos.x, this.pos.y, {
-        image: 'medpack',
-        spritewidth: 48,
-        spriteheight: 48,
-        width:48,
-        height:48
-      });
-      me.game.world.addChild(medpack, this.z);
-      //me.game.world.sort();
+            var medpack = me.pool.pull('medpack', this.pos.x, this.pos.y, {
+                image: 'medpack',
+                spritewidth: 48,
+                spriteheight: 48,
+                width: 48,
+                height: 48
+            });
+
+            me.game.world.addChild(medpack, this.z);
+        }
     }
-  }
 });
 
 game.RockEntity = me.ObjectEntity.extend({
@@ -37,6 +39,7 @@ game.GunEntity = me.CollectableEntity.extend({
         this.parent(x, y, settings);
         this.type = me.game.COLLIDE_OBJECT;
     },
+
     onCollision: function () {
         this.collidable = false;
         me.game.world.removeChild(this);
@@ -45,27 +48,32 @@ game.GunEntity = me.CollectableEntity.extend({
 
 game.MedpackEntity = me.CollectableEntity.extend({
     init: function (x, y, settings) {
-        // call the parent constructor
+        // Call the parent constructor
         this.parent(x, y, settings);
         this.type = me.game.COLLECTABLE_OBJECT;
     },
+
     onCollision: function (res, obj) {
-        //only collected by player
-        if (obj.type == game.MAIN_PLAYER_OBJECT) {
+        // Only collected by player
+        if (obj.type === game.MAIN_PLAYER_OBJECT) {
             this.collidable = false;
-            // remove it
             me.game.world.removeChild(this);
-            audioManager.playSound("powerup");
-            obj.health++;
-            game.data.health++;
+            audioManager.playSound('powerup');
+            obj.health += 1;
+            game.data.health += 1;
+
             if (game.data.health > 5) {
                 game.data.health = 5;
             }
             if (obj.health > 5) {
                 obj.health = 5;
             }
-            game.socket.emit('playerHealed', { id: obj.id, health: game.data.health });
-        } else if (obj.type == game.ENEMY_OBJECT) {
+
+            game.socket.emit('playerHealed', {
+                id: obj.id,
+                health: game.data.health
+            });
+        } else if (obj.type === game.ENEMY_OBJECT) {
             me.game.world.removeChild(this);
         }
     }

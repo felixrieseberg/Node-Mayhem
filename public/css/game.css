@@ -1,183 +1,249 @@
-/* Speed optimizations - make sure that those actually help! */
-body {
-	background-color: #000;
-	color: #fff;
+body
+{
+    margin: 0;
 
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-o-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-	
-	-ms-touch-action: none;
-	touch-action: none;
-	margin: 0;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    color: #fff;
+    background-color: #000;
+
+         -o-user-select: none;
+    -ms-touch-action: none;
+        touch-action: none;
 }
 
-#screen canvas {
-	margin: auto;
-	display: block;
-	image-rendering: optimizeSpeed;
-	image-rendering: -moz-crisp-edges;
-	image-rendering: -o-crisp-edges;
-	image-rendering: -webkit-optimize-contrast;
-	image-rendering: optimize-contrast;
-	-ms-interpolation-mode: nearest-neighbor;
+#screen canvas
+{
+    display: block;
+
+    margin: auto;
+
+    -ms-interpolation-mode: nearest-neighbor;
+
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering:   -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering:         optimize-contrast;
 }
 
 /* "Normal" CSS */
-html {
-  background-color: #e2e2e2;
-  margin: 0;
-  padding: 0;
-  height: 100%;
+html
+{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: #e2e2e2;
 }
 
-#title {
-  margin-top: 0px;
-  color: white;
+#title
+{
+    margin-top: 0;
+
+    color: white;
 }
 
-body {
-  background-image: url('/img/wild_oliva.png');
-  background-color: #fff;
-  color: #333;
-  font-size: .85em;
-  font-family: 'Lucida Console','Open Sans', "Segoe UI", Verdana, Helvetica, Sans-Serif;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+body
+{
+    font-family: 'Lucida Console','Open Sans', 'Segoe UI', Verdana, Helvetica, Sans-Serif;
+    font-size: .85em;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    color: #333;
+    background-color: #fff;
+    background-image: url('/img/wild_oliva.png');
 }
 
-.wrapper {
+.wrapper
+{
     height: 90%;
 }
 
-#score {
+#score
+{
+    font-family: 'Lucida Console','Open Sans', 'Segoe UI', Verdana, Helvetica, Sans-Serif;
+    font-weight: bold;
+
     float: left;
+
     width: 180px;
     min-height: 284px;
-    background-color: #a32300;
     margin-top: -1px;
     padding: 8px;
-    font-family: 'Lucida Console','Open Sans', "Segoe UI", Verdana, Helvetica, Sans-Serif;
+
     color: #fff;
-    font-weight: bold;
+    background-color: #a32300;
 }
 
-#score h4 {
-  margin: 0px;
+#score h4
+{
+    margin: 0;
 }
 
-#screen {
-  margin: 0px 20px;
-  margin-left: 0px;
-  clear: left;
-  float: left;
+#screen
+{
+    float: left;
+    clear: left;
+
+    margin: 0 20px;
+    margin-left: 0;
 }
 
-#title {
-  float: left;
-  padding-top: 10px;
+#title
+{
+    float: left;
+
+    padding-top: 10px;
 }
 
-#individualScores {
+#individualScores
+{
     margin-bottom: 50px;
 }
 
-#settings {
+#settings
+{
     height: 42px;
 }
 
-#soundSwitch, #musicSwitch {
+#soundSwitch,
+#musicSwitch
+{
     margin-top: 10px;
 }
 
-#musicSwitch:link, #musicSwitch:active, 
-#musicSwitch:visited, #soundSwitch:link,
-#soundSwitch:active, #soundSwitch:visited {
-    color: #fff;
+#musicSwitch:link,
+#musicSwitch:active,
+#musicSwitch:visited,
+#soundSwitch:link,
+#soundSwitch:active,
+#soundSwitch:visited
+{
     text-decoration: none;
+
+    color: #fff;
 }
 
-#musicSwitch:hover, #soundSwitch:hover {
-    color: #fff;
+#musicSwitch:hover,
+#soundSwitch:hover
+{
     text-decoration: underline;
-}
 
-#settings a:active, #settings a:visited {
-    color: #a32300;
-    text-decoration: none;
-}
-
-footer {
-  clear: both;
-    text-align: center;
-    padding: 40px 0px 0px 0px;
-    color: #e2e2e2;
-}
-
-footer a:link, footer a:active, footer a:visited, footer a:hover {
-    color: #e2e2e2;
-}
-
-footer h3 {
-    margin: 0px;
-    padding: 0px;
     color: #fff;
 }
 
-#container {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: -ms-fit-content;
-  width: fit-content;
-  margin: auto;
+#settings a:active,
+#settings a:visited
+{
+    text-decoration: none;
+
+    color: #a32300;
 }
 
-#primer {
-    background-color: #6d6d6d;
+footer
+{
+    clear: both;
+
+    padding: 40px 0 0 0;
+
+    text-align: center;
+
+    color: #e2e2e2;
+}
+
+footer a:link,
+footer a:active,
+footer a:visited,
+footer a:hover
+{
+    color: #e2e2e2;
+}
+
+footer h3
+{
+    margin: 0;
+    padding: 0;
+
+    color: #fff;
+}
+
+#container
+{
+    width: -webkit-fit-content;
+    width:    -moz-fit-content;
+    width:     -ms-fit-content;
+    width:         fit-content;
+    margin: auto;
+}
+
+#primer
+{
     width: 1400px;
     height: 603px;
+
+    background-color: #6d6d6d;
 }
 
-#nameinput {
+#nameinput
+{
     clear: left;
+
     width: 350px;
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
+
     text-align: center;
 }
 
-#nameinput h2 {
+#nameinput h2
+{
     color: #fff;
 }
 
-#nameinput input {
-  display: inline-block;
+#nameinput input
+{
+    font-family: 'Lucida Console','Open Sans', 'Segoe UI', Verdana, Helvetica, Sans-Serif;
+    font-size: 20px;
+
+    display: inline-block;
+
     width: 200px;
     height: 40px;
-    font-size: 20px;
-    font-family: 'Lucida Console','Open Sans', "Segoe UI", Verdana, Helvetica, Sans-Serif;
+
     text-align: center;
 }
 
-#nameinput a:link, #nameinput a:active, #nameinput a:visited {
-  margin-top: 12px;
-  display: inline-block;
-  width: 200px;
-  font-size: 20px;
-  color: #fff;
-  width: 200px;
-  height: 40px;
-  background-color: #a32300;
-  padding: 8px 3px 0px 3px;
-  text-align: center;
-  text-decoration: none;
+#nameinput a:link,
+#nameinput a:active,
+#nameinput a:visited
+{
+    font-size: 20px;
+
+    display: inline-block;
+
+    width: 200px;
+    width: 200px;
+    height: 40px;
+    margin-top: 12px;
+    padding: 8px 3px 0 3px;
+
+    text-align: center;
+    text-decoration: none;
+
+    color: #fff;
+    background-color: #a32300;
 }
 
-#nameinput a:hover {
+#nameinput a:hover
+{
     color: #a32300;
     background-color: #fff;
 }

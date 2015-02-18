@@ -1,47 +1,44 @@
-// The HUD - responsible for displaying hearts and the points in the 
+// The HUD - responsible for displaying hearts and the points in the
 // upper right
 /* ----------------------------------------------------------------- */
 game.HUD = game.HUD || {};
 
 game.HUD.Container = me.ObjectContainer.extend({
+    init: function () {
+        // call the constructor
+        this.parent();
 
-	init: function() {
-		// call the constructor
-		this.parent();
-		
-		// persistent across level change
-		this.isPersistent = true;
-		
-		// non collidable
-		this.collidable = false;
-		
-		// make sure our object is always draw first
-		this.z = Infinity;
+        // persistent across level change
+        this.isPersistent = true;
 
-		// give a name
-		this.name = "HUD";
-		
-		// add our child score object at the top left corner
-		this.addChild(new game.HUD.ScoreItem(1180, 20));
+        // non collidable
+        this.collidable = false;
+
+        // make sure our object is always draw first
+        this.z = Infinity;
+
+        // give a name
+        this.name = 'HUD';
+
+        // add our child score object at the top left corner
+        this.addChild(new game.HUD.ScoreItem(1180, 20));
         this.addChild(new game.HUD.HealthItem(20, 20));
-	}
+    }
 });
 
 // Health
 game.HUD.HealthItem = me.Renderable.extend({
-    /** 
-    * constructor
-    */
+    /**
+     * constructor
+     */
     init: function (x, y) {
-
-        // call the parent constructor 
+        // call the parent constructor
         // (size does not matter here)
         this.parent(new me.Vector2d(x, y), 10, 10);
 
         // create a font
-        this.font = new me.BitmapFont("32x32_font", 32);
-        this.font.set("left");
-        //this.font = new me.Font("Lucida Console", 20, "white", "center");
+        this.font = new me.BitmapFont('32x32_font', 32);
+        this.font.set('left');
 
         // local copy of the global score
         this.score = -1;
@@ -51,8 +48,8 @@ game.HUD.HealthItem = me.Renderable.extend({
     },
 
     /**
-    * update function
-    */
+     * update function
+     */
     update: function () {
         // we don't draw anything fancy here, so just
         // return true if the score has been updated
@@ -64,47 +61,44 @@ game.HUD.HealthItem = me.Renderable.extend({
     },
 
     /**
-    * draw the score
-    */
+     * draw the score
+     */
     draw: function (context) {
         // draw it baby !
         var playerHealth;
 
-        if (game.data.health == 5) {
-            playerHealth = "$$$$$";
-        } else if (game.data.health == 4) {
-            playerHealth = "$$$$";
-        } else if (game.data.health == 3) {
-            playerHealth = "$$$";
-        } else if (game.data.health == 2) {
-            playerHealth = "$$";
-        } else if (game.data.health == 1) {
-            playerHealth = "$";
-        } else if (game.data.health == 0) {
-            playerHealth = "";
+        if (game.data.health === 5) {
+            playerHealth = '$$$$$';
+        } else if (game.data.health === 4) {
+            playerHealth = '$$$$';
+        } else if (game.data.health === 3) {
+            playerHealth = '$$$';
+        } else if (game.data.health === 2) {
+            playerHealth = '$$';
+        } else if (game.data.health === 1) {
+            playerHealth = '$';
+        } else if (game.data.health === 0) {
+            playerHealth = '';
         }
 
         this.font.draw(context, playerHealth, this.pos.x, this.pos.y);
-        //console.log("Drawing score");
     }
 
 });
 
 // Score
 game.HUD.ScoreItem = me.Renderable.extend({
-    /** 
-    * constructor
-    */
+    /**
+     * constructor
+     */
     init: function (x, y) {
-
-        // call the parent constructor 
+        // call the parent constructor
         // (size does not matter here)
         this.parent(new me.Vector2d(x, y), 10, 10);
 
         // create a font
-        this.font = new me.BitmapFont("32x32_font", 32);
-        this.font.set("right");
-        //this.font = new me.Font("Lucida Console", 20, "white", "center");
+        this.font = new me.BitmapFont('32x32_font', 32);
+        this.font.set('right');
 
         // local copy of the global score
         this.score = -1;
@@ -114,8 +108,8 @@ game.HUD.ScoreItem = me.Renderable.extend({
     },
 
     /**
-    * update function
-    */
+     * update function
+     */
     update: function () {
         // we don't draw anything fancy here, so just
         // return true if the score has been updated
@@ -127,12 +121,10 @@ game.HUD.ScoreItem = me.Renderable.extend({
     },
 
     /**
-    * draw the score
-    */
+     * draw the score
+     */
     draw: function (context) {
-        // draw it baby !
         this.font.draw(context, game.data.score, this.pos.x, this.pos.y);
-        //console.log("Drawing score");
     }
 
 });
