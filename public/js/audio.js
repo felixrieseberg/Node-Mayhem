@@ -1,9 +1,9 @@
-/* global me, game */
+/* global me, game, audioManager */
 
 // Audio manager, managing sound for the game
 /* ----------------------------------------------------------------- */
 (function () {
-    var audioManager = {
+    audioManager = {
         init: function () {
             // initialize the 'sound engine', giving 'mp3' and 'ogg' as desired audio format
             // i.e. on Safari, the loader will load all audio.mp3 files,
