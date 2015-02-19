@@ -1,4 +1,4 @@
-/* global me, game, audioManager */
+/* global me, game */
 
 // Audio manager, managing sound for the game
 /* ----------------------------------------------------------------- */

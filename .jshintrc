@@ -41,6 +41,7 @@
         "nitrogen": true,
         "QUnit": true,
         "game": true,
-        "me": true
+        "me": true,
+        "audioManager": true
     }
 }
