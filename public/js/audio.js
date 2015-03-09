@@ -8,8 +8,6 @@
             // initialize the 'sound engine', giving 'mp3' and 'ogg' as desired audio format
             // i.e. on Safari, the loader will load all audio.mp3 files,
             // on Opera the loader will however load audio.ogg files
-
-            console.log('Audio manager init');
             audioManager.playBackgroundMusic(true);
         },
 
@@ -34,15 +32,13 @@
         },
 
         switchMute: function () {
-            if (me.audio.isAudioEnable()) {
-                console.log('Muting!');
+            if (document.getElementById('soundSwitch').textContent == 'DISABLE SOUND') {
                 me.audio.disable();
-                document.getElementById('soundSwitch').textContent = 'ENABLE ALL SOUNDS';
+                document.getElementById('soundSwitch').textContent = 'ENABLE SOUND';
             } else {
-                console.log('Unmuting!');
                 me.audio.enable();
                 audioManager.playBackgroundMusic(true);
-                document.getElementById('soundSwitch').textContent = 'DISABLE ALL SOUNDS';
+                document.getElementById('soundSwitch').textContent = 'DISABLE SOUND';
             }
         },
 
