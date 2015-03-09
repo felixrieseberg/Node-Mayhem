@@ -72,7 +72,7 @@ game.MedpackEntity = me.CollectableEntity.extend({
                 health: game.data.health
             });
 
-            var respawn = function(){
+            var respawn = function () {
                 var crate = me.pool.pull('CrateEntity', this.pos.x, this.pos.y, {
                     image: 'crate',
                     spritewidth: 48,
@@ -82,8 +82,8 @@ game.MedpackEntity = me.CollectableEntity.extend({
                 });
                 me.game.world.addChild(crate, this.z);
             };
-            
-            me.timer.setTimeout(respawn.bind(this), 90000, true);   //respawn health crate in 90 sec
+            // respawn health crate in 90 sec
+            me.timer.setTimeout(respawn.bind(this), 90000, true);
         } else if (obj.type === game.ENEMY_OBJECT) {
             me.game.world.removeChild(this);
         }
