@@ -52,7 +52,6 @@ game.MedpackEntity = me.CollectableEntity.extend({
         this.parent(x, y, settings);
         this.type = me.game.COLLECTABLE_OBJECT;
     },
-
     onCollision: function (res, obj) {
         // Only collected by player
         if (obj.type === game.MAIN_PLAYER_OBJECT) {
@@ -68,13 +67,23 @@ game.MedpackEntity = me.CollectableEntity.extend({
             if (obj.health > 5) {
                 obj.health = 5;
             }
-
             game.socket.emit('playerHealed', {
                 id: obj.id,
                 health: game.data.health
             });
+            me.timer.setTimeout(respawn.bind(this), 90000, true);   //respawn health crate in 90 sec
         } else if (obj.type === game.ENEMY_OBJECT) {
             me.game.world.removeChild(this);
         }
+        var respawn = function(){
+            var crate = me.pool.pull('CrateEntity', this.pos.x, this.pos.y, {
+                image: 'crate',
+                spritewidth: 48,
+                spriteheight: 48,
+                width: 48,
+                height: 48
+            });
+            me.game.world.addChild(crate, this.z);
+        };
     }
 });
