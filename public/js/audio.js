@@ -32,7 +32,7 @@
         },
 
         switchMute: function () {
-            if (document.getElementById('soundSwitch').textContent == 'DISABLE SOUND') {
+            if (document.getElementById('soundSwitch').textContent === 'DISABLE SOUND') {
                 me.audio.disable();
                 document.getElementById('soundSwitch').textContent = 'ENABLE SOUND';
             } else {
