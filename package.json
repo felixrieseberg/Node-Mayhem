@@ -14,7 +14,7 @@
     },
     "devDependencies": {
         "grunt": "latest",
-        "grunt-contrib-jscs": "latest",
+        "grunt-jscodesniffer": "latest",
         "grunt-contrib-jshint": "latest",
         "grunt-jscs": "latest",
         "load-grunt-tasks": "latest"
