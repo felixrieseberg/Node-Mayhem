@@ -4,7 +4,7 @@
 /* ----------------------------------------------------------------- */
 game.PlayScreen = me.ScreenObject.extend({
     onResetEvent: function () {
-         // load the level
+        // load the level
         me.levelDirector.loadLevel('middleearth');
 
         // reset the score
