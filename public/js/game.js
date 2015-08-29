@@ -36,12 +36,10 @@ var game = {
             });
         }
 
-        // Set up pointer events
-        me.input.registerPointerEvent('pointermove', me.game.viewport, function (e) {
-            game.mouseTarget = {
-                x: e.gameWorldX,
-                y: e.gameWorldY
-            };
+        // Using JQuery to get updated mouse position
+        $('div#screen').mousemove(function (e) {
+            var pos = me.input.globalToLocal(e.clientX, e.clientY);
+            game.mouseTarget = me.game.viewport.localToWorld(pos.x, pos.y);
         });
 
         me.audio.init('ogg,mp3');
