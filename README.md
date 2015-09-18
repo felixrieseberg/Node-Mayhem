@@ -1,14 +1,12 @@
 ![nodemayhemlogo](http://i.imgur.com/AKHyegZ.png "Node Mayhem Logo")
- 
-### A simple multiplayer shooter built with Melon.js and Node.js 
 [![Build Status](https://travis-ci.org/felixrieseberg/Node-Mayhem.svg?branch=master)](https://travis-ci.org/felixrieseberg/Node-Mayhem)
 
 ## Introduction
-Over one weekend, we (Helen Zeng, Timothy Strimple & Felix Rieseberg) 
-built a tiny multiplayer shooter that is completely browser-based and 
-powered by Node.js. We've used Melon.js, a bunch of Creative 
+Over one weekend, we (Helen Zeng, Timothy Strimple & Felix Rieseberg)
+built a tiny multiplayer shooter that is completely browser-based and
+powered by Node.js. We've used Melon.js, a bunch of Creative
 Commons-licensed art and coded our way to a quick, easy and fun shooter
-for Node Knockout 2013. 
+for Node Knockout 2013.
 
 A short [video can be found on YouTube](http://www.youtube.com/watch?v=17dk7ebUXf0)
 
